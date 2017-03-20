@@ -1,0 +1,14 @@
+# out dir
+target/
+
+# mvn dir
+.mvn
+
+# idea dir
+.idea
+
+# idea file
+*.iml
+
+# Mac files
+.DS_Store

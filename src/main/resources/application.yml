@@ -1,0 +1,17 @@
+
+server:
+    port: 8082
+
+spring:
+  application:
+    name: zno-online
+
+  profiles:
+    active: dev
+
+  mvc:
+    favicon:
+      enabled: true
+
+  jackson:
+    serialization.indent_output: true
