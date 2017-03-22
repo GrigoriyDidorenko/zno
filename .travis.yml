@@ -16,3 +16,11 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose -f src/main/docker/app.yml
+
+  notifications:
+  email:
+    recipients:
+      - kotun13@mail.ru
+      - grigoriy.didorenko@gmail.com
+    on_success: never
+    on_failure: always
