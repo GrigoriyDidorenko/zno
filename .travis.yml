@@ -17,10 +17,11 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose -f src/main/docker/app.yml
 
-  notifications:
+notifications:
   email:
     recipients:
-      - kotun13@mail.ru
       - grigoriy.didorenko@gmail.com
+      - kotun13@mail.ru
+      - atia29@mail.ru
     on_success: never
     on_failure: always
