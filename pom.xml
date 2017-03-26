@@ -25,6 +25,7 @@
 <!--		<jacoco.version>0.7.6.201602180812</jacoco.version>-->
 		<swagger.version>2.6.1</swagger.version>
 		<commons-lang.version>2.6</commons-lang.version>
+		<mapper.version>0.7.4</mapper.version>
 	</properties>
 
 	<dependencies>
@@ -84,6 +85,12 @@
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>${commons-lang.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${mapper.version}</version>
 		</dependency>
 
 	</dependencies>
