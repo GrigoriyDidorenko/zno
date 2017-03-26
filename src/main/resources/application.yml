@@ -15,3 +15,15 @@ spring:
 
   jackson:
     serialization.indent_output: true
+
+logging:
+  config: logback-spring.xml
+
+
+
+
+
+
+
+
+

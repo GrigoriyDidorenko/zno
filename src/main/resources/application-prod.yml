@@ -21,3 +21,6 @@ spring:
     devtools:
         livereload:
             enabled: false
+
+logging:
+  level: error
