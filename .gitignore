@@ -12,3 +12,6 @@ target/
 
 # Mac files
 .DS_Store
+
+# Log folder
+logs
