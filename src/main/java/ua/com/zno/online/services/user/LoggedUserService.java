@@ -1,4 +1,4 @@
-package ua.com.zno.online.services;
+package ua.com.zno.online.services.user;
 
 /**
  * Created by quento on 26.03.17.

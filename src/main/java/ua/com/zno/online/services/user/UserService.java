@@ -1,4 +1,4 @@
-package ua.com.zno.online.services;
+package ua.com.zno.online.services.user;
 
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.domain.Subject;

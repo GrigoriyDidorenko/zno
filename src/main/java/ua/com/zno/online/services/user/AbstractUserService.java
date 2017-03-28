@@ -1,6 +1,5 @@
-package ua.com.zno.online.services;
+package ua.com.zno.online.services.user;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,9 @@ import java.util.Optional;
 /**
  * Created by quento on 26.03.17.
  */
-public abstract class AbstractUserService implements UserService {
+abstract class AbstractUserService implements UserService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GuestService.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractUserService.class.getName());
 
     @Autowired
     private TestRepository testRepository;
@@ -34,7 +33,7 @@ public abstract class AbstractUserService implements UserService {
 
     @Override
     public final TestDTO getTest(Long id) throws ServerException {
-        Optional<Test> test = Optional.of(testRepository.findOne(id));
+        Optional<Test> test = Optional.of(testRepository.findByIdAndDeletedFalse(id));
 
         if (test.isPresent()) {
             TestDTO testDTO = entityToDTO.convertToDTO(test.get(), TestDTO.class);
@@ -42,13 +41,13 @@ public abstract class AbstractUserService implements UserService {
             return testDTO;
         }
 
-        LOG.error("Test with id {} was not found", id);
+        LOG.error("Test with id {} was not found by querying from REST API", id);
         throw new ServerException();
     }
 
     @Override
     public final List<Subject> getSubjects() {
-        return subjectRepository.findAll();
+        return subjectRepository.findByDeletedFalse();
     }
 
     @Override
