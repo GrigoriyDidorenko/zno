@@ -8,8 +8,6 @@ import java.util.List;
 /**
  * Created by quento on 26.03.17.
  */
-public interface SubjectRepository extends CrudRepository<Subject, Long> {
+public interface SubjectRepository extends AbstractRepository<Subject> {
 
-    @Override
-    List<Subject> findAll();
 }
