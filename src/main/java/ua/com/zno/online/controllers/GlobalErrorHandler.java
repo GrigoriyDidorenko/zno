@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import ua.com.zno.online.exceptions.ServerException;
-import ua.com.zno.online.services.GuestService;
 
 /**
  * Created by quento on 26.03.17.
