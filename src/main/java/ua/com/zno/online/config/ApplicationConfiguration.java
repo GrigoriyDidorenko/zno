@@ -1,4 +1,4 @@
-package ua.com.zno.online.beans;
+package ua.com.zno.online.config;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EncryptablePropertySource;
 import org.modelmapper.ModelMapper;
@@ -6,14 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by quento on 26.03.17.
  */
 @Configuration
 @EncryptablePropertySource(name = "application-prod", value = "classpath:application-prod.yml")
-public class Beans {
+public class ApplicationConfiguration {
 
     @Bean
     public ModelMapper modelMapper() {

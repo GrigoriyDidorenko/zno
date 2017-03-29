@@ -17,22 +17,18 @@ import org.springframework.stereotype.Service;
  * Created by quento on 28.03.17.
  */
 
-/*
+
 @Service
 @PropertySource("classpath:custom.properties")
 public class MailService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MailService.class.getName());
 
-    //consider this realization https://github.com/ozimov/spring-boot-email-tools
-
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value(value = "system.email")
+    @Value(value = "${system.email}")
     private String from;
-
-    //add from (your mail to properties)
 
     //could be tested : http://dolszewski.com/spring/sending-html-mail-with-spring-boot-and-thymeleaf/
 
@@ -56,4 +52,4 @@ public class MailService {
 
 
 }
-*/
+

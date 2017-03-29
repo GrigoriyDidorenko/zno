@@ -15,9 +15,12 @@ spring:
 
   mail:
     default-encoding: UTF-8
-    protocol: stmp
-#    username:
-#    password:
+    protocol: smtp
+    username: admin@zno.net.ua
+    password: 2`a#KRgzt&\n`"9]
+    port: 587
+    host: mail.zno.net.ua
+
 
 #logging:
 #  config: logback-spring.xml
