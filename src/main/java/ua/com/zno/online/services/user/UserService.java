@@ -1,5 +1,6 @@
 package ua.com.zno.online.services.user;
 
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.Test;
@@ -12,9 +13,12 @@ import java.util.List;
  */
 public interface UserService {
 
+    @Transactional(readOnly = true)
     TestDTO getTest(Long id) throws ServerException;
 
+    @Transactional(readOnly = true)
     List<Subject> getSubjects();
 
+    @Transactional(readOnly = true)
     List<Test> getTestsBySubject(Long subjectId);
 }
