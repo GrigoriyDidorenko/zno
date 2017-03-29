@@ -1,7 +1,17 @@
 package ua.com.zno.online.services.user;
 
+import org.springframework.transaction.annotation.Transactional;
+import ua.com.zno.online.DTOs.TestDTO;
+
 /**
- * Created by quento on 26.03.17.
+ * Created by quento on 29.03.17.
  */
-public class LoggedUserService extends AbstractUserService implements UserService {
+public interface LoggedUserService extends UserService {
+
+    @Transactional (readOnly = true)
+    TestDTO getRandomizedTest(Long subjectId);
+
+
+    //get user stat
+
 }

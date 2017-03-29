@@ -9,4 +9,4 @@ VOLUME /tmp
 EXPOSE 8080
 CMD echo "The application will start in ${APP_SLEEP} seconds. Let DB load completely" && \
     sleep ${APP_SLEEP} && \
-    java -Djava.security.egd=file:/dev/./urandom -jar /app.war
+    java -Dspring.profiles.active=dev -Djava.security.egd=file:/dev/./urandom -jar /app.war
