@@ -9,7 +9,7 @@ spring:
         driver-class-name: com.mysql.jdbc.Driver
         url: jdbc:mysql://localhost:3306/zno?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false
         username: root
-        password:
+        password: ENC(EQ8ySN3HxLT61JnHyYqySJ/KvRn3rir7lPddB2sxs6Q=)
 
     jpa:
         database: mysql
