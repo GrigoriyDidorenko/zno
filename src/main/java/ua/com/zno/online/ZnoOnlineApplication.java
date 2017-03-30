@@ -25,7 +25,7 @@ public class ZnoOnlineApplication {
             String activeProfile = System.getProperty("spring.profiles.active");
             return validProd(activeProfile, args);
         } catch (NullPointerException e) {
-            LOG.error("Pass as VM option active profile to run");
+            LOG.error("Pass as VM option -Dspring.profiles.active=dev to run");
             return false;
         }
 
@@ -41,7 +41,7 @@ public class ZnoOnlineApplication {
             Optional<String> param = param(args, jasyptProperty);
 
             if (!param.isPresent()) {
-                LOG.error("You run in production mode, pass as program argument jasypt password");
+                LOG.error("You run in production mode, pass Program Argument --jasypt.encryptor.password ");
                 return false;
             }
         }
