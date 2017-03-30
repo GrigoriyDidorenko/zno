@@ -21,15 +21,13 @@ public class ZnoOnlineApplication {
     }
 
     private static boolean valid(String[] args) {
-        try {
-            String activeProfile = System.getProperty("spring.profiles.active");
-            return validProd(activeProfile, args);
-        } catch (NullPointerException e) {
-            LOG.error("Pass as VM option -Dspring.profiles.active=dev to run");
-            return false;
-        }
-
+        Optional<String> activeProfile = Optional.ofNullable(System.getProperty("spring.profiles.active"));
+        if (activeProfile.isPresent())
+            return validProd(activeProfile.get(), args);
+        LOG.error("Pass as VM option -Dspring.profiles.active to run");
+        return false;
     }
+
 
     private static boolean validProd(String activeProfile, String[] args) {
 
