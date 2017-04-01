@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 
 @Service
-@Scope(value = "session")
+//@Scope(value = "session")
 @PropertySource("classpath:custom.properties")
 public class RequestFilter {
 
