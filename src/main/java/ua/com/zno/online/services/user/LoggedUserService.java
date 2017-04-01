@@ -8,9 +8,11 @@ import ua.com.zno.online.DTOs.TestDTO;
  */
 public interface LoggedUserService extends UserService {
 
-    @Transactional (readOnly = true)
+    @Transactional(readOnly = true)
     TestDTO getRandomizedTest(Long subjectId);
 
+    @Transactional
+    void saveTestResult(TestDTO testDTO);
 
     //get user stat
 
