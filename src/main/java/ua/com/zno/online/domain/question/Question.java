@@ -55,7 +55,10 @@ public class Question extends AbstractEntity {
     }
 
     public Set<Answer> getAnswers() {
-        return answers;
+        if (type != QuestionType.COMPLEX)
+            return answers;
+
+        return Collections.emptySet();
     }
 
     public void setAnswers(Set<Answer> answers) {
