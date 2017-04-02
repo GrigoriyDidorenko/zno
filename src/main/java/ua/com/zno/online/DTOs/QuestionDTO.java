@@ -3,6 +3,7 @@ package ua.com.zno.online.DTOs;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import ua.com.zno.online.domain.Answer;
 import ua.com.zno.online.domain.Test;
+import ua.com.zno.online.domain.question.QuestionType;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,6 +23,10 @@ public class QuestionDTO extends AbstractDTO {
     private Test test;
 
     private List<AnswerDTO> answers;
+
+    private QuestionType type;
+
+    private List<QuestionDTO> subQuestions;
 
     public String getQuestionText() {
         return questionText;
@@ -45,5 +50,21 @@ public class QuestionDTO extends AbstractDTO {
 
     public void setAnswers(List<AnswerDTO> answers) {
         this.answers = answers;
+    }
+
+    public QuestionType getType() {
+        return type;
+    }
+
+    public void setType(QuestionType type) {
+        this.type = type;
+    }
+
+    public List<QuestionDTO> getSubQuestions() {
+        return subQuestions;
+    }
+
+    public void setSubQuestions(List<QuestionDTO> subQuestions) {
+        this.subQuestions = subQuestions;
     }
 }
