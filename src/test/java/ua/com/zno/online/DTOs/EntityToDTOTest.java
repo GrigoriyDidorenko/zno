@@ -7,11 +7,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.zno.online.ZnoOnlineApplication;
-import ua.com.zno.online.domain.AbstractEntity;
 import ua.com.zno.online.domain.Answer;
-import ua.com.zno.online.domain.Question;
+import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.util.Constants;
 
 import java.util.Collections;
