@@ -39,7 +39,7 @@ public class User extends AbstractEntity {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.ORDINAL)
-    @CollectionTable(name = "user_roles"
+    @CollectionTable(name = "user_authorities"
             , joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role_id", nullable = false)
     private Set<Authority> authorities = new HashSet<>();

@@ -1,5 +1,7 @@
 package ua.com.zno.online.domain;
 
+import ua.com.zno.online.domain.question.Question;
+
 import javax.persistence.*;
 
 /**

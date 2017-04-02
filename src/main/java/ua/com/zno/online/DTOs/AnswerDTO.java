@@ -1,9 +1,6 @@
 package ua.com.zno.online.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import ua.com.zno.online.domain.Question;
-
-import javax.persistence.Column;
 
 /**
  * Created by quento on 26.03.17.

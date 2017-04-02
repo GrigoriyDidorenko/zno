@@ -1,15 +1,9 @@
 package ua.com.zno.online.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import ua.com.zno.online.domain.Question;
 import ua.com.zno.online.domain.Subject;
-import ua.com.zno.online.domain.Test;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by quento on 26.03.17.
