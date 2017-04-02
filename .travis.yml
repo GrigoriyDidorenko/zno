@@ -8,7 +8,7 @@ services:
   - docker
 
 script:
-  - mvn package -Dspring.profiles.active=dev docker:build
+  - mvn package -P prod -Dspring.profiles.active=dev docker:build
 
 
 before_install:
