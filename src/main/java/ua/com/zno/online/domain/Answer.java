@@ -3,6 +3,7 @@ package ua.com.zno.online.domain;
 import ua.com.zno.online.domain.question.Question;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 /**
  * Created by quento on 26.03.17.
@@ -19,6 +20,7 @@ public class Answer extends AbstractEntity {
     @Column(name = "answer_text", nullable = false)
     private String answerText;
 
+    @Min(value = 0, message = "Mark must be positive")
     @Column(name = "mark", nullable = false)
     private int mark;
 
