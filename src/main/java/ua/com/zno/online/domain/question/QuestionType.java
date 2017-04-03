@@ -5,5 +5,5 @@ package ua.com.zno.online.domain.question;
  */
 public enum QuestionType {
 
-    SIMPLE, COMPLEX, SUB_QUESTION
+    SIMPLE, COMPLEX, SUB_QUESTION, OPEN
 }

@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -14,9 +16,12 @@ import java.util.Set;
 @Table(catalog = "zno", name = "test_results")
 public class TestResult extends AbstractEntity {
 
+    @Min(value = 0, message = "Duration must be positive")
     @Column(name = "duration", nullable = false)
     private Integer duration;
 
+    @Min(value = 100, message = "Total mark must be at least 100")
+    @Max(value = 200, message = "Total mark must be max 200")
     @Column(name = "mark", nullable = false)
     private Double mark;
 
