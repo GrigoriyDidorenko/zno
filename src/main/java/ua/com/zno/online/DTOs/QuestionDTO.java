@@ -20,7 +20,7 @@ public class QuestionDTO extends AbstractDTO {
 
     private String questionText;
 
-    private Test test;
+    private Long testId;
 
     private List<AnswerDTO> answers;
 
@@ -36,12 +36,12 @@ public class QuestionDTO extends AbstractDTO {
         this.questionText = questionText;
     }
 
-    public Test getTest() {
-        return test;
+    public Long getTestId() {
+        return testId;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setTestId(Long testId) {
+        this.testId = testId;
     }
 
     public List<AnswerDTO> getAnswers() {

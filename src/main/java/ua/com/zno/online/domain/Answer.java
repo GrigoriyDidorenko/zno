@@ -24,6 +24,9 @@ public class Answer extends AbstractEntity {
     @Column(name = "mark", nullable = false)
     private int mark;
 
+
+    //TODO consider picture
+
     public String getAnswerText() {
         return answerText;
     }
@@ -46,5 +49,25 @@ public class Answer extends AbstractEntity {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Answer answer = (Answer) o;
+
+        if (mark != answer.mark) return false;
+        return answerText != null ? answerText.equals(answer.answerText) : answer.answerText == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (answerText != null ? answerText.hashCode() : 0);
+        result = 31 * result + mark;
+        return result;
     }
 }

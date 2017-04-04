@@ -9,14 +9,13 @@ import java.util.List;
  * Created by quento on 26.03.17.
  */
 
-@JsonRootName("test")
 public class TestDTO extends AbstractDTO {
 
     private String name;
 
     private int duration;
 
-    private Subject subject;
+    private Long subjectId;
 
     private List<QuestionDTO> questions;
 
@@ -36,12 +35,12 @@ public class TestDTO extends AbstractDTO {
         this.duration = duration;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public Long getSubjectId() {
+        return subjectId;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
     }
 
     public List<QuestionDTO> getQuestions() {

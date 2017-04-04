@@ -33,4 +33,22 @@ public abstract class AbstractEntity {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbstractEntity that = (AbstractEntity) o;
+
+        if (deleted != that.deleted) return false;
+        return id != null ? id.equals(that.id) : that.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (deleted ? 1 : 0);
+        return result;
+    }
 }

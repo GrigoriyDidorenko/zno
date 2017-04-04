@@ -1,13 +1,16 @@
 package ua.com.zno.online.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ua.com.zno.online.DTOs.EntityToDTO;
+import org.springframework.web.bind.annotation.ResponseBody;
+import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.DTOs.SubjectDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.exceptions.ServerException;
+import ua.com.zno.online.services.user.GuestService;
 import ua.com.zno.online.services.user.UserService;
 
 import java.util.List;
@@ -28,6 +31,7 @@ public class GuestController {
 
 
     @GetMapping("test/{testId}")
+    @ResponseBody
     public TestDTO getTest(@PathVariable Long testId) throws ServerException {
         return guestService.getTest(testId);
     }

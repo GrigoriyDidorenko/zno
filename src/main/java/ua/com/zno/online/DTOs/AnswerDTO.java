@@ -9,18 +9,18 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonRootName("answer")
 public class AnswerDTO extends AbstractDTO {
 
-    private QuestionDTO question;
+    private Long questionId;
 
     private String answerText;
 
     private int mark;
 
-    public QuestionDTO getQuestion() {
-        return question;
+    public Long getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion(QuestionDTO question) {
-        this.question = question;
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
     public String getAnswerText() {

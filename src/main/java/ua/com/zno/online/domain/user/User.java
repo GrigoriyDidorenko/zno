@@ -1,5 +1,6 @@
 package ua.com.zno.online.domain.user;
 
+import org.hibernate.validator.constraints.Email;
 import ua.com.zno.online.domain.AbstractEntity;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class User extends AbstractEntity {
     @Column(name = "surname", nullable = false)
     private String surname;
 
+    @Email
     @Column(name = "email", nullable = false)
     private String email;
 
