@@ -24,16 +24,14 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/vkLogin", "/test/**", "/subject/**").permitAll()
-                .antMatchers("/smthImportant/**").hasRole("ADMIN")
-                .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")//just for exmpl
+                .antMatchers("/vkLogin").permitAll()
+                .antMatchers("/test/**").hasRole("USER")
+                .antMatchers("/subject/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .and()
-                .httpBasic()//for dev only
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -44,12 +42,12 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.deleteCookies(cookieNamesToClear);
     }
 
-    @Autowired
+    /*@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
                 .withUser("user").password("password").roles("USER");
-    }
+    }*/
 
 
 }
