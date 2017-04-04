@@ -1,8 +1,9 @@
-package ua.com.zno.online.DTOs;
+package ua.com.zno.online.DTOs.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ua.com.zno.online.DTOs.AbstractDTO;
 import ua.com.zno.online.domain.AbstractEntity;
 import ua.com.zno.online.util.Constants;
 

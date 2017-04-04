@@ -3,8 +3,9 @@ package ua.com.zno.online.services.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.com.zno.online.DTOs.EntityToDTO;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.zno.online.DTOs.TestDTO;
+import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.Test;
 import ua.com.zno.online.exceptions.ServerException;
@@ -18,6 +19,7 @@ import java.util.Optional;
 /**
  * Created by quento on 26.03.17.
  */
+@Transactional
 abstract class AbstractUserService implements UserService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractUserService.class.getName());

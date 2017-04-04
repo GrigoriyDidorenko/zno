@@ -55,10 +55,13 @@ public class Question extends AbstractEntity {
     }
 
     public Set<Answer> getAnswers() {
-        if (type != QuestionType.COMPLEX)
-            return answers;
+        if (type == QuestionType.COMPLEX)
+            return Collections.emptySet();
 
-        return Collections.emptySet();
+        if (Hibernate.isInitialized(this.answers))
+            Hibernate.initialize(this.answers);
+        return answers;
+
     }
 
     public void setAnswers(Set<Answer> answers) {
@@ -94,5 +97,28 @@ public class Question extends AbstractEntity {
 
     public void setSubQuestions(Set<Question> subQuestions) {
         this.subQuestions = subQuestions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Question question = (Question) o;
+
+        if (questionText != null ? !questionText.equals(question.questionText) : question.questionText != null)
+            return false;
+        if (type != question.type) return false;
+        return parentId != null ? parentId.equals(question.parentId) : question.parentId == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (questionText != null ? questionText.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
+        return result;
     }
 }
