@@ -35,7 +35,7 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
                 ua.com.zno.online.domain.User user = userRepository.findUserByLogin(login);
                 if(user != null) {
                     return new User(user.getLogin(), user.getSecret(), true, true, true, true,
-                            AuthorityUtils.createAuthorityList("USER"));
+                            AuthorityUtils.createAuthorityList("ROLE_USER"));
                 } else {
                     throw new UsernameNotFoundException("could not find the user '"
                             + login + "'");
