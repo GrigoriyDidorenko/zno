@@ -19,7 +19,7 @@ import ua.com.zno.online.repository.UserRepository;
 class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
