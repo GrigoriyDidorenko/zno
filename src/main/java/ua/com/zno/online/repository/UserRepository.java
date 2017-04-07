@@ -9,5 +9,5 @@ import ua.com.zno.online.domain.User;
 @Repository
 public interface UserRepository extends AbstractRepository<User> {
     User findUserByLogin(String login);
-
+    User findUserByEmail(String email);
 }

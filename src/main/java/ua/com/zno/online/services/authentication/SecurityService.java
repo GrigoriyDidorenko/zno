@@ -18,8 +18,14 @@ import ua.com.zno.online.domain.User;
 import ua.com.zno.online.exceptions.ServerException;
 import ua.com.zno.online.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ua.com.zno.online.services.mail.MailService;
+import ua.com.zno.online.util.SecurityUtils;
 
+import javax.tools.JavaCompiler;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Security;
 import java.util.Optional;
 
 /**
@@ -27,10 +33,7 @@ import java.util.Optional;
  */
 
 @Service
-public class AuthenticationService {
-
-    @Autowired
-    private UserDetailsService userDetailsService;
+public class SecurityService {
 
     @Autowired
     private UserRepository userRepository;
@@ -40,6 +43,9 @@ public class AuthenticationService {
 
     @Autowired
     private EntityToDTO entityToDTO;
+
+    @Autowired
+    private MailService mailService;
 
     public void authenticateVkUser(String code) throws ServerException, IOException {
         RestTemplate restTemplate = new RestTemplate();
@@ -57,6 +63,7 @@ public class AuthenticationService {
 
         if (!user.isPresent()){
             User userToPersist = entityToDTO.DTOToEntity(userDTO, User.class);
+            userToPersist.setEnabled(true);
             userRepository.save(userToPersist);
             user = Optional.of(userToPersist);
         }
@@ -76,17 +83,45 @@ public class AuthenticationService {
         }
     }
 
+    public void register(String name, String surname, String email,  String password) throws ServerException, NoSuchAlgorithmException {
+        //validate email is front task
+        Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
+        if (user.isPresent()) throw new ServerException("This email already registered!"); //TODO not sure how to make feedback
+        User userToPersist = new User(name, surname, email, email, password, false);
+        userRepository.save(userToPersist);
+        mailService.sendEmail(email, "Confirm registration on 'zno.net.ua'", createContent(email));
+    }
+
+    public void confirmRegistration(String email, String hash) throws NoSuchAlgorithmException, ServerException {
+        if (!hash.equals(SecurityUtils.createHash("SHA-256", email + env.getProperty("vk.client.secret")))){
+            throw new ServerException("not valid hash");
+        }
+
+        Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
+        if (!user.isPresent()) throw new ServerException("user does not exists");
+        if (user.get().getEnabled()) throw new ServerException("user account already activated");
+
+        user.get().setEnabled(true);
+        userRepository.save(user.get());
+    }
+
+    private String createContent(String email) throws NoSuchAlgorithmException {
+        //String beautyHtml = ...
+        return env.getProperty("host.uri") + "confirmRegistration/" + email + "/" + SecurityUtils.createHash(
+                "SHA-256", email + env.getProperty("vk.client.secret"));
+    }
+
     private String makeVkUrl(String code){
 
         return "https://oauth.vk.com/access_token?" +
                 "client_id=" +
-                env.getProperty("client.id") +
+                env.getProperty("vk.client.id") +
                 "&" +
                 "client_secret=" +
-                env.getProperty("client.secret") +
+                env.getProperty("vk.client.secret") +
                 "&" +
                 "redirect_uri=" +
-                env.getProperty("redirect.uri") +
+                env.getProperty("host.uri") + "vkLogin" +
                 "&" +
                 "code=" +
                 code;

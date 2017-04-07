@@ -13,19 +13,34 @@ import javax.persistence.Table;
 @Table(catalog = "zno", name = "users")
 public class User extends AbstractEntity {
 
-    @Column(name = "login", nullable = false)
+    @Column
+    private String name;
+    @Column
+    private String surname;
+    @Column(nullable = false, unique = true)
     private String login;
-    @Column(name = "secret", nullable = false)
+    @Column(nullable = false)
     private String secret;
-    @Column(name = "email", nullable = false)
+    @Column(unique = true)
     private String email;
+    @Column(nullable = false)
+    private Boolean enabled;
 
     public User() {
     }
 
-    public User(String email, String secret){
-        this.email = email;
+    public User(String login, String secret){
+        this.login = login;
         this.secret = secret;
+    }
+
+    public User(String name, String surname, String login, String email, String secret, Boolean enabled) {
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.secret = secret;
+        this.email = email;
+        this.enabled = enabled;
     }
 
     public String getSecret() {
@@ -50,5 +65,29 @@ public class User extends AbstractEntity {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

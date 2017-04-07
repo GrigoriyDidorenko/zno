@@ -31,14 +31,14 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
         return new UserDetailsService() {
 
             @Override
-            public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-                ua.com.zno.online.domain.User user = userRepository.findUserByLogin(login);
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                ua.com.zno.online.domain.User user = userRepository.findUserByLogin(username);
                 if(user != null) {
-                    return new User(user.getLogin(), user.getSecret(), true, true, true, true,
+                    return new User(user.getLogin(), user.getSecret(), user.getEnabled(), true, true, true,
                             AuthorityUtils.createAuthorityList("ROLE_USER"));
                 } else {
                     throw new UsernameNotFoundException("could not find the user '"
-                            + login + "'");
+                            + username + "'");
                 }
             }
 
