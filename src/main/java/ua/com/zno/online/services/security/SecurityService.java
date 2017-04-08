@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import ua.com.zno.online.DTOs.EntityToDTO;
 import ua.com.zno.online.DTOs.UserDTO;
@@ -43,6 +44,7 @@ public class SecurityService {
     @Autowired
     private MailService mailService;
 
+    @Transactional
     public void authenticateVkUser(String code) throws ServerException, IOException {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = null;
@@ -79,6 +81,7 @@ public class SecurityService {
         }
     }
 
+    @Transactional
     public void register(String name, String surname, String email,  String password) throws ServerException, NoSuchAlgorithmException {
         //validate email is front task
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
@@ -88,6 +91,7 @@ public class SecurityService {
         mailService.sendEmail(email, "Confirm registration on 'zno.net.ua'", createContent(email));
     }
 
+    @Transactional
     public void confirmRegistration(String email, String hash) throws NoSuchAlgorithmException, ServerException {
         if (!hash.equals(SecurityUtils.createSHA256URLSafeHash(email + env.getProperty("vk.client.secret")))){
             throw new ServerException("not valid hash");

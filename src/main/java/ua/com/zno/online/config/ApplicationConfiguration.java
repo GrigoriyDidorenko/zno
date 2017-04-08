@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Created by quento on 26.03.17.
  */
 @Configuration
 @EncryptablePropertySource(name = "application-prod", value = "classpath:application-prod.yml")
+@EnableTransactionManagement
 public class ApplicationConfiguration {
 
     @Bean
