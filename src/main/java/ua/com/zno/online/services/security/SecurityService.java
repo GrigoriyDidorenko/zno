@@ -1,4 +1,4 @@
-package ua.com.zno.online.services.authentication;
+package ua.com.zno.online.services.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ua.com.zno.online.DTOs.EntityToDTO;
@@ -21,11 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ua.com.zno.online.services.mail.MailService;
 import ua.com.zno.online.util.SecurityUtils;
 
-import javax.tools.JavaCompiler;
 import java.io.IOException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Security;
 import java.util.Optional;
 
 /**
@@ -93,7 +89,7 @@ public class SecurityService {
     }
 
     public void confirmRegistration(String email, String hash) throws NoSuchAlgorithmException, ServerException {
-        if (!hash.equals(SecurityUtils.createHash("SHA-256", email + env.getProperty("vk.client.secret")))){
+        if (!hash.equals(SecurityUtils.createSHA256URLSafeHash(email + env.getProperty("vk.client.secret")))){
             throw new ServerException("not valid hash");
         }
 
@@ -107,8 +103,7 @@ public class SecurityService {
 
     private String createContent(String email) throws NoSuchAlgorithmException {
         //String beautyHtml = ...
-        return env.getProperty("host.uri") + "confirmRegistration/" + email + "/" + SecurityUtils.createHash(
-                "SHA-256", email + env.getProperty("vk.client.secret"));
+        return env.getProperty("host.uri") + "confirmRegistration/" + email + "/" + SecurityUtils.createSHA256URLSafeHash(email + env.getProperty("vk.client.secret"));
     }
 
     private String makeVkUrl(String code){

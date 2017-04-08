@@ -5,14 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import ua.com.zno.online.domain.User;
 import ua.com.zno.online.exceptions.ServerException;
-import ua.com.zno.online.services.authentication.SecurityService;
+import ua.com.zno.online.services.security.SecurityService;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
-import java.util.Optional;
 
 /**
  * Created by obalitskiy on 3/31/17.
@@ -44,7 +42,7 @@ public class SecurityController {
     public String confirmRegistration(@PathVariable String email, @PathVariable String hash) throws ServerException, NoSuchAlgorithmException {
         securityService.confirmRegistration(email, hash);
 
-        return "user_profile_or_smth";
+        return "user_profile_or_smth"; //TODO this requests confirmRegistration again with hash=user_profile_or_smth
     }
 
 
