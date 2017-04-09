@@ -12,9 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-import ua.com.zno.online.DTOs.EntityToDTO;
+import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.DTOs.UserDTO;
-import ua.com.zno.online.domain.User;
+import ua.com.zno.online.domain.user.Authority;
+import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.ServerException;
 import ua.com.zno.online.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +24,8 @@ import ua.com.zno.online.util.SecurityUtils;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -57,7 +60,7 @@ public class SecurityService {
         if (HttpStatus.OK !=response.getStatusCode()) throw new ServerException("Can not authenticate via VK");
 
         UserDTO userDTO = new ObjectMapper().readValue(response.getBody(), UserDTO.class);
-        Optional<User> user = Optional.ofNullable(userRepository.findUserByLogin(userDTO.getLogin()));
+        Optional<User> user = Optional.ofNullable(userRepository.findUserByLogin(userDTO.getVkId()));
 
         if (!user.isPresent()){
             User userToPersist = entityToDTO.DTOToEntity(userDTO, User.class);
@@ -68,7 +71,7 @@ public class SecurityService {
 
         try {
 
-            UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.get().getLogin(), user.get().getSecret(), true, true, true, true,
+            UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.get().getLogin(), user.get().getPassword(), user.get().isEnabled(), true, true, true,
                     AuthorityUtils.createAuthorityList("ROLE_USER"));
 
             Authentication auth =
@@ -86,7 +89,7 @@ public class SecurityService {
         //validate email is front task
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
         if (user.isPresent()) throw new ServerException("This email already registered!"); //TODO not sure how to make feedback
-        User userToPersist = new User(name, surname, email, email, password, false);
+        User userToPersist = new User(name, surname, email, email, password, LocalDateTime.now(), false, Collections.singleton(Authority.USER));
         userRepository.save(userToPersist);
         mailService.sendEmail(email, "Confirm registration on 'zno.net.ua'", createContent(email));
     }
@@ -99,7 +102,7 @@ public class SecurityService {
 
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
         if (!user.isPresent()) throw new ServerException("user does not exists");
-        if (user.get().getEnabled()) throw new ServerException("user account already activated");
+        if (user.get().isEnabled()) throw new ServerException("user account already activated");
 
         user.get().setEnabled(true);
         userRepository.save(user.get());

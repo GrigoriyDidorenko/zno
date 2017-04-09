@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonRootName("user")
 public class UserDTO extends AbstractDTO{
     @JsonProperty("user_id")
-    private String login;
+    private String vkId;
     @JsonProperty("email")
     private String email;
     @JsonProperty("access_token")
@@ -22,17 +22,17 @@ public class UserDTO extends AbstractDTO{
     }
 
     public UserDTO(String login, String email, String secret) {
-        this.login = login;
+        this.vkId = login;
         this.email = email;
         this.secret = secret;
     }
 
-    public String getLogin() {
-        return login;
+    public String getVkId() {
+        return vkId;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setVkId(String vkId) {
+        this.vkId = vkId;
     }
 
     public String getEmail() {
