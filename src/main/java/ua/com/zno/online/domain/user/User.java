@@ -17,7 +17,7 @@ import java.util.Set;
 public class User extends AbstractEntity {
 
     @Column(name = "vk_id", nullable = true)
-    private Long vkId;
+    private String login;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -36,8 +36,8 @@ public class User extends AbstractEntity {
     @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;
 
-    @Column(name = "activated", nullable = false)
-    private boolean activated;
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.ORDINAL)
@@ -46,12 +46,26 @@ public class User extends AbstractEntity {
     @Column(name = "role_id", nullable = false)
     private Set<Authority> authorities = new HashSet<>();
 
-    public Long getVkId() {
-        return vkId;
+    public User() {
     }
 
-    public void setVkId(Long vkId) {
-        this.vkId = vkId;
+    public User(String name, String surname, String login, String email, String password, LocalDateTime creationDate, boolean enabled, Set<Authority> authorities) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.creationDate = creationDate;
+        this.enabled = enabled;
+        this.authorities = authorities;
+        this.login = login;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getName() {
@@ -94,12 +108,12 @@ public class User extends AbstractEntity {
         this.creationDate = creationDate;
     }
 
-    public boolean isActivated() {
-        return activated;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setActivated(boolean activated) {
-        this.activated = activated;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Set<Authority> getAuthorities() {

@@ -256,7 +256,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `deleted` bit(1) NOT NULL,
-  `activated` bit(1) NOT NULL,
+  `enabled` bit(1) NOT NULL,
   `creation_date` tinyblob NOT NULL,
   `email` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
