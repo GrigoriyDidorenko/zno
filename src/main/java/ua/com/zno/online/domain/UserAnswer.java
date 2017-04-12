@@ -9,6 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(catalog = "zno", name = "user_answers")
+@Deprecated
 public class UserAnswer extends AbstractEntity {
 
     @ManyToOne

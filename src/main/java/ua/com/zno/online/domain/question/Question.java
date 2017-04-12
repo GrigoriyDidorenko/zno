@@ -3,6 +3,7 @@ package ua.com.zno.online.domain.question;
 import org.hibernate.Hibernate;
 import ua.com.zno.online.domain.AbstractEntity;
 import ua.com.zno.online.domain.Answer;
+import ua.com.zno.online.domain.FailedQuestion;
 import ua.com.zno.online.domain.Test;
 
 import javax.persistence.*;
@@ -96,6 +97,8 @@ public class Question extends AbstractEntity {
     }
 
     public void setSubQuestions(Set<Question> subQuestions) {
+
+
         this.subQuestions = subQuestions;
     }
 

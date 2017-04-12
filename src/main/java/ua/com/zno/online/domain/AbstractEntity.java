@@ -34,6 +34,10 @@ public abstract class AbstractEntity {
         this.deleted = deleted;
     }
 
+    public AbstractEntity() {
+        this.deleted = false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

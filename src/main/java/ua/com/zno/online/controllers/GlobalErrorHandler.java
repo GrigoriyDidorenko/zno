@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import ua.com.zno.online.exceptions.ServerException;
+import ua.com.zno.online.exceptions.UserException;
 
 /**
  * Created by quento on 26.03.17.
@@ -23,6 +24,14 @@ public class GlobalErrorHandler {
         LOG.debug("Handling ServerException in GlobalErrorHandler", e);
 
         //return error model and view
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = UserException.class)
+    public void handleConflict(UserException e) {
+        LOG.debug("Handling UserException in GlobalErrorHandler", e);
+
+
     }
 
 }

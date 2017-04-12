@@ -13,11 +13,26 @@ public class TestDTO extends AbstractDTO {
 
     private String name;
 
-    private int duration;
+    private Integer duration;
 
     private Long subjectId;
 
     private List<QuestionDTO> questions;
+
+    public TestDTO() {
+    }
+
+    public TestDTO(String name, List<QuestionDTO> questions) {
+        this.name = name;
+        this.questions = questions;
+    }
+
+    public TestDTO(String name, int duration, Long subjectId, List<QuestionDTO> questions) {
+        this.name = name;
+        this.duration = duration;
+        this.subjectId = subjectId;
+        this.questions = questions;
+    }
 
     public String getName() {
         return name;
@@ -27,11 +42,11 @@ public class TestDTO extends AbstractDTO {
         this.name = name;
     }
 
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

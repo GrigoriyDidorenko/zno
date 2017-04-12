@@ -28,8 +28,14 @@ public class TestResult extends AbstractEntity {
     @Column(name = "submission_time", nullable = false)
     private LocalDateTime submissionTime;
 
-    @OneToMany(mappedBy = "testResult")
-    private Set<UserAnswer> userAnswers;
+    public TestResult() {
+    }
+
+    public TestResult(Integer duration, Double mark, LocalDateTime submissionTime) {
+        this.duration = duration;
+        this.mark = mark;
+        this.submissionTime = submissionTime;
+    }
 
     public Integer getDuration() {
         return duration;
@@ -53,13 +59,5 @@ public class TestResult extends AbstractEntity {
 
     public void setSubmissionTime(LocalDateTime submissionTime) {
         this.submissionTime = submissionTime;
-    }
-
-    public Set<UserAnswer> getUserAnswers() {
-        return userAnswers;
-    }
-
-    public void setUserAnswers(Set<UserAnswer> userAnswers) {
-        this.userAnswers = userAnswers;
     }
 }

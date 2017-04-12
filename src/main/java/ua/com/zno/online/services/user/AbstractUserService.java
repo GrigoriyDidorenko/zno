@@ -22,16 +22,14 @@ import java.util.Optional;
 @Transactional
 abstract class AbstractUserService implements UserService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractUserService.class.getName());
+    @Autowired
+    protected TestRepository testRepository;
 
     @Autowired
-    private TestRepository testRepository;
+    protected SubjectRepository subjectRepository;
 
     @Autowired
-    private SubjectRepository subjectRepository;
-
-    @Autowired
-    private EntityToDTO entityToDTO;
+    protected EntityToDTO entityToDTO;
 
     @Override
     public final TestDTO getTest(Long id) throws ServerException {
@@ -43,8 +41,7 @@ abstract class AbstractUserService implements UserService {
             return testDTO;
         }
 
-        LOG.error("Test with id {} was not found by querying from REST API", id);
-        throw new ServerException();
+        throw new ServerException(String.format("Test with id %d was not found by querying from REST API", id));
     }
 
     @Override
