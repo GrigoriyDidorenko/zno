@@ -21,31 +21,32 @@ public class SecurityController {
     @Autowired
     private SecurityService securityService;
 
-
+//TODO DEAL with returning the response
     @GetMapping("vkLogin")
-    public String vkLogin(@RequestParam String code, Principal principal) throws ServerException, IOException {
-        if (principal != null) return "some_page_that_says_'you are already logged_in'";
+    public void vkLogin(@RequestParam String code, Principal principal) throws ServerException, IOException {
+        if (principal != null) return;
         securityService.authenticateVkUser(code);
-
-        return "user_profile_or_smth";
     }
 
     @GetMapping("registration") //TODO should be POST
-    public String registration(@RequestParam String name, @RequestParam(required = false) String surname,
+    public void registration(@RequestParam String name, @RequestParam(required = false) String surname,
                                @RequestParam String email, @RequestParam String password) throws ServerException, NoSuchAlgorithmException {
         securityService.register(name, surname, email, password);
-
-        return "login";
     }
 
     @GetMapping("confirmRegistration/{email}/{hash}")
-    public String confirmRegistration(@PathVariable String email, @PathVariable String hash) throws ServerException, NoSuchAlgorithmException {
+    public void confirmRegistration(@PathVariable String email, @PathVariable String hash) throws ServerException, NoSuchAlgorithmException {
         securityService.confirmRegistration(email, hash);
-
-        return "user_profile_or_smth"; //TODO this requests confirmRegistration again with hash=user_profile_or_smth
     }
 
+    @GetMapping("resetPassword")
+    public void resetPassword(@RequestParam String email) throws ServerException {
+        securityService.resetPassword(email);
+    }
 
-
+    @GetMapping("changePassword") //TODO should be POST
+    public void changePassword(@RequestParam String email, @RequestParam String oldPsswrd, @RequestParam String newPsswrd) throws ServerException {
+        securityService.changePassword(email, oldPsswrd, newPsswrd);
+    }
 
 }

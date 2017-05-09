@@ -1,5 +1,6 @@
 package ua.com.zno.online.services.security;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -46,6 +48,9 @@ public class SecurityService {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Transactional
     public void authenticateVkUser(String code) throws ServerException, IOException {
@@ -86,12 +91,14 @@ public class SecurityService {
 
     @Transactional
     public void register(String name, String surname, String email,  String password) throws ServerException, NoSuchAlgorithmException {
-        //validate email is front task
+        //TODO validate email
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
         if (user.isPresent()) throw new ServerException("This email already registered!"); //TODO not sure how to make feedback
-        User userToPersist = new User(name, surname, email, email, password, LocalDateTime.now(), false, Collections.singleton(Authority.USER));
+
+        String hashedPassword = passwordEncoder.encode(password);
+        User userToPersist = new User(name, surname, email, email, hashedPassword, LocalDateTime.now(), false, Collections.singleton(Authority.USER));
         userRepository.save(userToPersist);
-        mailService.sendEmail(email, "Confirm registration on 'zno.net.ua'", createContent(email));
+        mailService.sendEmail(email, "Підтвердіть реєстрацію для 'zno.net.ua'.", createConfirmationContent(email));
     }
 
     @Transactional
@@ -106,11 +113,58 @@ public class SecurityService {
 
         user.get().setEnabled(true);
         userRepository.save(user.get());
+        mailService.sendEmail(email, "Ви успішно зареєстровані на 'zno.net.ua'.", createSuccessRegistrationContent());
     }
 
-    private String createContent(String email) throws NoSuchAlgorithmException {
+    @Transactional
+    public void resetPassword(String email) throws ServerException {
+        Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
+        if (!user.isPresent()) throw new ServerException("User with this email does not exist");
+        if (!user.get().isEnabled()) throw new ServerException("Account is not enabled yet");
+
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String password = RandomStringUtils.random( 5, characters );
+        String hashedPassword = passwordEncoder.encode(password);
+        user.get().setPassword(hashedPassword);
+        userRepository.save(user.get());
+        mailService.sendEmail(email, "Відновлення паролю для 'zno.net.ua'", createResetContent(password));
+    }
+
+    @Transactional
+    public void changePassword(String email, String oldPsswrd, String newPsswrd) throws ServerException {
+        Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
+        if (!user.isPresent()) throw new ServerException("User with this email does not exist");
+        if (!user.get().isEnabled()) throw new ServerException("Account is not enabled yet");
+
+        if (!passwordEncoder.matches(oldPsswrd, user.get().getPassword())){
+            throw new ServerException("Password is not correct");
+        }
+
+        String hashedPassword = passwordEncoder.encode(newPsswrd);
+        user.get().setPassword(hashedPassword);
+        userRepository.save(user.get());
+        mailService.sendEmail(email, "Зміна паролю для 'zno.net.ua'", createChangePasswordContent());
+    }
+
+    private String createChangePasswordContent(){
+        //String beautyHtml = ...
+        return "Ви успішно змінили пароль, якщо ви цього не робили, будь ласка, повідомте за номером 0978715858";
+    }
+
+    private String createSuccessRegistrationContent(){
+        //String beautyHtml = ...
+        return "Ви успішно зареєстровані на 'zno.net.ua'. Автризуйтеся і скоріше приступайте до роботи";
+    }
+
+    private String createConfirmationContent(String email) throws NoSuchAlgorithmException {
         //String beautyHtml = ...
         return env.getProperty("host.uri") + "confirmRegistration/" + email + "/" + SecurityUtils.createSHA256URLSafeHash(email + env.getProperty("vk.client.secret"));
+    }
+
+    private String createResetContent(String password){
+        //String beautyHtml = ...
+        return "Ваш тимчасовий пароль: " + password + ". Ви можете змінити його в особистому кабінеті:\n" +
+                env.getProperty("host.uri") + "changePasswordPage";
     }
 
     private String makeVkUrl(String code){
