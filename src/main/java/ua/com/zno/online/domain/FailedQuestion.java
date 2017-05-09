@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * Created by quento on 11.04.17.
  */
 @Entity
-@Table(schema = "zno", catalog = "failed_questions",
+@Table(catalog = "zno", name = "failed_questions",
         uniqueConstraints = @UniqueConstraint(columnNames = {"question_id", "user_id"}))
 public class FailedQuestion extends AbstractEntity {
 

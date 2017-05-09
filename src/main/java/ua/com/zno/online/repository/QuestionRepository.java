@@ -13,12 +13,12 @@ import java.util.List;
 public interface QuestionRepository extends AbstractRepository<Question> {
 
     @Query(value = "select * from questions q join failed_questions f on f.question_id = q.id " +
-            "where f.user_id = ?1 and f.deleted = false and f.resolved = false and f.next_ask_day < current_date",
+            "where f.user_id = ?1 and f.deleted = false and f.resolved = false and f.next_ask_time < current_date",
             nativeQuery = true)
     List<Question> findAllFailedQuestions(Long userId);
 
     @Query(value = "select * from questions q join failed_questions f on f.question_id = q.id " +
-            "where f.user_id = ?2 and f.deleted = false and f.resolved = false and f.next_ask_day < current_date and f.subject_id = ?1",
+            "where f.user_id = ?2 and f.deleted = false and f.resolved = false and f.next_ask_time < current_date and f.subject_id = ?1",
             nativeQuery = true)
     List<Question> findAnllFailedQuestionsBySubject(Long subjectId, Long userId);
 }

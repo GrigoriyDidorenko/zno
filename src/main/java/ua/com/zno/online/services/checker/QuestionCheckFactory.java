@@ -32,7 +32,6 @@ public class QuestionCheckFactory {
 
 
     public Integer check(TestResultDTO.UserAnswerDTO userAnswerDTO) throws UserException {
-        //todo: check if id does not exist
         Optional<Question> question = Optional.ofNullable(questionRepository.findOne(userAnswerDTO.getQuestionId()));
 
         if (!question.isPresent())
