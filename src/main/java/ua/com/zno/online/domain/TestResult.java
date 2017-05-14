@@ -17,7 +17,7 @@ import java.util.Set;
 public class TestResult extends AbstractEntity {
 
     @Min(value = 0, message = "Duration must be positive")
-    @Column(name = "duration", nullable = false)
+    @Column(name = "duration")
     private Integer duration;
 
     @Min(value = 100, message = "Total mark must be at least 100")

@@ -20,19 +20,32 @@ public class FailedQuestion extends AbstractEntity {
     @Column(name = "question_id", nullable = false)
     private Long questionId;
 
+    /*
+    *
+    * mark question as resolved after all stages are answered
+    *
+    * */
     @Column(name = "resolved", nullable = false)
     private boolean resolved;
 
     @Column(name = "creation_date", nullable = false)
-//    @Temporal(value = TemporalType.DATE)
     private LocalDateTime creationDate;
 
+
+    /*
+    *
+    * number of stages to ask question again, depends on property ${days.between.remind} size
+    *
+    * */
     @Column(name = "stage", nullable = false)
     private Integer stage;
 
-
+    /*
+    *
+    * based on property ${days.between.remind} selects next date to ask
+    *
+    * */
     @Column(name = "next_ask_time", nullable = false)
-//    @Temporal(value = TemporalType.DATE)
     private LocalDateTime nextAskTime;
 
     public FailedQuestion(Long userId, Long subjectId, Long questionId, boolean resolved,

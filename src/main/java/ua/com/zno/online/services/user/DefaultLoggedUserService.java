@@ -100,7 +100,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
                     if (askNextTime.isPresent())
                         failedQuestionRepository.setNewAskDate(askNextTime.get(), id);
                     else
-                        failedQuestionRepository.markDeleted(id);
+                        failedQuestionRepository.markResolved(id);
                 });
     }
 

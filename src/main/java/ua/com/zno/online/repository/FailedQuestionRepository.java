@@ -19,6 +19,6 @@ public interface FailedQuestionRepository extends AbstractRepository<FailedQuest
     Set<Long> findIdByDeletedFalseAndUserId(Long userId);
 
     @Modifying
-    @Query("update FailedQuestion f set f.deleted = true where f.userId=?1")
-    void markDeleted(Long id);
+    @Query("update FailedQuestion f set f.resolved = true where f.userId=?1")
+    void markResolved(Long id);
 }
