@@ -3,9 +3,7 @@ package ua.com.zno.online.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
 import ua.com.zno.online.controllers.filter.RequestFilter;
@@ -28,6 +26,8 @@ public class LoggedUserController {
     @Autowired
     private LoggedUserService defaultLoggedUserService;
 
+    //TODO: add redirects for post requests
+
     @PostMapping("result")
     public ResponseEntity<Void> acceptTestResult(HttpServletRequest request, @RequestBody TestResultDTO testResultDTO) throws UserException {
         if (requestFilter.isSpamming(request.getLocalAddr())) {
@@ -46,5 +46,15 @@ public class LoggedUserController {
 
         defaultLoggedUserService.saveFailedQuestionsResult(testResultDTO);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("failed/questions/{subjectId}")
+    public TestDTO getFailedQuestionsTest(@PathVariable Long subjectId) {
+        return defaultLoggedUserService.getFailedQuestionsBySubject(subjectId);
+    }
+
+    @GetMapping("failed/questions")
+    public TestDTO getFailedQuestionsTest() {
+        return defaultLoggedUserService.getFailedQuestions();
     }
 }
