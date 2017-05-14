@@ -37,6 +37,7 @@ public class GuestController {
     }
 
     @GetMapping("subject")
+    @ResponseBody
     public List<SubjectDTO> getSubjects() {
         return guestService.getSubjects().stream()
                 .map(subject -> entityToDTO.convertToDTO(subject, SubjectDTO.class))
