@@ -59,7 +59,7 @@ public class Question extends AbstractEntity {
         if (type == QuestionType.COMPLEX)
             return Collections.emptySet();
 
-        if (Hibernate.isInitialized(this.answers))
+        if (!Hibernate.isInitialized(this.answers))
             Hibernate.initialize(this.answers);
         return answers;
 

@@ -45,6 +45,7 @@ public class GuestController {
     }
 
     @GetMapping("subject/{subjectId}")
+    @ResponseBody
     public List<TestDTO> getTestsBySubject(@PathVariable Long subjectId) {
         return guestService.getTestsBySubject(subjectId).stream()
                 .map(test -> entityToDTO.convertToDTO(test, TestDTO.class))
