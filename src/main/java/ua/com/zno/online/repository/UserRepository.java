@@ -15,7 +15,7 @@ public interface UserRepository extends AbstractRepository<User> {
 
     User findUserByEmail(String email);
 
-    @Query("select  u.email from User u join FailedQuestions fq on u.id = fq.user_id " +
-            "where fq.resolved = false and u.enabled = true")
+    @Query(value = "select u.email from Users u join failed_questions fq on u.id = fq.user_id " +
+            "where fq.resolved = false and u.enabled = true", nativeQuery = true)
     List<String> getEmailsOfUsersWithFailedQuestions();
 }
