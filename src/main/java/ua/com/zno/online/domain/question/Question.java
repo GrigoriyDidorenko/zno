@@ -39,6 +39,9 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "parentId")
     private Set<Question> subQuestions;
 
+    @Column(name = "image")
+    private byte[] image;
+
     public String getQuestionText() {
         return questionText;
     }
@@ -97,9 +100,15 @@ public class Question extends AbstractEntity {
     }
 
     public void setSubQuestions(Set<Question> subQuestions) {
-
-
         this.subQuestions = subQuestions;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     @Override

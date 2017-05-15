@@ -38,9 +38,9 @@ public class EntityToDTO {
         T entity = modelMapper.map(dto, entityClass);
         if (dto.getId() != null) {
             entity.setId(dto.getId() - Constants.ID_APPENDER);
-
-            //TODO: logic to update fields
         }
+
+        //TODO: logic to update fields
 
         return entity;
     }

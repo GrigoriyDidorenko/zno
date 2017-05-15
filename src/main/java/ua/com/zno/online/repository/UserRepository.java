@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.com.zno.online.domain.user.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -18,4 +19,6 @@ public interface UserRepository extends AbstractRepository<User> {
     @Query(value = "select u.email from Users u join failed_questions fq on u.id = fq.user_id " +
             "where fq.resolved = false and u.enabled = true", nativeQuery = true)
     List<String> getEmailsOfUsersWithFailedQuestions();
+
+    List<User> findByEnabledFalseAndCreationDateBefore(LocalDateTime beforeDate);
 }

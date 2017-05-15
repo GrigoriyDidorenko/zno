@@ -9,8 +9,6 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class AbstractEntity {
 
-    //TODO: add for each entity hashcode, equals, toString
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

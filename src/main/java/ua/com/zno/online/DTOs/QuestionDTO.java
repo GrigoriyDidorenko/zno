@@ -28,6 +28,16 @@ public class QuestionDTO extends AbstractDTO {
 
     private List<QuestionDTO> subQuestions;
 
+    private byte[] image;
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public String getQuestionText() {
         return questionText;
     }
