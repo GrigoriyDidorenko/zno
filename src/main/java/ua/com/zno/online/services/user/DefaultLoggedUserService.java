@@ -9,14 +9,13 @@ import ua.com.zno.online.DTOs.QuestionDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
 import ua.com.zno.online.domain.FailedQuestion;
+import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.TestResult;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.UserException;
-import ua.com.zno.online.repository.FailedQuestionRepository;
-import ua.com.zno.online.repository.QuestionRepository;
-import ua.com.zno.online.repository.TestRepository;
-import ua.com.zno.online.repository.TestResultRepository;
+import ua.com.zno.online.DTOs.statistic.Statistics;
+import ua.com.zno.online.repository.*;
 import ua.com.zno.online.services.checker.QuestionCheckFactory;
 
 import java.time.LocalDateTime;
@@ -44,6 +43,9 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
 
     @Autowired
     private TestResultRepository testResultRepository;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
 
     @Value(value = "#{'${days.between.remind}'.split(',')}")
     private List<Long> daysBetweenRemind;
@@ -84,7 +86,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         }
 
 
-        testResultRepository.save(new TestResult(testResultDTO.getDuration(), total, LocalDateTime.now()));
+        testResultRepository.save(new TestResult(testRepository.findOne(testResultDTO.getTestId()), testResultDTO.getDuration(), total, LocalDateTime.now()));
     }
 
     @Override
@@ -142,6 +144,23 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
             return Optional.of(failedQuestion.getCreationDate().plusDays(daysBetweenRemind.get(newStage)));
 
         return Optional.empty();
+    }
+
+    @Override
+    public Statistics getStatistics() {
+        long userId = getAuthenticatedUser().getId();
+
+        List<Subject> subjects = subjectRepository.findAll();
+
+        Map<String, Double> avrgMarkForSubject = new HashMap<>();
+
+        subjects.stream().forEach(subject -> avrgMarkForSubject.put(subject.getName(),
+                testResultRepository.avrgMarkForSubject(userId, subject.getId())));
+
+        return new Statistics(testResultRepository.avrgMark(userId),
+                avrgMarkForSubject,
+                testResultRepository.avrgDuration(userId),
+                testResultRepository.failedQuestionsCount(userId));
     }
 
     @Override

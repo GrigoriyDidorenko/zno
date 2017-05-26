@@ -18,6 +18,8 @@ import java.util.Set;
 @JsonRootName("question")
 public class QuestionDTO extends AbstractDTO {
 
+    private Integer position;
+
     private String questionText;
 
     private Long testId;
@@ -66,5 +68,13 @@ public class QuestionDTO extends AbstractDTO {
 
     public void setSubQuestions(List<QuestionDTO> subQuestions) {
         this.subQuestions = subQuestions;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }

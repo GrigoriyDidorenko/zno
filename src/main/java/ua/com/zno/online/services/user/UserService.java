@@ -21,4 +21,7 @@ public interface UserService {
 
     @Transactional(readOnly = true)
     List<Test> getTestsBySubject(Long subjectId);
+
+    @Transactional(readOnly = true)
+    TestDTO getShuffledTestBySubject(Long subjectId);
 }

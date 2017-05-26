@@ -3,7 +3,6 @@ package ua.com.zno.online.domain.question;
 import org.hibernate.Hibernate;
 import ua.com.zno.online.domain.AbstractEntity;
 import ua.com.zno.online.domain.Answer;
-import ua.com.zno.online.domain.FailedQuestion;
 import ua.com.zno.online.domain.Test;
 
 import javax.persistence.*;
@@ -18,6 +17,9 @@ import java.util.Set;
 @Entity
 @Table(catalog = "zno", name = "questions")
 public class Question extends AbstractEntity {
+
+    @Column(name = "position")
+    private Integer position;
 
     @Column(name = "question", nullable = false, length = 500)
     private String questionText;
@@ -123,5 +125,13 @@ public class Question extends AbstractEntity {
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
         return result;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }

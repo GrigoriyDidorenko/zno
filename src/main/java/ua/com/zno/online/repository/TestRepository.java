@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface TestRepository extends AbstractRepository<Test> {
 
-    List<Test> findTestBySubjectId(Long subjectId);
+    List<Test> findTestsBySubjectId(Long subjectId);
 }

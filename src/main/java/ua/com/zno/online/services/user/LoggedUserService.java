@@ -5,8 +5,7 @@ import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.UserException;
-
-import java.util.List;
+import ua.com.zno.online.DTOs.statistic.Statistics;
 
 /**
  * Created by quento on 29.03.17.
@@ -27,6 +26,9 @@ public interface LoggedUserService extends UserService {
 
     @Transactional
     void saveFailedQuestionsResult(TestResultDTO testResultDTO) throws UserException;
+
+    @Transactional
+    Statistics getStatistics();
 
     User getAuthenticatedUser();
 

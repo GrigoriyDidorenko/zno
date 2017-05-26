@@ -19,6 +19,8 @@ public class TestDTO extends AbstractDTO {
 
     private List<QuestionDTO> questions;
 
+    private String year;
+
     public TestDTO() {
     }
 
@@ -32,6 +34,14 @@ public class TestDTO extends AbstractDTO {
         this.duration = duration;
         this.subjectId = subjectId;
         this.questions = questions;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getName() {

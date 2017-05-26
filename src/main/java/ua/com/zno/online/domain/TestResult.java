@@ -1,9 +1,8 @@
 package ua.com.zno.online.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import ua.com.zno.online.domain.user.User;
+
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
@@ -15,6 +14,14 @@ import java.util.Set;
 @Entity
 @Table(catalog = "zno", name = "test_results")
 public class TestResult extends AbstractEntity {
+
+    @ManyToOne
+    @PrimaryKeyJoinColumn
+    private Test test;
+
+    @ManyToOne
+    @PrimaryKeyJoinColumn
+    private User user;
 
     @Min(value = 0, message = "Duration must be positive")
     @Column(name = "duration", nullable = false)
@@ -31,7 +38,8 @@ public class TestResult extends AbstractEntity {
     public TestResult() {
     }
 
-    public TestResult(Integer duration, Double mark, LocalDateTime submissionTime) {
+    public TestResult(Test test, Integer duration, Double mark, LocalDateTime submissionTime) {
+        this.test = test;
         this.duration = duration;
         this.mark = mark;
         this.submissionTime = submissionTime;
@@ -59,5 +67,21 @@ public class TestResult extends AbstractEntity {
 
     public void setSubmissionTime(LocalDateTime submissionTime) {
         this.submissionTime = submissionTime;
+    }
+
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

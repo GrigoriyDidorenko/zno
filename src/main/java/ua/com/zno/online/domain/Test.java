@@ -6,6 +6,8 @@ import ua.com.zno.online.domain.question.Question;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,6 +21,9 @@ public class Test extends AbstractEntity {
     @Column(name = "name", nullable = false, length = 250)
     private String name;
 
+    @Column(nullable = false)
+    private String year;
+
     @Column(name = "duration", nullable = false, length = 5)
     @Min(value = 0, message = "Duration must be positive")
     private Integer duration;
@@ -29,6 +34,15 @@ public class Test extends AbstractEntity {
 
     @OneToMany(mappedBy = "test")
     private Set<Question> questions;
+
+    public Test(String name, String year, Integer duration) {
+        this.name = name;
+        this.year = year;
+        this.duration = duration;
+    }
+
+    public Test() {
+    }
 
     public String getName() {
         return name;
@@ -54,6 +68,14 @@ public class Test extends AbstractEntity {
         this.subject = subject;
     }
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
     public Set<Question> getQuestions() {
         if (!Hibernate.isInitialized(this.questions))
             Hibernate.initialize(this.questions);
@@ -62,6 +84,13 @@ public class Test extends AbstractEntity {
 
     public void setQuestions(Set<Question> questions) {
         this.questions = questions;
+    }
+
+    public void addQuestions(List<Question> questions){
+        if (getQuestions() == null){
+            setQuestions(new HashSet<>());
+        }
+        getQuestions().addAll(questions);
     }
 
     @Override

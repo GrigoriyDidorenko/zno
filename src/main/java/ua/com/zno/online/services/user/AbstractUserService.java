@@ -1,20 +1,22 @@
 package ua.com.zno.online.services.user;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.zno.online.DTOs.QuestionDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.Test;
+import ua.com.zno.online.domain.question.Question;
+import ua.com.zno.online.domain.question.QuestionType;
 import ua.com.zno.online.exceptions.ServerException;
+import ua.com.zno.online.repository.QuestionRepository;
 import ua.com.zno.online.repository.SubjectRepository;
 import ua.com.zno.online.repository.TestRepository;
 import ua.com.zno.online.util.Shuffler;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by quento on 26.03.17.
@@ -30,6 +32,9 @@ abstract class AbstractUserService implements UserService {
 
     @Autowired
     protected EntityToDTO entityToDTO;
+
+    @Autowired
+    protected QuestionRepository questionRepository;
 
     @Override
     public final TestDTO getTest(Long id) throws ServerException {
@@ -51,6 +56,42 @@ abstract class AbstractUserService implements UserService {
 
     @Override
     public final List<Test> getTestsBySubject(Long subjectId) {
-        return testRepository.findTestBySubjectId(subjectId);
+        return testRepository.findTestsBySubjectId(subjectId);
+    }
+
+    @Override
+    public TestDTO getShuffledTestBySubject(Long subjectId) {
+        List<Test> tests = testRepository.findTestsBySubjectId(subjectId);
+        List<Question> questions = new ArrayList<>();
+
+        tests.forEach(test -> questions.addAll(test.getQuestions()));
+        int avrgNumOfSimpleQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.SIMPLE, tests.size());
+        int avrgNumOfComplexQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.COMPLEX, tests.size());
+        int avrgNumOfOpenQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.OPEN, tests.size());
+
+        Test test = new Test("Brainstorm", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)), 100); //FIXME duration
+        test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.SIMPLE, avrgNumOfSimpleQuestions));
+        test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.COMPLEX, avrgNumOfComplexQuestions));
+        test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.OPEN, avrgNumOfOpenQuestions));
+        test.setId(-1L);
+        test.setSubject(subjectRepository.findOne(subjectId));
+
+
+        return entityToDTO.convertToDTO(test, TestDTO.class);
+    }
+
+    private List<Question> getShuffledLimitedQuestions(List<Question> questions, QuestionType type, int num){
+        questions = new ArrayList<>(questions
+                .stream()
+                .filter(q -> q.getType().equals(type)).collect(Collectors.toList()));
+        Collections.shuffle(questions);
+        return questions.stream().limit(num).collect(Collectors.toList());
+    }
+
+    private int getAvrgNumberOfQuestionsOfCertainType(List<Question> questions, QuestionType questionType, int size){
+        return (int)Math.ceil((double) questions
+                .stream()
+                .filter(q -> q.getType().equals(questionType))
+                .count() / size);
     }
 }

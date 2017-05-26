@@ -49,4 +49,10 @@ public class GuestController {
                 .map(test -> entityToDTO.convertToDTO(test, TestDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @GetMapping("brainstorm/{subjectId}")
+    @ResponseBody
+    public TestDTO getShuffledTest(@PathVariable Long subjectId){
+        return guestService.getShuffledTestBySubject(subjectId);
+    }
 }

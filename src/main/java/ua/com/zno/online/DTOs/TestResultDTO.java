@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by quento on 09.04.17.
  */
-public class TestResultDTO extends AbstractDTO {
+public class TestResultDTO extends AbstractDTO { // FIXME added test and user to testResult
 
     @NotNull
     private Long testId;

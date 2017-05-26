@@ -3,18 +3,17 @@ package ua.com.zno.online.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import ua.com.zno.online.DTOs.TestDTO;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import ua.com.zno.online.DTOs.TestResultDTO;
 import ua.com.zno.online.controllers.filter.RequestFilter;
 import ua.com.zno.online.exceptions.UserException;
-import ua.com.zno.online.services.user.DefaultLoggedUserService;
+import ua.com.zno.online.DTOs.statistic.Statistics;
 import ua.com.zno.online.services.user.LoggedUserService;
 
+import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.security.Principal;
 
 /**
  * Created by quento on 28.03.17.
@@ -46,5 +45,13 @@ public class LoggedUserController {
 
         defaultLoggedUserService.saveFailedQuestionsResult(testResultDTO);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("statistics")
+    @ResponseBody
+    public Statistics getStatistics(Principal principal) throws UserException {
+        if (principal == null) throw new UserException("you are not authenticated!");
+
+        return defaultLoggedUserService.getStatistics();
     }
 }
