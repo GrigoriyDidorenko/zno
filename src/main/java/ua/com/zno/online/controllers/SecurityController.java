@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.com.zno.online.DTOs.UserDTO;
 import ua.com.zno.online.exceptions.ZnoServerException;
-import ua.com.zno.online.exceptions.UserException;
+import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.services.security.SecurityService;
 
 import javax.validation.Valid;
@@ -27,14 +27,14 @@ public class SecurityController {
     private SecurityService securityService;
 
     @GetMapping("vkLogin")
-    public ResponseEntity<Void> vkLogin(@RequestParam String code, Principal principal) throws ZnoServerException, IOException, UserException {
+    public ResponseEntity<Void> vkLogin(@RequestParam String code, Principal principal) throws ZnoServerException, IOException, ZnoUserException {
         if (principal != null) return null;
         securityService.authenticateVkUser(code);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("googleLoginn")
-    public ResponseEntity<Void> googleLoginn(@RequestParam(name = "id_token") String idToken, Principal principal) throws GeneralSecurityException, IOException, UserException {
+    public ResponseEntity<Void> googleLoginn(@RequestParam(name = "id_token") String idToken, Principal principal) throws GeneralSecurityException, IOException, ZnoUserException {
         if (principal != null) return null;
         securityService.authenticateGoogleUser(idToken);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -49,7 +49,7 @@ public class SecurityController {
     @PostMapping("facebookLogin") //TODO button works only from second attempt
     public ResponseEntity<Void> facebookLogin(@RequestParam String accessToken, @RequestParam String userId,
                                               @RequestParam String name,
-                                              @RequestParam String email, Principal principal) throws ZnoServerException, IOException, UserException {
+                                              @RequestParam String email, Principal principal) throws ZnoServerException, IOException, ZnoUserException {
         if (principal != null) return null;
         securityService.authenticateFacebookUser(accessToken, userId, name, email);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -61,7 +61,7 @@ public class SecurityController {
     }
 
     @PostMapping(value = "registration", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Void> registration(@RequestBody @Valid UserDTO userDTO) throws ZnoServerException, NoSuchAlgorithmException {
+    public ResponseEntity<Void> registration(@RequestBody @Valid UserDTO userDTO) throws ZnoUserException, NoSuchAlgorithmException {
         securityService.register(userDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }

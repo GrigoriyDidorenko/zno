@@ -5,9 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import ua.com.zno.online.exceptions.ZnoServerException;
-import ua.com.zno.online.exceptions.UserException;
+import ua.com.zno.online.exceptions.ZnoUserException;
 
 /**
  * Created by quento on 26.03.17.
@@ -20,18 +21,20 @@ public class GlobalErrorHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = ZnoServerException.class)
-    public void handleConflict(ZnoServerException e) {
+    public
+    @ResponseBody
+    String handleConflict(ZnoServerException e) {
         LOG.debug("Handling ZnoServerException in GlobalErrorHandler", e);
-
-        //return error model and view
+        return e.getMessage();
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = UserException.class)
-    public void handleConflict(UserException e) {
-        LOG.debug("Handling UserException in GlobalErrorHandler", e);
-
-
+    @ExceptionHandler(value = ZnoUserException.class)
+    public
+    @ResponseBody
+    String handleConflict(ZnoUserException e) {
+        LOG.debug("Handling ZnoUserException in GlobalErrorHandler", e);
+        return e.getMessage();
     }
 
 }

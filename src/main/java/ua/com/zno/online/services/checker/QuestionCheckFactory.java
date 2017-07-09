@@ -4,11 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.com.zno.online.DTOs.QuestionDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
-import ua.com.zno.online.domain.Answer;
 import ua.com.zno.online.domain.question.Question;
-import ua.com.zno.online.exceptions.UserException;
+import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.repository.QuestionRepository;
 
 import java.util.Optional;
@@ -31,15 +29,15 @@ public class QuestionCheckFactory {
     private SimpleQuestionCheckStrategy simpleQuestionCheckStrategy;
 
 
-    public Integer check(TestResultDTO.UserAnswerDTO userAnswerDTO) throws UserException {
+    public Integer check(TestResultDTO.UserAnswerDTO userAnswerDTO) throws ZnoUserException {
         Optional<Question> question = Optional.ofNullable(questionRepository.findOne(userAnswerDTO.getQuestionId()));
 
         if (!question.isPresent())
-            throw new UserException("Question with such id is not present, probably hacked JSON");
+            throw new ZnoUserException("Question with such id is not present, probably hacked JSON");
 
         switch (question.get().getType()) {
             default:
-                throw new UserException(String.format("Received complex question in test result with id %d",
+                throw new ZnoUserException(String.format("Received complex question in test result with id %d",
                         userAnswerDTO.getQuestionId()));
 
             case OPEN:

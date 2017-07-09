@@ -29,7 +29,7 @@ import ua.com.zno.online.DTOs.UserDTO;
 import ua.com.zno.online.domain.user.Authority;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.ZnoServerException;
-import ua.com.zno.online.exceptions.UserException;
+import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ua.com.zno.online.services.mail.MailService;
@@ -67,7 +67,7 @@ public class SecurityService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void authenticateVkUser(String code) throws ZnoServerException, IOException, UserException {
+    public void authenticateVkUser(String code) throws ZnoServerException, IOException, ZnoUserException {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = null;
         try {
@@ -92,7 +92,7 @@ public class SecurityService {
     }
 
     @Transactional
-    public void authenticateGoogleUser(String idToken) throws GeneralSecurityException, IOException, UserException {
+    public void authenticateGoogleUser(String idToken) throws GeneralSecurityException, IOException, ZnoUserException {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new ApacheHttpTransport(), new JacksonFactory())
                 .setAudience(Collections.singletonList(env.getProperty("google.client.id")))
                 // Or, if multiple clients access the backend:
@@ -133,12 +133,12 @@ public class SecurityService {
             }
         } catch (Exception e) {
             SecurityContextHolder.getContext().setAuthentication(null);
-            throw new UserException("Could not authentiate google user");
+            throw new ZnoUserException("Could not authentiate google user");
         }
     }
 
     @Transactional
-    public void authenticateFacebookUser(String accessToken, String userId, String name, String email) throws ZnoServerException, IOException, UserException {
+    public void authenticateFacebookUser(String accessToken, String userId, String name, String email) throws ZnoServerException, IOException, ZnoUserException {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = null;
         try {
@@ -164,7 +164,7 @@ public class SecurityService {
         authorizateUser(user.get());
     }
 
-    private void authorizateUser(User user) throws UserException {
+    private void authorizateUser(User user) throws ZnoUserException {
         try {
 
             UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), user.isEnabled(), true, true, true,
@@ -176,16 +176,16 @@ public class SecurityService {
             SecurityContextHolder.getContext().setAuthentication(auth);
         } catch (Exception e) {
             SecurityContextHolder.getContext().setAuthentication(null);
-            throw new UserException("Could not authentiate vk user");
+            throw new ZnoUserException("Could not authentiate vk user");
         }
     }
 
     @Transactional
     public void register(UserDTO userDTO) throws
-            ZnoServerException, NoSuchAlgorithmException {
+            ZnoUserException, NoSuchAlgorithmException {
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(userDTO.getEmail()));
         if (user.isPresent())
-            throw new ZnoServerException("This email already registered!"); //TODO not sure how to make feedback
+            throw new ZnoUserException("This email already registered!"); //TODO not sure how to make feedback
 
         String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
         User userToPersist = new User(userDTO.getEmail().substring(0, userDTO.getEmail().indexOf("@")),

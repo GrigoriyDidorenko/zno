@@ -42,7 +42,7 @@ public class ZnoServerException extends Exception {
 
     @Override
     public String toString() {
-        return "UserException{" +
+        return "ZnoUserException{" +
                 "message='" + message + '\'' +
                 ", cause=" + cause +
                 ", enableSuppression=" + enableSuppression +

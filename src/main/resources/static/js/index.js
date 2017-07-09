@@ -53,8 +53,8 @@ $('#registration').click(function () {
             success: function () {
                 alert('Success');
             },
-            error: function () {
-                alert('Bullshit');
+            error: function (response) {
+                alert('Error appeared: ' + response.responseText);
             }
         })
     }

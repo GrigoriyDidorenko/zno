@@ -4,7 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
 import ua.com.zno.online.domain.user.User;
-import ua.com.zno.online.exceptions.UserException;
+import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.DTOs.statistic.Statistics;
 
 /**
@@ -16,7 +16,7 @@ public interface LoggedUserService extends UserService {
     TestDTO getRandomizedTest(Long subjectId);
 
     @Transactional
-    void saveTestResult(TestResultDTO testResultDTO) throws UserException;
+    void saveTestResult(TestResultDTO testResultDTO) throws ZnoUserException;
 
     @Transactional(readOnly = true)
     TestDTO getFailedQuestions();
@@ -25,7 +25,7 @@ public interface LoggedUserService extends UserService {
     TestDTO getFailedQuestionsBySubject(Long subjectId);
 
     @Transactional
-    void saveFailedQuestionsResult(TestResultDTO testResultDTO) throws UserException;
+    void saveFailedQuestionsResult(TestResultDTO testResultDTO) throws ZnoUserException;
 
     @Transactional
     Statistics getStatistics();

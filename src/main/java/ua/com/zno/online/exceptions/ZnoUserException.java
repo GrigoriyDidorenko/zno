@@ -3,36 +3,36 @@ package ua.com.zno.online.exceptions;
 /**
  * Created by quento on 09.04.17.
  */
-public class UserException extends Exception {
+public class ZnoUserException extends Exception {
 
     private String message;
     private Throwable cause;
     private boolean enableSuppression;
     private boolean writableStackTrace;
 
-    public UserException() {
+    public ZnoUserException() {
         super();
     }
 
-    public UserException(String message) {
+    public ZnoUserException(String message) {
         super(message);
         this.message = message;
     }
 
-    public UserException(String message, Throwable cause) {
+    public ZnoUserException(String message, Throwable cause) {
         super(message, cause);
         this.message = message;
         this.cause = cause;
     }
 
-    public UserException(Throwable cause) {
+    public ZnoUserException(Throwable cause) {
         super(cause);
         this.cause = cause;
     }
 
-    public UserException(String message, Throwable cause,
-                         boolean enableSuppression,
-                         boolean writableStackTrace) {
+    public ZnoUserException(String message, Throwable cause,
+                            boolean enableSuppression,
+                            boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
         this.message = message;
         this.cause = cause;
@@ -42,7 +42,7 @@ public class UserException extends Exception {
 
     @Override
     public String toString() {
-        return "UserException{" +
+        return "ZnoUserException{" +
                 "message='" + message + '\'' +
                 ", cause=" + cause +
                 ", enableSuppression=" + enableSuppression +

@@ -13,7 +13,7 @@ import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.TestResult;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.domain.user.User;
-import ua.com.zno.online.exceptions.UserException;
+import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.DTOs.statistic.Statistics;
 import ua.com.zno.online.repository.*;
 import ua.com.zno.online.services.checker.QuestionCheckFactory;
@@ -59,7 +59,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     }
 
     @Override
-    public void saveTestResult(TestResultDTO testResultDTO) throws UserException {
+    public void saveTestResult(TestResultDTO testResultDTO) throws ZnoUserException {
         User user = getAuthenticatedUser();
 
         Map<Long, Long> questionIdWithMark = checkTest(testResultDTO);
@@ -93,7 +93,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     }
 
     @Override
-    public void saveFailedQuestionsResult(TestResultDTO testResultDTO) throws UserException {
+    public void saveFailedQuestionsResult(TestResultDTO testResultDTO) throws ZnoUserException {
         Map<Long, Long> questionIdWithMark = checkTest(testResultDTO);
 
         questionIdWithMark.entrySet().stream()
@@ -109,7 +109,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
                 });
     }
 
-    private Map<Long, Long> checkTest(TestResultDTO testResultDTO) throws UserException {
+    private Map<Long, Long> checkTest(TestResultDTO testResultDTO) throws ZnoUserException {
         Map<Long, Long> questionIdWithMark = new HashMap<>();
 
         for (TestResultDTO.UserAnswerDTO userAnswer : testResultDTO.getUserAnswerDTO()) {
