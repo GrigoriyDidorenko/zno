@@ -1,5 +1,3 @@
-var loggedUser;
-
 $('#fullpage').fullpage({
     sectionsColor: ['#2980b9', '#c73145', '#5f47a2', '#cc6f2b', '#cc6f2b'],
     anchors: ['welcome', 'pass-test', 'get-plan', 'start-test', 'mobile-app'],
@@ -72,8 +70,7 @@ $('#login').click(function () {
         contentType: "application/json; charset=utf-8",
         url: "/login",
         data: JSON.stringify(userCredentials),
-        success: function (user) {
-            loggedUser = user;
+        success: function () {
             window.location.href = "subject.html";
         },
         error: function (exception) {

@@ -2,7 +2,7 @@
 server:
     port: 8082
     session:
-      timeout: 0
+      timeout: -1
 
 spring:
   application:

@@ -95,7 +95,7 @@ public class SecurityController {
     public LoginStatus getStatus() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && !auth.getName().equals("anonymousUser") && auth.isAuthenticated()) {
-            return new LoginStatus(true, auth.getName());
+            return new LoginStatus(true, userRepository.findUserByEmail(auth.getName()).getName());
         } else {
             return new LoginStatus(false, null);
         }
