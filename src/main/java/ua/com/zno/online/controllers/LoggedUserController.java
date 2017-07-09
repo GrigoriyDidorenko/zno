@@ -3,6 +3,7 @@ package ua.com.zno.online.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
@@ -17,7 +18,8 @@ import java.security.Principal;
 /**
  * Created by quento on 28.03.17.
  */
-@RestController(value = "user")  //FIXME does not work with "*/user/*". Works without "user" in path
+@Controller
+@RequestMapping("user")
 public class LoggedUserController { //FIXME ZnoUserException{message='you are not authenticated!' must redirect to login
 
     @Autowired

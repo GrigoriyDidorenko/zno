@@ -46,6 +46,10 @@ public class User extends AbstractEntity {
     public User() {
     }
 
+    public User(String name) {
+        this.name = name;
+    }
+
     public User(String name, String login, String email, String password, LocalDateTime creationDate, boolean enabled, Set<Authority> authorities) {
         this.name = name;
         this.email = email;

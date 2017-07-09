@@ -157,7 +157,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
 
         Map<String, Double> avrgMarkForSubject = new HashMap<>();
 
-        for (Subject subject : subjects){
+        for (Subject subject : subjects) {
             avrgMarkForSubject.put(subject.getName(), testResultRepository.avrgMarkForSubject(userId, subject.getId()));
         }
 
@@ -173,25 +173,6 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
                 (org.springframework.security.core.userdetails.User)
                         SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return (User) userRepository.findUserByLogin(user.getUsername());
-    }
-
-    public static void main(String[] args) {
-        Integer i1 = 10;
-        Integer i2 = 10;
-
-        Double d1 = 10.06;
-        Double d2 = 10.06;
-
-        Float f1 = 0.8f;
-        Float f2 = 0.8f;
-
-        String str1 = "Bar";
-        String str2 = "Bar";
-
-        System.out.println(i1 == i2); //true
-        System.out.println(d1 == d2); //false ?????????
-        System.out.println(f1 == f2); //true
-        System.out.println(str1 == str2); //true
+        return userRepository.findUserByLogin(user.getUsername());
     }
 }
