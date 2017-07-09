@@ -5,21 +5,23 @@ $('#fullpage').fullpage({
 });
 
 $('.mob_menu').click(function () {
-    $('.menu').animate({ right: '0' }, 300).click(function () {
-        $('.menu').animate({ right: '-230px' }, 300);
+    $('.menu').animate({right: '0'}, 300).click(function () {
+        $('.menu').animate({right: '-230px'}, 300);
     });
 });
 $('.more_social').click(function () {
     $('.socials').fadeToggle(300);
 });
 function loop(a) {
-    $(''+a+'').animate({'margin-bottom': 5}, {
-        duration: 300,
-        complete: function() {
-            $(a).animate({'margin-bottom': 0}, {
-                duration: 300,
-                complete: loop(a)});
-        }}
+    $('' + a + '').animate({'margin-bottom': 5}, {
+            duration: 300,
+            complete: function () {
+                $(a).animate({'margin-bottom': 0}, {
+                    duration: 300,
+                    complete: loop(a)
+                });
+            }
+        }
     );
 }
 loop('.first-page');
@@ -28,10 +30,32 @@ loop('.third-page');
 
 $('.collapse').collapse();
 
-$(window).scroll(function() {
-    if($(window).scrollTop() >= 200){
+$(window).scroll(function () {
+    if ($(window).scrollTop() >= 200) {
         $('.test_navigation').addClass('fixed');
-    } else{
+    } else {
         $('.test_navigation').removeClass('fixed');
     }
+
 });
+
+$('#registration').click(function () {
+        var email = $('#email').val();
+        var password = $('#password').val();
+        //TODO validate it
+        var newUserCredentials = {"email": email, "password": password};
+
+        $.ajax({
+            type: "POST",
+            url: "/registration",
+            data: JSON.stringify(newUserCredentials),
+            dataType: "json",
+            success: function () {
+                alert('Success');
+            },
+            error: function () {
+                alert('Bullshit');
+            }
+        })
+    }
+);
