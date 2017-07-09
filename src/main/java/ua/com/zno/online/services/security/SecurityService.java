@@ -28,11 +28,10 @@ import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.DTOs.UserDTO;
 import ua.com.zno.online.domain.user.Authority;
 import ua.com.zno.online.domain.user.User;
-import ua.com.zno.online.exceptions.ServerException;
+import ua.com.zno.online.exceptions.ZnoServerException;
 import ua.com.zno.online.exceptions.UserException;
 import ua.com.zno.online.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ua.com.zno.online.services.checker.QuestionCheckFactory;
 import ua.com.zno.online.services.mail.MailService;
 import ua.com.zno.online.util.SecurityUtils;
 
@@ -68,16 +67,16 @@ public class SecurityService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void authenticateVkUser(String code) throws ServerException, IOException, UserException {
+    public void authenticateVkUser(String code) throws ZnoServerException, IOException, UserException {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = null;
         try {
             response = restTemplate.getForEntity(makeVkUrl(code), String.class);
         } catch (Exception e) {
-            throw new ServerException("Can not authenticate via VK");
+            throw new ZnoServerException("Can not authenticate via VK");
         }
 
-        if (HttpStatus.OK != response.getStatusCode()) throw new ServerException("Can not authenticate via VK");
+        if (HttpStatus.OK != response.getStatusCode()) throw new ZnoServerException("Can not authenticate via VK");
 
         UserDTO userDTO = new ObjectMapper().readValue(response.getBody(), UserDTO.class);
         Optional<User> user = Optional.ofNullable(userRepository.findUserByLogin(userDTO.getLogin()));
@@ -139,16 +138,16 @@ public class SecurityService {
     }
 
     @Transactional
-    public void authenticateFacebookUser(String accessToken, String userId, String name, String email) throws ServerException, IOException, UserException {
+    public void authenticateFacebookUser(String accessToken, String userId, String name, String email) throws ZnoServerException, IOException, UserException {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = null;
         try {
             response = restTemplate.getForEntity(makeFbUrl(accessToken), String.class);
         } catch (Exception e) {
-            throw new ServerException("Can not authenticate via FB");
+            throw new ZnoServerException("Can not authenticate via FB");
         }
 
-        if (HttpStatus.OK != response.getStatusCode()) throw new ServerException("Can not authenticate via FB");
+        if (HttpStatus.OK != response.getStatusCode()) throw new ZnoServerException("Can not authenticate via FB");
 
         ObjectMapper om = new ObjectMapper();
         om.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
@@ -183,10 +182,10 @@ public class SecurityService {
 
     @Transactional
     public void register(UserDTO userDTO) throws
-            ServerException, NoSuchAlgorithmException {
+            ZnoServerException, NoSuchAlgorithmException {
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(userDTO.getEmail()));
         if (user.isPresent())
-            throw new ServerException("This email already registered!"); //TODO not sure how to make feedback
+            throw new ZnoServerException("This email already registered!"); //TODO not sure how to make feedback
 
         String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
         User userToPersist = new User(userDTO.getEmail().substring(0, userDTO.getEmail().indexOf("@")),
@@ -196,14 +195,14 @@ public class SecurityService {
     }
 
     @Transactional
-    public void confirmRegistration(String email, String hash) throws NoSuchAlgorithmException, ServerException {
+    public void confirmRegistration(String email, String hash) throws NoSuchAlgorithmException, ZnoServerException {
         if (!hash.equals(SecurityUtils.createSHA256URLSafeHash(email + env.getProperty("vk.client.secret")))) {
-            throw new ServerException("not valid hash");
+            throw new ZnoServerException("not valid hash");
         }
 
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
-        if (!user.isPresent()) throw new ServerException("user does not exists");
-        if (user.get().isEnabled()) throw new ServerException("user account already activated");
+        if (!user.isPresent()) throw new ZnoServerException("user does not exists");
+        if (user.get().isEnabled()) throw new ZnoServerException("user account already activated");
 
         user.get().setEnabled(true);
         userRepository.save(user.get());
@@ -211,10 +210,10 @@ public class SecurityService {
     }
 
     @Transactional
-    public void resetPassword(String email) throws ServerException {
+    public void resetPassword(String email) throws ZnoServerException {
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
-        if (!user.isPresent()) throw new ServerException("User with this email does not exist");
-        if (!user.get().isEnabled()) throw new ServerException("Account is not enabled yet");
+        if (!user.isPresent()) throw new ZnoServerException("User with this email does not exist");
+        if (!user.get().isEnabled()) throw new ZnoServerException("Account is not enabled yet");
 
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         String password = RandomStringUtils.random(5, characters);
@@ -225,13 +224,13 @@ public class SecurityService {
     }
 
     @Transactional
-    public void changePassword(String email, String oldPsswrd, String newPsswrd) throws ServerException {
+    public void changePassword(String email, String oldPsswrd, String newPsswrd) throws ZnoServerException {
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
-        if (!user.isPresent()) throw new ServerException("User with this email does not exist");
-        if (!user.get().isEnabled()) throw new ServerException("Account is not enabled yet");
+        if (!user.isPresent()) throw new ZnoServerException("User with this email does not exist");
+        if (!user.get().isEnabled()) throw new ZnoServerException("Account is not enabled yet");
 
         if (!passwordEncoder.matches(oldPsswrd, user.get().getPassword())) {
-            throw new ServerException("Password is not correct");
+            throw new ZnoServerException("Password is not correct");
         }
 
         String hashedPassword = passwordEncoder.encode(newPsswrd);

@@ -3,36 +3,36 @@ package ua.com.zno.online.exceptions;
 /**
  * Created by quento on 26.03.17.
  */
-public class ServerException extends Exception {
+public class ZnoServerException extends Exception {
 
     private String message;
     private Throwable cause;
     private boolean enableSuppression;
     private boolean writableStackTrace;
 
-    public ServerException() {
+    public ZnoServerException() {
         super();
     }
 
-    public ServerException(String message) {
+    public ZnoServerException(String message) {
         super(message);
         this.message = message;
     }
 
-    public ServerException(String message, Throwable cause) {
+    public ZnoServerException(String message, Throwable cause) {
         super(message, cause);
         this.message = message;
         this.cause = cause;
     }
 
-    public ServerException(Throwable cause) {
+    public ZnoServerException(Throwable cause) {
         super(cause);
         this.cause = cause;
     }
 
-    public ServerException(String message, Throwable cause,
-                           boolean enableSuppression,
-                           boolean writableStackTrace) {
+    public ZnoServerException(String message, Throwable cause,
+                              boolean enableSuppression,
+                              boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
         this.message = message;
         this.cause = cause;

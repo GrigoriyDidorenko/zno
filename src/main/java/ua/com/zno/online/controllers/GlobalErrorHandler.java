@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import ua.com.zno.online.exceptions.ServerException;
+import ua.com.zno.online.exceptions.ZnoServerException;
 import ua.com.zno.online.exceptions.UserException;
 
 /**
@@ -19,9 +19,9 @@ public class GlobalErrorHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GlobalErrorHandler.class.getName());
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(value = ServerException.class)
-    public void handleConflict(ServerException e) {
-        LOG.debug("Handling ServerException in GlobalErrorHandler", e);
+    @ExceptionHandler(value = ZnoServerException.class)
+    public void handleConflict(ZnoServerException e) {
+        LOG.debug("Handling ZnoServerException in GlobalErrorHandler", e);
 
         //return error model and view
     }

@@ -2,18 +2,15 @@ package ua.com.zno.online.services.user;
 
 
 import org.hibernate.Hibernate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.zno.online.DTOs.QuestionDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.Test;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.domain.question.QuestionType;
-import ua.com.zno.online.exceptions.ServerException;
+import ua.com.zno.online.exceptions.ZnoServerException;
 import ua.com.zno.online.repository.QuestionRepository;
 import ua.com.zno.online.repository.SubjectRepository;
 import ua.com.zno.online.repository.TestRepository;
@@ -41,7 +38,7 @@ abstract class AbstractUserService implements UserService {
     protected QuestionRepository questionRepository;
 
     @Override
-    public final TestDTO getTest(Long id) throws ServerException {
+    public final TestDTO getTest(Long id) throws ZnoServerException {
         Optional<Test> test = Optional.of(testRepository.findByIdAndDeletedFalse(id));
 
         if (test.isPresent()) {
@@ -51,7 +48,7 @@ abstract class AbstractUserService implements UserService {
             return testDTO;
         }
 
-        throw new ServerException(String.format("Test with id %d was not found by querying from REST API", id));
+        throw new ZnoServerException(String.format("Test with id %d was not found by querying from REST API", id));
     }
 
     @Override

@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.com.zno.online.DTOs.UserDTO;
-import ua.com.zno.online.exceptions.ServerException;
+import ua.com.zno.online.exceptions.ZnoServerException;
 import ua.com.zno.online.exceptions.UserException;
 import ua.com.zno.online.services.security.SecurityService;
 
@@ -27,7 +27,7 @@ public class SecurityController {
     private SecurityService securityService;
 
     @GetMapping("vkLogin")
-    public ResponseEntity<Void> vkLogin(@RequestParam String code, Principal principal) throws ServerException, IOException, UserException {
+    public ResponseEntity<Void> vkLogin(@RequestParam String code, Principal principal) throws ZnoServerException, IOException, UserException {
         if (principal != null) return null;
         securityService.authenticateVkUser(code);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -49,7 +49,7 @@ public class SecurityController {
     @PostMapping("facebookLogin") //TODO button works only from second attempt
     public ResponseEntity<Void> facebookLogin(@RequestParam String accessToken, @RequestParam String userId,
                                               @RequestParam String name,
-                                              @RequestParam String email, Principal principal) throws ServerException, IOException, UserException {
+                                              @RequestParam String email, Principal principal) throws ZnoServerException, IOException, UserException {
         if (principal != null) return null;
         securityService.authenticateFacebookUser(accessToken, userId, name, email);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -61,25 +61,25 @@ public class SecurityController {
     }
 
     @PostMapping(value = "registration", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Void> registration(@RequestBody @Valid UserDTO userDTO) throws ServerException, NoSuchAlgorithmException {
+    public ResponseEntity<Void> registration(@RequestBody @Valid UserDTO userDTO) throws ZnoServerException, NoSuchAlgorithmException {
         securityService.register(userDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("confirmRegistration/{email}/{hash}")
-    public ResponseEntity<Void> confirmRegistration(@PathVariable String email, @PathVariable String hash) throws ServerException, NoSuchAlgorithmException {
+    public ResponseEntity<Void> confirmRegistration(@PathVariable String email, @PathVariable String hash) throws ZnoServerException, NoSuchAlgorithmException {
         securityService.confirmRegistration(email, hash);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("resetPassword")
-    public ResponseEntity<Void> resetPassword(@RequestParam String email) throws ServerException {
+    public ResponseEntity<Void> resetPassword(@RequestParam String email) throws ZnoServerException {
         securityService.resetPassword(email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("changePassword")
-    public ResponseEntity<Void> changePassword(@RequestParam String email, @RequestParam String oldPsswrd, @RequestParam String newPsswrd) throws ServerException {
+    public ResponseEntity<Void> changePassword(@RequestParam String email, @RequestParam String oldPsswrd, @RequestParam String newPsswrd) throws ZnoServerException {
         securityService.changePassword(email, oldPsswrd, newPsswrd);
         return new ResponseEntity<>(HttpStatus.OK);
     }
