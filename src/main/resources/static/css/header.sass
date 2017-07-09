@@ -1,0 +1,143 @@
+.header
+  background: rgba(0,0,0,0.3)
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  z-index: 2
+  padding: 15px 0
+  box-sizing: border-box
+  .wrapper
+    display: flex
+    justify-content: space-between
+    align-items: center
+    .logo
+      display: flex
+      align-items: center
+      img
+        width: 35px
+        height: 35px
+        margin-right: 5px
+      span
+        color: white
+        font:
+          family: 'Raleway', sans-serif
+          size: 19px
+          weight: 500
+        letter-spacing: 0.7px
+nav.header_menu
+  .mob_menu
+    display: none
+    @media #{$mobile}
+      display: block
+      margin-top: 5px
+      cursor: pointer
+      span
+        display: block
+        width: 25px
+        height: 2px
+        background: rgb(255, 255, 255)
+        margin-bottom: 4px
+  ul
+    display: flex
+    align-items: center
+    padding: 0
+    list-style-type: none
+    margin: 0
+    position: relative
+    @media #{$mobile}
+      display: block
+      position: fixed
+      top: 0
+      right: -230px
+      background: rgba(0, 0, 0, 0.66)
+      box-shadow: 0 0 20px rgba(0,0,0,0.2)
+      height: 100vh
+      width: 200px
+      padding: 15px
+      box-sizing: border-box
+    li
+      padding: 0 10px
+      @media #{$mobile}
+        padding: 0 0 25px 0
+      a
+        font-size: 13px
+        color: white
+        letter-spacing: 0.7px
+        font-weight: 700
+        text-transform: uppercase
+        cursor: pointer
+      &:last-of-type
+        border-left: 0.5px solid rgba(255, 255, 255, 0.66)
+        @media #{$mobile}
+          border: none
+        &:hover
+          a
+            color: $light_yellow
+      &:last-of-type
+        padding-right: 0
+        a
+          color: $yellow_color
+          &:hover
+            color: $light_yellow
+    .btn_close
+      display: none
+      img
+        width: 15px
+      @media #{$mobile}
+        display: block
+        cursor: pointer
+        position: absolute
+        top: 25px
+        left: -25px
+#menu
+  position: fixed
+  top: 130px
+  left: 30px
+  height: 40px
+  z-index: 70
+  width: 100%
+  padding: 0
+  margin: 0
+  @media (max-width: 767px)
+    display: none
+  li
+    display: flex
+    margin: 20px
+    width: 55px
+    height: 55px
+    color: #000
+    background: #fff
+    background: rgba(255,255,255, 0.5)
+    -webkit-border-radius: 10px
+    border-radius: 50px
+    justify-content: center
+    align-items: center
+    cursor: pointer
+    position: relative
+    @include transition(0.3s)
+    a
+      position: absolute
+      width: 100%
+      height: 100%
+      display: flex
+      align-items: center
+      justify-content: center
+      border-radius: 50px
+      img
+        width: 30px
+        height: 30px
+    &:after
+      position: absolute
+      content: ''
+      display: block
+      width: 1px
+      height: 12px
+      background: white
+      bottom: -16px
+      left: 28px
+    &:last-of-type
+      &:after
+        display: none
+    &:hover
+      background: rgba(255, 255, 255, 0.15)

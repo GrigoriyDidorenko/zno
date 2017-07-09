@@ -6,7 +6,7 @@
     <groupId>ua.com.zno.online</groupId>
     <artifactId>zno-online</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>zno-online</name>
     <description>Best ZNO project</description>

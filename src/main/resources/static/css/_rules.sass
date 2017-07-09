@@ -1,0 +1,96 @@
+@mixin transition($transition)
+  -moz-transition:    $transition
+  -o-transition:      $transition
+  -webkit-transition: $transition
+  transition:         $transition
+
+a
+  text-decoration: none
+  @include transition(0.3s)
+  &:hover
+    text-decoration: none
+
+input, textarea, button
+  font-family: 'Open Sans', sans-serif
+  &:focus
+    outline: none
+
+.btn
+  display: block
+  background: $green_color
+  color: white
+  text-align: center
+  border-radius: 50px
+  padding: 10px 20px
+  font-size: 13px
+  letter-spacing: 0.7px
+  font-weight: 700
+  text-transform: uppercase
+  cursor: pointer
+  @include transition(0.3s)
+  &:hover
+    color: white
+    background: $light_green
+
+html, body
+  padding: 0
+  margin: 0
+  font-size: 14px
+  font-family: 'Open Sans', sans-serif
+
+.wrapper
+  margin: 0 auto
+  max-width: $large
+  width: 100%
+  @media #{$tablet}
+    max-width: none
+    width: 90%
+  @media #{$mobile}
+    width: 90%
+.wrap
+  display: flex
+  flex-direction: column
+  width: 850px
+  margin: 0 auto
+  align-items: center
+  height: 100%
+  @media (max-width: 1000px)
+    width: 90%
+  @media #{$mobile}
+    width: 100%
+
+.button-remember
+  font-size: 14px
+  font-weight: 500
+  line-height: 20px
+  display: flex
+  align-items: center
+  i
+    border: 1px solid rgba(102, 175, 233, 0.77)
+    width: 20px
+    height: 20px
+    display: inline-block
+    border-radius: 3px
+    cursor: pointer
+    color: #fff
+    text-align: center
+    margin-right: 8px
+  input[type="checkbox"], input[type="radio"]
+    display: none
+    &:checked + i
+      background-color: rgba(102, 175, 233, 0.77)
+input[type="checkbox"] + i::before, input[type="radio"] + i::before
+  content: '\f00c'
+  color: transparent
+  line-height: 18px
+input[type="radio"] + i::before
+  display: block
+  margin-top: -2px
+input[type="checkbox"]:checked + i::before, input[type="radio"]:checked + i::before
+  color: white
+.button-remember_radio
+  i
+    width: 15px
+    height: 15px
+    border-radius: 50px
+    font-size: 11px

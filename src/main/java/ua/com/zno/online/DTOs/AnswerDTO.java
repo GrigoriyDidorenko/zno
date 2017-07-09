@@ -15,6 +15,16 @@ public class AnswerDTO extends AbstractDTO {
 
     private int mark;
 
+    private byte[] image;
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public Long getQuestionId() {
         return questionId;
     }

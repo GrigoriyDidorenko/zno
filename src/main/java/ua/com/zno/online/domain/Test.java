@@ -32,7 +32,7 @@ public class Test extends AbstractEntity {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    @OneToMany(mappedBy = "test")
+    @OneToMany(mappedBy = "test", fetch = FetchType.LAZY)
     private Set<Question> questions;
 
     public Test(String name, String year, Integer duration) {
@@ -77,8 +77,6 @@ public class Test extends AbstractEntity {
     }
 
     public Set<Question> getQuestions() {
-        if (!Hibernate.isInitialized(this.questions))
-            Hibernate.initialize(this.questions);
         return questions;
     }
 

@@ -24,8 +24,8 @@ public class Answer extends AbstractEntity {
     @Column(name = "mark", nullable = false)
     private int mark;
 
-
-    //TODO consider picture
+    @Column(name = "image")
+    private byte[] image;
 
     public String getAnswerText() {
         return answerText;
@@ -49,6 +49,14 @@ public class Answer extends AbstractEntity {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     @Override

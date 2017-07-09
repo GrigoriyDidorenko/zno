@@ -2,6 +2,7 @@ package ua.com.zno.online.DTOs;
 
 import ua.com.zno.online.domain.question.QuestionType;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class TestResultDTO extends AbstractDTO { // FIXME added test and user to
     @NotNull
     private Long testId;
 
-    @NotNull
+    @Min(value = 0)
     private Integer duration;
 
     private List<UserAnswerDTO> userAnswerDTO;

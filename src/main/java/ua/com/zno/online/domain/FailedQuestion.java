@@ -20,19 +20,32 @@ public class FailedQuestion extends AbstractEntity {
     @Column(name = "question_id", nullable = false)
     private Long questionId;
 
+    /*
+    *
+    * mark question as resolved after all stages are answered
+    *
+    * */
     @Column(name = "resolved", nullable = false)
     private boolean resolved;
 
     @Column(name = "creation_date", nullable = false)
-//    @Temporal(value = TemporalType.DATE)
     private LocalDateTime creationDate;
 
+
+    /*
+    *
+    * number of stages to ask question again, depends on property ${days.between.remind} size
+    *
+    * */
     @Column(name = "stage", nullable = false)
     private Integer stage;
 
-
+    /*
+    *
+    * based on property ${days.between.remind} selects next date to ask
+    *
+    * */
     @Column(name = "next_ask_time", nullable = false)
-//    @Temporal(value = TemporalType.DATE)
     private LocalDateTime nextAskTime;
 
     public FailedQuestion(Long userId, Long subjectId, Long questionId, boolean resolved,
@@ -104,5 +117,35 @@ public class FailedQuestion extends AbstractEntity {
 
     public void setNextAskTime(LocalDateTime nextAskTime) {
         this.nextAskTime = nextAskTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        FailedQuestion that = (FailedQuestion) o;
+
+        if (resolved != that.resolved) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (subjectId != null ? !subjectId.equals(that.subjectId) : that.subjectId != null) return false;
+        if (questionId != null ? !questionId.equals(that.questionId) : that.questionId != null) return false;
+        if (creationDate != null ? !creationDate.equals(that.creationDate) : that.creationDate != null) return false;
+        if (stage != null ? !stage.equals(that.stage) : that.stage != null) return false;
+        return nextAskTime != null ? nextAskTime.equals(that.nextAskTime) : that.nextAskTime == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (subjectId != null ? subjectId.hashCode() : 0);
+        result = 31 * result + (questionId != null ? questionId.hashCode() : 0);
+        result = 31 * result + (resolved ? 1 : 0);
+        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
+        result = 31 * result + (stage != null ? stage.hashCode() : 0);
+        result = 31 * result + (nextAskTime != null ? nextAskTime.hashCode() : 0);
+        return result;
     }
 }

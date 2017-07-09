@@ -1,9 +1,6 @@
 package ua.com.zno.online.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -17,7 +14,7 @@ public class Subject extends AbstractEntity {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @OneToMany(mappedBy = "subject")
+    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
     private Set<Test> tests;
 
     public String getName() {
@@ -34,5 +31,23 @@ public class Subject extends AbstractEntity {
 
     public void setTests(Set<Test> tests) {
         this.tests = tests;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Subject subject = (Subject) o;
+
+        return name != null ? name.equals(subject.name) : subject.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 }

@@ -1,5 +1,9 @@
 package ua.com.zno.online.services.user;
 
+
+import org.hibernate.Hibernate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.zno.online.DTOs.QuestionDTO;
@@ -41,6 +45,7 @@ abstract class AbstractUserService implements UserService {
         Optional<Test> test = Optional.of(testRepository.findByIdAndDeletedFalse(id));
 
         if (test.isPresent()) {
+            Hibernate.initialize(test.get().getQuestions());
             TestDTO testDTO = entityToDTO.convertToDTO(test.get(), TestDTO.class);
             Shuffler.shuffle(testDTO);
             return testDTO;

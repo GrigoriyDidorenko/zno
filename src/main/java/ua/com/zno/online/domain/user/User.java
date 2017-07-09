@@ -123,4 +123,32 @@ public class User extends AbstractEntity {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        User user = (User) o;
+
+        if (enabled != user.enabled) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        return authorities != null ? authorities.equals(user.authorities) : user.authorities == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (enabled ? 1 : 0);
+        result = 31 * result + (authorities != null ? authorities.hashCode() : 0);
+        return result;
+    }
 }

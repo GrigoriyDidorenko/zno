@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;
+import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
 import ua.com.zno.online.controllers.filter.RequestFilter;
 import ua.com.zno.online.exceptions.UserException;
@@ -26,6 +28,8 @@ public class LoggedUserController { //FIXME UserException{message='you are not a
 
     @Autowired
     private LoggedUserService defaultLoggedUserService;
+
+    //TODO: add redirects for post requests
 
     @PostMapping("result")
     public ResponseEntity<Void> acceptTestResult(HttpServletRequest request, @RequestBody TestResultDTO testResultDTO) throws UserException {
@@ -53,5 +57,15 @@ public class LoggedUserController { //FIXME UserException{message='you are not a
         if (principal == null) throw new UserException("you are not authenticated!");
 
         return defaultLoggedUserService.getStatistics();
+    }
+
+    @GetMapping("failed/questions/{subjectId}")
+    public TestDTO getFailedQuestionsTest(@PathVariable Long subjectId) {
+        return defaultLoggedUserService.getFailedQuestionsBySubject(subjectId);
+    }
+
+    @GetMapping("failed/questions")
+    public TestDTO getFailedQuestionsTest() {
+        return defaultLoggedUserService.getFailedQuestions();
     }
 }
