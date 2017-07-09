@@ -3,6 +3,11 @@ package ua.com.zno.online.DTOs;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import ua.com.zno.online.util.Constants;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 
 /**
  * Created by obalitskiy on 4/5/17.
@@ -11,9 +16,18 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonRootName("user")
 public class UserDTO extends AbstractDTO {
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("password")
+    @NotNull
+    private String password;
+
     @JsonProperty("user_id")
     private String login;
     @JsonProperty("email")
+    @NotNull
+    @Pattern(regexp = Constants.EMAIL_VALIDATOR)
     private String email;
     @JsonProperty("access_token")//todo remove secret
     private String secret;
@@ -49,5 +63,21 @@ public class UserDTO extends AbstractDTO {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

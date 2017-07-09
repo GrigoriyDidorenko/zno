@@ -117,7 +117,7 @@ public class SecurityService {
                 Optional<User> user = Optional.ofNullable(userRepository.findUserByLogin(login));
 
                 if (!user.isPresent()) {
-                    User userToPersist = new User(name, surname, login, email, login, LocalDateTime.now(), true, Collections.singleton(Authority.USER));
+                    User userToPersist = new User(name, login, email, login, LocalDateTime.now(), true, Collections.singleton(Authority.USER));
                     userRepository.save(userToPersist);
                     user = Optional.of(userToPersist);
                 }
@@ -139,7 +139,7 @@ public class SecurityService {
     }
 
     @Transactional
-    public void authenticateFacebookUser(String accessToken, String userId, String name, String surname, String email) throws ServerException, IOException, UserException {
+    public void authenticateFacebookUser(String accessToken, String userId, String name, String email) throws ServerException, IOException, UserException {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = null;
         try {
@@ -156,7 +156,7 @@ public class SecurityService {
         Optional<User> user = Optional.ofNullable(userRepository.findUserByLogin(fbResponseDTO.getUserId()));
 
         if (!user.isPresent()) {
-            User userToPersist = new User(name, surname, userId, email, accessToken, LocalDateTime.now(),
+            User userToPersist = new User(name, userId, email, accessToken, LocalDateTime.now(),
                     true, Collections.singleton(Authority.USER));
             userRepository.save(userToPersist);
             user = Optional.of(userToPersist);
@@ -182,17 +182,17 @@ public class SecurityService {
     }
 
     @Transactional
-    public void register(String name, String surname, String email, String password) throws
+    public void register(UserDTO userDTO) throws
             ServerException, NoSuchAlgorithmException {
-        //TODO validate email
-        Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
+        Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(userDTO.getEmail()));
         if (user.isPresent())
             throw new ServerException("This email already registered!"); //TODO not sure how to make feedback
 
-        String hashedPassword = passwordEncoder.encode(password);
-        User userToPersist = new User(name, surname, email, email, hashedPassword, LocalDateTime.now(), false, Collections.singleton(Authority.USER));
+        String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
+        User userToPersist = new User(userDTO.getEmail().substring(0, userDTO.getEmail().indexOf("@")),
+                userDTO.getEmail(), userDTO.getEmail(), hashedPassword, LocalDateTime.now(), false, Collections.singleton(Authority.USER));
         userRepository.save(userToPersist);
-        mailService.sendEmail(email, "Підтвердіть реєстрацію для 'zno.net.ua'.", createConfirmationContent(email));
+        mailService.sendEmail(userDTO.getEmail(), "Підтвердіть реєстрацію для 'zno.net.ua'.", this.createConfirmationContent(userDTO.getEmail()));
     }
 
     @Transactional

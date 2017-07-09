@@ -22,9 +22,6 @@ public class User extends AbstractEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "surname", nullable = false)
-    private String surname;
-
     @Email
     @Column(name = "email", nullable = false)
     private String email;
@@ -49,9 +46,8 @@ public class User extends AbstractEntity {
     public User() {
     }
 
-    public User(String name, String surname, String login, String email, String password, LocalDateTime creationDate, boolean enabled, Set<Authority> authorities) {
+    public User(String name, String login, String email, String password, LocalDateTime creationDate, boolean enabled, Set<Authority> authorities) {
         this.name = name;
-        this.surname = surname;
         this.email = email;
         this.password = password;
         this.creationDate = creationDate;
@@ -74,14 +70,6 @@ public class User extends AbstractEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public String getEmail() {
@@ -135,7 +123,6 @@ public class User extends AbstractEntity {
         if (enabled != user.enabled) return false;
         if (login != null ? !login.equals(user.login) : user.login != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         return authorities != null ? authorities.equals(user.authorities) : user.authorities == null;
     }
@@ -145,7 +132,6 @@ public class User extends AbstractEntity {
         int result = super.hashCode();
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (enabled ? 1 : 0);
         result = 31 * result + (authorities != null ? authorities.hashCode() : 0);

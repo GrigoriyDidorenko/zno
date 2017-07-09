@@ -2,16 +2,16 @@ package ua.com.zno.online.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import ua.com.zno.online.DTOs.UserDTO;
 import ua.com.zno.online.exceptions.ServerException;
 import ua.com.zno.online.exceptions.UserException;
 import ua.com.zno.online.services.security.SecurityService;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
@@ -48,10 +48,10 @@ public class SecurityController {
 
     @PostMapping("facebookLogin") //TODO button works only from second attempt
     public ResponseEntity<Void> facebookLogin(@RequestParam String accessToken, @RequestParam String userId,
-                                              @RequestParam String name, @RequestParam String surname,
+                                              @RequestParam String name,
                                               @RequestParam String email, Principal principal) throws ServerException, IOException, UserException {
         if (principal != null) return null;
-        securityService.authenticateFacebookUser(accessToken, userId, name, surname, email);
+        securityService.authenticateFacebookUser(accessToken, userId, name, email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -60,10 +60,9 @@ public class SecurityController {
         return "fbLogin.html";
     }
 
-    @PostMapping("registration")
-    public ResponseEntity<Void> registration(@RequestParam String name, @RequestParam(required = false) String surname,
-                                             @RequestParam String email, @RequestParam String password) throws ServerException, NoSuchAlgorithmException {
-        securityService.register(name, surname, email, password);
+    @PostMapping(value = "registration", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Void> registration(@RequestBody @Valid UserDTO userDTO) throws ServerException, NoSuchAlgorithmException {
+        securityService.register(userDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

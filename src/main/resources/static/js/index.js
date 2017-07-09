@@ -47,9 +47,10 @@ $('#registration').click(function () {
 
         $.ajax({
             type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
             url: "/registration",
             data: JSON.stringify(newUserCredentials),
-            dataType: "json",
             success: function () {
                 alert('Success');
             },
