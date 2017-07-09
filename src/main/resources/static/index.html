@@ -23,6 +23,76 @@
             position: relative;
         }
     </style>
+
+    <script>
+
+        function send(accessToken, userID, name, email) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8082/facebookLogin');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('accessToken=' + accessToken + "&userId=" + userID + "&name=" + name + "&email=" + email);
+        }
+
+
+
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '314517038979180',
+                cookie     : true,  // enable cookies to allow the server to access
+                                    // the session
+                xfbml      : true,  // parse social plugins on this page
+                version    : 'v2.8' // use graph api version 2.8
+            });
+
+            // Now that we've initialized the JavaScript SDK, we call
+            // FB.getLoginStatus().  This function gets the state of the
+            // person visiting this page and can return one of three states to
+            // the callback you provide.  They can be:
+            //
+            // 1. Logged into your app ('connected')
+            // 2. Logged into Facebook, but not your app ('not_authorized')
+            // 3. Not logged into Facebook and can't tell if they are logged into
+            //    your app or not.
+            //
+            // These three cases are handled in the callback function.
+        };
+
+        function fb_login(){
+            FB.login(function(response) {
+
+                if (response.authResponse) {
+                    console.log('Welcome!  Fetching your information.... ');
+                    //console.log(response); // dump complete info
+                    var access_token = response.authResponse.accessToken; //get access token
+                    var userId = response.authResponse.userID; //get FB UID
+                    if (response.status === 'connected') {
+                        // Logged into your app and Facebook.
+
+                        FB.api('/me?fields=name,email', function(response) {
+                            var email = response.email;
+                            var name = response.name;
+                            send(access_token, userId, name, email);
+                        });
+                    }
+
+                } else {
+                    //user hit cancel button
+                    console.log('User cancelled login or did not fully authorize.');
+
+                }
+            }, {
+                scope: 'email'
+            });
+        }
+        // Load the SDK asynchronously
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 </head>
 <body>
 <header>
@@ -111,7 +181,7 @@
                                     <p>або</p></div>
                                 <div class="social">
                                     <a><img src="img/vk.svg" alt="vk" title="vk"></a>
-                                    <a><img src="img/facebook.svg" alt="facebook" title="facebook"></a>
+                                    <a onclick="fb_login();"><img src="img/facebook.svg" alt="facebook" title="facebook"></a>
                                     <a><img src="img/google-plus.svg" alt="google-plus" title="google-plus"></a>
                                 </div>
                             </div>
@@ -260,5 +330,8 @@
 <script type="text/javascript" src="js/jquery.fullPage.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script src="https://use.fontawesome.com/75e1b47c6b.js"></script>
+
+
+
 </body>
 </html>
