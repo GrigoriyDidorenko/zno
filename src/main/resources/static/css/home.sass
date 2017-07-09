@@ -1,0 +1,294 @@
+.welcome_block
+  display: flex
+  align-items: center
+  height: 100%
+  position: relative
+  .wrap
+    padding-top: 50px
+    @media (max-width: 635px)
+      padding-top: 90px
+    @media (max-width: 460px)
+      padding-top: 50px
+    h1
+      color: white
+      font:
+        size: 33px
+        weight: 600
+      letter-spacing: 0.5px
+      margin: 0 0 10px 0
+      text-align: center
+      @media (max-width: 635px)
+        font-size: 25px
+    h2
+      color: white
+      text-align: center
+      margin: 0
+      font:
+        size: 18px
+        weight: 300
+      letter-spacing: 0.5px
+      line-height: 28px
+      @media (max-width: 635px)
+        font-size: 15px
+        line-height: 20px
+    .main_registration
+      display: flex
+      justify-content: space-between
+      width: 100%
+      margin-top: 55px
+      @media (max-width: 865px)
+        margin-top: 35px
+      @media (max-width: 635px)
+        flex-direction: column-reverse
+        margin-top: 40px
+      @media (max-width: 460px)
+        width: 250px
+.main_registration--about
+  @media (max-width: 635px)
+    display: flex
+    margin-top: 40px
+    justify-content: space-between
+  @media (max-width: 460px)
+    display: none
+  & > div
+    display: flex
+    align-items: center
+    margin-bottom: 30px
+    padding-right: 15px
+    @media (max-width: 635px)
+      flex-direction: column
+      padding: 0
+    & > div:first-of-type
+      margin-right: 15px
+    img
+      width: 45px
+      margin-right: 8px
+    div
+      p
+        margin: 0
+        color: white
+        letter-spacing: 0.5px
+        &:first-of-type
+          font-weight: 600
+          font-size: 16px
+          @media (max-width: 635px)
+            font-size: 14px
+            padding-top: 3px
+            font-weight: 400
+        &:nth-child(2)
+          font-weight: 300
+          font-size: 14px
+          @media (max-width: 635px)
+            display: none
+.main_registration--signin
+  @media (max-width: 825px)
+    width: 50%
+  @media (max-width: 635px)
+    width: 100%
+  p:first-of-type
+    margin: 0 auto 10px auto
+    font-size: 16px
+    text-align: center
+    color: white
+    font-weight: 600
+    letter-spacing: 0.5px
+    @media (max-width: 635px)
+      font-size: 16px
+  form
+    text-align: center
+    margin-bottom: 18px
+    @media (max-width: 635px)
+      display: flex
+      margin-bottom: 5px
+    @media (max-width: 460px)
+      flex-direction: column
+    input
+      display: block
+      width: 100%
+      border: none
+      padding: 9px 15px
+      border-radius: 50px
+      background: rgba(255, 255, 255, 0.73)
+      margin: 0 auto 7px auto
+      box-sizing: border-box
+      @media (max-width: 635px)
+        margin: 0 10px 5px 10px
+      @media (max-width: 460px)
+        margin: 0 auto 7px auto
+    input:-webkit-autofill
+      background: rgba(255, 255, 255, 0.73)
+  .btn
+    @media (max-width: 635px)
+      margin: 0 auto
+      width: 250px
+  .registration_or
+    text-align: center
+    color: rgba(255, 255, 255, 0.7)
+    position: relative
+    letter-spacing: 0.3px
+    margin: 13px 0
+    p
+      font-size: 13px
+      font-weight: 400
+      color: rgba(255, 255, 255, 0.58)
+      background: #2980b9
+      width: 40px
+      z-index: 2
+      position: relative
+    hr
+      position: absolute
+      width: 100%
+      height: 1px
+      background: rgba(255, 255, 255, 0.32)
+      top: -10px
+      left: 0
+      border: 0
+      z-index: 1
+.social
+  display: flex
+  align-items: center
+  justify-content: center
+  a
+    display: block
+    margin: 0 10px
+    img
+      width: 35px
+      background: rgba(255,255,255,.73)
+      padding: 7px
+      border-radius: 50px
+      cursor: pointer
+      @include transition(0.3s)
+      &:hover
+        background: white
+.navigation_bottom
+  position: absolute
+  bottom: 20px
+  left: 0
+  width: 100%
+  text-align: center
+  opacity: 0.5
+  padding-left: 80px
+  @media (max-width: 635px)
+    display: none
+  img
+    width: 30px
+    height: 30px
+    display: block
+    text-align: center
+    margin: 0 auto
+  p
+    letter-spacing: 0.5px
+    color: white
+    font-size: 13px
+    margin: -5px 0 0
+section
+  position: relative
+.page_wrap
+  width: 1000px
+  height: 100%
+  margin: 0 auto
+  display: flex
+  align-items: center
+  color: white
+  padding-left: 80px
+  @media (max-width: 1230px)
+    width: 90%
+  @media (max-width: 767px)
+    padding-left: 0
+    padding-top: 100px
+    flex-wrap: wrap
+  .wrap_left
+    width: 50%
+    letter-spacing: 0.5px
+    @media (max-width: 635px)
+      width: 100%
+      margin-bottom: auto
+    p
+      margin: 0 0 10px 0
+      font-size: 28px
+      margin-bottom: 8px
+      line-height: 32px
+      position: relative
+      &:after
+        position: absolute
+        content: ''
+        display: block
+        width: 60px
+        height: 2px
+        background: white
+        bottom: -20px
+        left: 0
+    span
+      display: block
+      padding-top: 25px
+      font-size: 16px
+      font-weight: 300
+  .wrap_right
+    width: 50%
+    @media (max-width: 635px)
+      width: 100%
+      height: 70%
+    img
+      width: auto
+      height: auto
+      max-width: 90%
+  .wrap_center
+    width: 100%
+    height: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    > p
+      margin: 0 0 10px 0
+      font-size: 28px
+      margin-bottom: 8px
+      line-height: 32px
+      @media (max-width: 460px)
+        font-size: 25px
+    hr
+      width: 60px
+      border: none
+      height: 2px
+      background: white
+      margin: 5px auto 0 auto
+    span
+      display: block
+      padding-top: 15px
+      font-size: 16px
+      font-weight: 300
+      @media (max-width: 460px)
+        font-size: 14px
+    .section_img
+      display: flex
+      align-items: center
+      justify-content: space-between
+      margin-top: 50px
+      @media (max-width: 460px)
+        margin-top: 30px
+      img
+        width: 100px
+        margin: 0 30px
+        @media (max-width: 460px)
+          width: 60px
+          margin: 0 10px
+      .section_img-dots
+        display: flex
+        align-items: center
+        justify-content: center
+        p
+          display: block
+          width: 5px
+          height: 5px
+          border-radius: 50px
+          background: white
+          margin: 0 5px
+          @media (max-width: 460px)
+            width: 3px
+            height: 3px
+            margin: 0 3px
+    .btn
+      cursor: pointer
+      margin-top: 40px
+      @media (max-width: 460px)
+        margin-top: 30px

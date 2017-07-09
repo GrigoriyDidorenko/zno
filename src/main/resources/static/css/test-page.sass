@@ -1,0 +1,80 @@
+.test-page
+  padding-top: 50px
+  h1
+    margin: 0 0 5px 0
+    font-weight: 600
+    font-size: 21px
+    color: $sub_red
+  h2
+    font-size: 14px
+    margin: 0 0 10px 0
+    font-weight: 600
+  ul
+    padding-left: 5px
+    list-style-type: decimal
+    li
+      border-top: 1px solid #ededed
+      padding: 10px 0
+      p
+        img
+          width: 400px
+          margin: 10px 20px
+      .radio
+        margin-top: 0
+        margin-bottom: 5px
+.test_navigation_outer
+  height: 45px
+  .test_navigation
+    background: white
+    height: 45px
+    display: flex
+    align-items: center
+    margin: 10px
+    ul
+      padding: 0
+      margin: 0
+      list-style-type: none
+      li
+        display: inline-block
+        margin-right: 10px
+        border: none
+        a
+          border: 1px solid #c0cbd9
+          width: 22px
+          border-radius: 50px
+          height: 22px
+          display: flex
+          align-items: center
+          font-size: 13px
+          color: #c0cbd9
+          justify-content: center
+          position: relative
+          &:after
+            content: ''
+            position: absolute
+            top: 10px
+            right: -12px
+            display: block
+            width: 9px
+            height: 1px
+            background: #c0cbd9
+        &:last-of-type
+          a
+            &:after
+              display: none
+        a.checked
+          border-color: transparent
+          background: $dark_blue
+          color: white
+.test_navigation.fixed
+  position: fixed
+  top: 0
+  width: 100%
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05)
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16)
+  padding: 0
+  margin: 0
+  z-index: 9
+.test-end
+  width: 200px
+  margin: 30px auto 50px auto
