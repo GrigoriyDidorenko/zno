@@ -18,8 +18,8 @@ import java.security.Principal;
 /**
  * Created by quento on 28.03.17.
  */
-@RestController(value = "user")
-public class LoggedUserController {
+@RestController(value = "user")  //FIXME does not work with "*/user/*". Works without "user" in path
+public class LoggedUserController { //FIXME UserException{message='you are not authenticated!' must redirect to login
 
     @Autowired
     private RequestFilter requestFilter;

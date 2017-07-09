@@ -10,29 +10,29 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonRootName("user")
-public class UserDTO extends AbstractDTO{
+public class UserDTO extends AbstractDTO {
     @JsonProperty("user_id")
-    private String vkId;
+    private String login;
     @JsonProperty("email")
     private String email;
-    @JsonProperty("access_token")
+    @JsonProperty("access_token")//todo remove secret
     private String secret;
 
     public UserDTO() {
     }
 
     public UserDTO(String login, String email, String secret) {
-        this.vkId = login;
+        this.login = login;
         this.email = email;
         this.secret = secret;
     }
 
-    public String getVkId() {
-        return vkId;
+    public String getLogin() {
+        return login;
     }
 
-    public void setVkId(String vkId) {
-        this.vkId = vkId;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getEmail() {

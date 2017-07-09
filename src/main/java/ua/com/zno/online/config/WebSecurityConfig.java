@@ -25,7 +25,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                .antMatchers("/subject/**").hasRole("ADMIN")
+                .antMatchers("/subject/**").hasRole("USER")
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -38,10 +38,10 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/home")
                 .and()
                 .csrf().disable();
-                //.logoutSuccessHandler(logoutSuccessHandler)
-                //.invalidateHttpSession(true)
-                //.addLogoutHandler(logoutHandler)
-                //.deleteCookies(cookieNamesToClear);
+        //.logoutSuccessHandler(logoutSuccessHandler)
+        //.invalidateHttpSession(true)
+        //.addLogoutHandler(logoutHandler)
+        //.deleteCookies(cookieNamesToClear);
     }
 
     @Override

@@ -37,6 +37,7 @@ public class GuestController {
     }
 
     @GetMapping("subject")
+    @ResponseBody
     public List<SubjectDTO> getSubjects() {
         return guestService.getSubjects().stream()
                 .map(subject -> entityToDTO.convertToDTO(subject, SubjectDTO.class))
@@ -44,6 +45,7 @@ public class GuestController {
     }
 
     @GetMapping("subject/{subjectId}")
+    @ResponseBody
     public List<TestDTO> getTestsBySubject(@PathVariable Long subjectId) {
         return guestService.getTestsBySubject(subjectId).stream()
                 .map(test -> entityToDTO.convertToDTO(test, TestDTO.class))
@@ -52,7 +54,7 @@ public class GuestController {
 
     @GetMapping("brainstorm/{subjectId}")
     @ResponseBody
-    public TestDTO getShuffledTest(@PathVariable Long subjectId){
+    public TestDTO getShuffledTest(@PathVariable Long subjectId) {
         return guestService.getShuffledTestBySubject(subjectId);
     }
 }

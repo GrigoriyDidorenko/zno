@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(catalog = "zno", name = "users")
 public class User extends AbstractEntity {
 
-    @Column(name = "vk_id", nullable = true)
+    @Column(name = "login", nullable = true)
     private String login;
 
     @Column(name = "name", nullable = false)

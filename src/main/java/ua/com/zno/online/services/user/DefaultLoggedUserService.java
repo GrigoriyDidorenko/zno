@@ -47,6 +47,9 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     @Autowired
     private SubjectRepository subjectRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Value(value = "#{'${days.between.remind}'.split(',')}")
     private List<Long> daysBetweenRemind;
 
@@ -154,8 +157,9 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
 
         Map<String, Double> avrgMarkForSubject = new HashMap<>();
 
-        subjects.stream().forEach(subject -> avrgMarkForSubject.put(subject.getName(),
-                testResultRepository.avrgMarkForSubject(userId, subject.getId())));
+        for (Subject subject : subjects){
+            avrgMarkForSubject.put(subject.getName(), testResultRepository.avrgMarkForSubject(userId, subject.getId()));
+        }
 
         return new Statistics(testResultRepository.avrgMark(userId),
                 avrgMarkForSubject,
@@ -164,8 +168,30 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     }
 
     @Override
-    public User getAuthenticatedUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public User getAuthenticatedUser() { //TODO maybe create getAuthenticatedUserId()
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User)
+                        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return (User) userRepository.findUserByLogin(user.getUsername());
     }
 
+    public static void main(String[] args) {
+        Integer i1 = 10;
+        Integer i2 = 10;
+
+        Double d1 = 10.06;
+        Double d2 = 10.06;
+
+        Float f1 = 0.8f;
+        Float f2 = 0.8f;
+
+        String str1 = "Bar";
+        String str2 = "Bar";
+
+        System.out.println(i1 == i2); //true
+        System.out.println(d1 == d2); //false ?????????
+        System.out.println(f1 == f2); //true
+        System.out.println(str1 == str2); //true
+    }
 }
