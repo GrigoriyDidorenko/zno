@@ -67,8 +67,8 @@ html, body
   align-items: center
   i
     border: 1px solid rgba(102, 175, 233, 0.77)
-    width: 20px
-    height: 20px
+    width: 18px
+    height: 18px
     display: inline-block
     border-radius: 3px
     cursor: pointer
@@ -82,15 +82,16 @@ html, body
 input[type="checkbox"] + i::before, input[type="radio"] + i::before
   content: '\f00c'
   color: transparent
-  line-height: 18px
+  line-height: 16px
 input[type="radio"] + i::before
   display: block
-  margin-top: -2px
+  margin-top: 1px
+  font-size: 12px
 input[type="checkbox"]:checked + i::before, input[type="radio"]:checked + i::before
   color: white
 .button-remember_radio
   i
-    width: 15px
-    height: 15px
+    width: 18px
+    height: 18px
     border-radius: 50px
     font-size: 11px

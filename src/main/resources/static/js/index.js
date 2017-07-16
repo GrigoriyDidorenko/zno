@@ -30,13 +30,33 @@ loop('.third-page');
 
 $('.collapse').collapse();
 
+$("a.scrollto").click(function() {
+    var elementClick = $(this).attr("href");
+    var destination = $(elementClick).offset().top;
+    jQuery("html:not(:animated),body:not(:animated)").animate({
+        scrollTop: destination
+    }, 800);
+    return false;
+});
+
+var blockWidth;
+$('.test_navigation ul').removeClass('fixed');
+
 $(window).scroll(function () {
-    if ($(window).scrollTop() >= 200) {
-        $('.test_navigation').addClass('fixed');
+    blockWidth = $('.test__block').outerWidth();
+    if ($(window).scrollTop() >= 280) {
+        $('.test_navigation ul').addClass('fixed').css('width', blockWidth);
     } else {
-        $('.test_navigation').removeClass('fixed');
+        $('.test_navigation ul').removeClass('fixed');
     }
 
+});
+
+$('.test__block label').click(function () {
+    $(this).unbind();
+    var liId = $(this).parents('li').attr('id');
+    $(this).parent('form').each('input')
+    $('.test_navigation ul li:nth-child('+liId+') a').addClass('checked');
 });
 
 $('#registration').click(function () {

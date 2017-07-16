@@ -12,69 +12,93 @@
   ul
     padding-left: 5px
     list-style-type: decimal
+    list-style-position: inside
+    margin: 0
     li
-      border-top: 1px solid #ededed
-      padding: 10px 0
+      border-bottom: 1px solid #ededed
+      padding: 20px 0
+      &:first-of-type
+        padding-top: 0
       p
+        display: inline
         img
           width: 400px
           margin: 10px 20px
+      form
+        margin: 10px 0 0 0
+        label
+          min-height: 20px
+          padding-left: 20px
+          margin-bottom: 5px
+          font-weight: normal
+          cursor: pointer
       .radio
         margin-top: 0
         margin-bottom: 5px
-.test_navigation_outer
+.test_list
+  display: flex
+  justify-content: space-between
+  .test_iframe
+    background: #fff2f5
+    margin-top: 123px
+    width: 20%
+  .test__block
+    width: 60%
+    padding: 0 5px
+.test_navigation
+  background: white
   height: 45px
-  .test_navigation
+  display: flex
+  align-items: center
+  margin: 10px 0
+  ul
+    padding: 0
+    margin: 0
+    list-style-type: none
     background: white
-    height: 45px
-    display: flex
-    align-items: center
-    margin: 10px
-    ul
-      padding: 0
-      margin: 0
-      list-style-type: none
-      li
-        display: inline-block
-        margin-right: 10px
-        border: none
+    li
+      display: inline-block
+      margin-right: 10px
+      border: none
+      padding: 10px 0
+      a
+        border: 1px solid #c0cbd9
+        width: 22px
+        border-radius: 50px
+        height: 22px
+        display: flex
+        align-items: center
+        font-size: 13px
+        color: #c0cbd9
+        justify-content: center
+        position: relative
+        &:after
+          content: ''
+          position: absolute
+          top: 10px
+          right: -12px
+          display: block
+          width: 9px
+          height: 1px
+          background: #c0cbd9
+      &:last-of-type
         a
-          border: 1px solid #c0cbd9
-          width: 22px
-          border-radius: 50px
-          height: 22px
-          display: flex
-          align-items: center
-          font-size: 13px
-          color: #c0cbd9
-          justify-content: center
-          position: relative
           &:after
-            content: ''
-            position: absolute
-            top: 10px
-            right: -12px
-            display: block
-            width: 9px
-            height: 1px
-            background: #c0cbd9
-        &:last-of-type
-          a
-            &:after
-              display: none
-        a.checked
-          border-color: transparent
-          background: $dark_blue
-          color: white
-.test_navigation.fixed
+            display: none
+      a.checked
+        border-color: transparent
+        background: $dark_blue
+        color: white
+.test_navigation ul.fixed
   position: fixed
   top: 0
-  width: 100%
+  border-bottom-left-radius: 2px
+  border-bottom-right-radius: 2px
   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05)
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16)
-  padding: 0
-  margin: 0
+  padding: 0 0 0 10px
+  margin: 0 0 0 -5px
   z-index: 9
 .test-end
-  width: 200px
+  width: 180px
   margin: 30px auto 50px auto
