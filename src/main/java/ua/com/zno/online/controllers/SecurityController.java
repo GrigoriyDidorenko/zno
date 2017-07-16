@@ -90,7 +90,7 @@ public class SecurityController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("user")
+    @GetMapping("loginStatus")
     @ResponseBody
     public LoginStatus getStatus() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
