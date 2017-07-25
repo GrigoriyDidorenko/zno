@@ -21,11 +21,6 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public void init(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService());
-    }
-
     @Bean
     UserDetailsService userDetailsService() {
         return new UserDetailsService() {

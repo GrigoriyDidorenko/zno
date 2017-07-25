@@ -1,6 +1,8 @@
 # TODO: encrypt db password!
 server:
     port: 8082
+    session:
+      timeout: -1
 
 spring:
   application:
@@ -12,6 +14,7 @@ spring:
 
   jackson:
     serialization.indent_output: true
+
 
   mail:
     default-encoding: UTF-8

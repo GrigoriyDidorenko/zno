@@ -3,6 +3,7 @@ package ua.com.zno.online.services.user;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.UserDTO;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.DTOs.statistic.Statistics;
@@ -31,7 +32,5 @@ public interface LoggedUserService extends UserService {
     Statistics getStatistics();
 
     User getAuthenticatedUser();
-
-    //get user stat
 
 }
