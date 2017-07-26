@@ -10,6 +10,7 @@ import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.DTOs.SubjectDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.exceptions.ZnoServerException;
+import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.services.user.UserService;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class GuestController {
 
     @GetMapping("brainstorm/{subjectId}")
     @ResponseBody
-    public TestDTO getShuffledTest(@PathVariable Long subjectId) {
+    public TestDTO getShuffledTest(@PathVariable Long subjectId) throws ZnoUserException {
         return guestService.getShuffledTestBySubject(subjectId);
     }
 }

@@ -11,6 +11,7 @@ import ua.com.zno.online.domain.Test;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.domain.question.QuestionType;
 import ua.com.zno.online.exceptions.ZnoServerException;
+import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.repository.QuestionRepository;
 import ua.com.zno.online.repository.SubjectRepository;
 import ua.com.zno.online.repository.TestRepository;
@@ -44,7 +45,7 @@ abstract class AbstractUserService implements UserService {
         if (test.isPresent()) {
             Hibernate.initialize(test.get().getQuestions());
             TestDTO testDTO = entityToDTO.convertToDTO(test.get(), TestDTO.class);
-            Shuffler.shuffle(testDTO);
+            Shuffler.shuffle(testDTO);//FIXME can not shuffle like that
             return testDTO;
         }
 
@@ -62,8 +63,10 @@ abstract class AbstractUserService implements UserService {
     }
 
     @Override
-    public TestDTO getShuffledTestBySubject(Long subjectId) {
+    public TestDTO getShuffledTestBySubject(Long subjectId) throws ZnoUserException {
         List<Test> tests = testRepository.findTestsBySubjectId(subjectId);
+        if (tests.isEmpty()) throw new ZnoUserException("there is no such subjectId: " + subjectId);
+
         List<Question> questions = new ArrayList<>();
 
         tests.forEach(test -> questions.addAll(test.getQuestions()));

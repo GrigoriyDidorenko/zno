@@ -14,6 +14,8 @@ public class SubjectDTO extends AbstractDTO {
 
     private Set<TestDTO> tests;
 
+    private String articleJSON;
+
     public String getName() {
         return name;
     }
@@ -28,5 +30,13 @@ public class SubjectDTO extends AbstractDTO {
 
     public void setTests(Set<TestDTO> tests) {
         this.tests = tests;
+    }
+
+    public String getArticleJSON() {
+        return articleJSON;
+    }
+
+    public void setArticleJSON(String articleJSON) {
+        this.articleJSON = articleJSON;
     }
 }

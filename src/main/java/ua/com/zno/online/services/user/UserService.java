@@ -5,6 +5,7 @@ import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.Test;
 import ua.com.zno.online.exceptions.ZnoServerException;
+import ua.com.zno.online.exceptions.ZnoUserException;
 
 import java.util.List;
 
@@ -23,5 +24,5 @@ public interface UserService {
     List<Test> getTestsBySubject(Long subjectId);
 
     @Transactional(readOnly = true)
-    TestDTO getShuffledTestBySubject(Long subjectId);
+    TestDTO getShuffledTestBySubject(Long subjectId) throws ZnoUserException;
 }

@@ -14,6 +14,35 @@ public class Subject extends AbstractEntity {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
+
+    /**
+     * Schema:
+     * {
+     *     "adviceTitle": "String",
+     *     "advices": "Map<String, String>",
+     *     "additionalResourcesTitle": "String"
+     *     "additionalResources": "List<String>"
+     * }
+     *
+     * Example:
+     *
+     * {
+     *     "adviceTitle": "Корисні поради",
+     *     "advices": {
+     *         "Елена Кононенко, учитель математики Технического лицея НТУУ 'КПИ'" : "Прогоните дополнительно тесты по
+     *         самым проблемным темам, а перед тестированием все полностью, чтобы довести навыки до автоматизма.",
+     *         "Елена Кирдягенко" "блааа"
+     *     },
+     *     "additionalResourcesTitle" : "Додаткові матеріали",
+     *     "additionalResources": [
+     *          "Критерії оцінювання завдання з розгорнутою відповіддю з математики (2016 рік)",
+     *          "Критерії оцінювання завдання з розгорнутою відповіддю з математики (2017 рік)"
+     *     ]
+     * }
+     */
+    @Column(name = "article", nullable = false, length = 1000)
+    private String articleJSON;
+
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
     private Set<Test> tests;
 
@@ -31,6 +60,14 @@ public class Subject extends AbstractEntity {
 
     public void setTests(Set<Test> tests) {
         this.tests = tests;
+    }
+
+    public String getArticleJSON() {
+        return articleJSON;
+    }
+
+    public void setArticleJSON(String articleJSON) {
+        this.articleJSON = articleJSON;
     }
 
     @Override

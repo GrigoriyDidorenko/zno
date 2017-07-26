@@ -135,8 +135,9 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         List<Question> failedQuestions = questionRepository.findAnllFailedQuestionsBySubject(subjectId, getAuthenticatedUser().getId());
         List<QuestionDTO> questionDTOs = new ArrayList<>(failedQuestions.size());
         failedQuestions.forEach(question -> questionDTOs.add(super.entityToDTO.convertToDTO(question, QuestionDTO.class)));
+        String subjectName = subjectRepository.findOne(subjectId).getName();
 
-        return new TestDTO("Failed questions by subject", questionDTOs);
+        return new TestDTO("Failed questions by subject", subjectName, questionDTOs); //FIXME if there is no failed q - 404
     }
 
     private Optional<LocalDateTime> askNextTime(Long failedQuestionId) {

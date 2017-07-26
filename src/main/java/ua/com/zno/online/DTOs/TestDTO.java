@@ -1,7 +1,6 @@
 package ua.com.zno.online.DTOs;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
-import ua.com.zno.online.domain.Subject;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
@@ -9,23 +8,44 @@ import java.util.List;
  * Created by quento on 26.03.17.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TestDTO extends AbstractDTO {
 
     private String name;
 
     private Integer duration;
 
-    private Long subjectId;
+    private Long subjectId; //TODO Do we need it?
 
     private List<QuestionDTO> questions;
 
     private String year;
 
+    private String subjectName;
+
     public TestDTO() {
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public TestDTO(String name) {
+        this.name = name;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
     public TestDTO(String name, List<QuestionDTO> questions) {
         this.name = name;
+        this.questions = questions;
+    }
+
+    public TestDTO(String name, String subjectName, List<QuestionDTO> questions){
+        this.name = name;
+        this.subjectName = subjectName;
         this.questions = questions;
     }
 
