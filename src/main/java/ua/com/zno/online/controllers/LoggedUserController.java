@@ -11,6 +11,7 @@ import ua.com.zno.online.controllers.filter.RequestFilter;
 import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.DTOs.statistic.Statistics;
 import ua.com.zno.online.services.user.LoggedUserService;
+import ua.com.zno.online.util.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -60,6 +61,7 @@ public class LoggedUserController { //FIXME ZnoUserException{message='you are no
 
     @GetMapping("failed/questions/{subjectId}")
     public TestDTO getFailedQuestionsTest(@PathVariable Long subjectId) {
+        subjectId -= Constants.ID_APPENDER;
         return defaultLoggedUserService.getFailedQuestionsBySubject(subjectId);
     }
 
