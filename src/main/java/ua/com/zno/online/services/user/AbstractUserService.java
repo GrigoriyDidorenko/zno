@@ -5,6 +5,8 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.zno.online.DTOs.TestDTO;
+import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.UserAnswersPerQuestionDTO;
 import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.Test;
@@ -15,6 +17,7 @@ import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.repository.QuestionRepository;
 import ua.com.zno.online.repository.SubjectRepository;
 import ua.com.zno.online.repository.TestRepository;
+import ua.com.zno.online.services.checker.QuestionCheckFactory;
 import ua.com.zno.online.util.Shuffler;
 
 import java.util.*;
@@ -25,6 +28,9 @@ import java.util.stream.Collectors;
  */
 @Transactional
 abstract class AbstractUserService implements UserService {
+
+    @Autowired
+    private QuestionCheckFactory questionCheckFactory;
 
     @Autowired
     protected TestRepository testRepository;
@@ -40,7 +46,7 @@ abstract class AbstractUserService implements UserService {
 
     @Override
     public final TestDTO getTest(Long id) throws ZnoServerException {
-        Optional<Test> test = Optional.of(testRepository.findByIdAndDeletedFalse(id));
+        Optional<Test> test = Optional.ofNullable(testRepository.findByIdAndDeletedFalse(id));
 
         if (test.isPresent()) {
             Hibernate.initialize(test.get().getQuestions());
@@ -72,12 +78,12 @@ abstract class AbstractUserService implements UserService {
         tests.forEach(test -> questions.addAll(test.getQuestions()));
         int avrgNumOfSimpleQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.QUESTION_WITH_ONE_CORRECT_ANSWER, tests.size());
         int avrgNumOfComplexQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.QUESTION_WITH_SUB_QUESTIONS, tests.size());
-        int avrgNumOfOpenQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.OPEN, tests.size());
+        int avrgNumOfOpenQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.QUESTION_OPEN, tests.size());
 
-        Test test = new Test("Brainstorm", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)), 100); //FIXME duration
+        Test test = new Test("Brainstorm", Calendar.getInstance().get(Calendar.YEAR), 100); //FIXME duration
         test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.QUESTION_WITH_ONE_CORRECT_ANSWER, avrgNumOfSimpleQuestions));
         test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.QUESTION_WITH_SUB_QUESTIONS, avrgNumOfComplexQuestions));
-        test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.OPEN, avrgNumOfOpenQuestions));
+        test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.QUESTION_OPEN, avrgNumOfOpenQuestions));
         test.setId(-1L);
         test.setSubject(subjectRepository.findOne(subjectId));
 
@@ -85,7 +91,7 @@ abstract class AbstractUserService implements UserService {
         return entityToDTO.convertToDTO(test, TestDTO.class);
     }
 
-    private List<Question> getShuffledLimitedQuestions(List<Question> questions, QuestionType type, int num){
+    private List<Question> getShuffledLimitedQuestions(List<Question> questions, QuestionType type, int num) {
         questions = new ArrayList<>(questions
                 .stream()
                 .filter(q -> q.getType().equals(type)).collect(Collectors.toList()));
@@ -93,10 +99,27 @@ abstract class AbstractUserService implements UserService {
         return questions.stream().limit(num).collect(Collectors.toList());
     }
 
-    private int getAvrgNumberOfQuestionsOfCertainType(List<Question> questions, QuestionType questionType, int size){
-        return (int)Math.ceil((double) questions
+    private int getAvrgNumberOfQuestionsOfCertainType(List<Question> questions, QuestionType questionType, int size) {
+        return (int) Math.ceil((double) questions
                 .stream()
                 .filter(q -> q.getType().equals(questionType))
                 .count() / size);
+    }
+
+    @Override
+    public final double calculateTestResult(Map<Long, Long> questionIdWithMark) throws ZnoUserException {
+        return questionIdWithMark.values().stream().mapToDouble(Long::doubleValue).sum() + 100;
+    }
+
+    protected final Map<Long, Long> computeMarkPerQuestion(TestResultDTO testResultDTO) throws ZnoUserException {
+        Map<Long, Long> questionIdWithMark = new HashMap<>();
+
+        for (UserAnswersPerQuestionDTO userAnswer : testResultDTO.getUserAnswersPerQuestionDTO()) {
+            long mark = questionCheckFactory.check(userAnswer);
+            questionIdWithMark.put(userAnswer.getId(), mark);
+        }
+
+        return questionIdWithMark;
+
     }
 }

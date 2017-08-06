@@ -21,8 +21,8 @@ public class Test extends AbstractEntity {
     @Column(name = "name", nullable = false, length = 250)
     private String name;
 
-    @Column(nullable = false)
-    private String year;
+    @Column(name = "year", nullable = false)
+    private Integer year;
 
     @Column(name = "duration", nullable = false, length = 5)
     @Min(value = 0, message = "Duration must be positive")
@@ -35,7 +35,7 @@ public class Test extends AbstractEntity {
     @OneToMany(mappedBy = "test", fetch = FetchType.LAZY)
     private Set<Question> questions;
 
-    public Test(String name, String year, Integer duration) {
+    public Test(String name, Integer year, Integer duration) {
         this.name = name;
         this.year = year;
         this.duration = duration;
@@ -68,11 +68,11 @@ public class Test extends AbstractEntity {
         this.subject = subject;
     }
 
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
@@ -84,8 +84,8 @@ public class Test extends AbstractEntity {
         this.questions = questions;
     }
 
-    public void addQuestions(List<Question> questions){
-        if (getQuestions() == null){
+    public void addQuestions(List<Question> questions) {
+        if (getQuestions() == null) {
             setQuestions(new HashSet<>());
         }
         getQuestions().addAll(questions);

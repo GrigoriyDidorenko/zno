@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.UserAnswersPerQuestionDTO;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.repository.QuestionRepository;
@@ -32,7 +32,7 @@ public class QuestionCheckFactory {
     private MultiplyCorrectAnswersQuestionCheckStrategy multiplyCorrectAnswersQuestionCheckStrategy;
 
 
-    public Integer check(TestResultDTO.UserAnswersPerQuestionDTO userAnswersPerQuestionDTO) throws ZnoUserException {
+    public Integer check(UserAnswersPerQuestionDTO userAnswersPerQuestionDTO) throws ZnoUserException {
         Optional<Question> question = Optional.ofNullable(questionRepository.findOne(userAnswersPerQuestionDTO.getId()));
 
         if (!question.isPresent())
@@ -43,7 +43,7 @@ public class QuestionCheckFactory {
                 throw new ZnoUserException(String.format("Received complex question in test result with id %d",
                         userAnswersPerQuestionDTO.getId()));
 
-            case OPEN:
+            case QUESTION_OPEN:
                 return openQuestionCheckStrategy.check(userAnswersPerQuestionDTO, question.get());
 
             case QUESTION_WITH_ONE_CORRECT_ANSWER:

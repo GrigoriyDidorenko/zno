@@ -1,7 +1,7 @@
 package ua.com.zno.online.services.checker;
 
 import org.springframework.stereotype.Service;
-import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.UserAnswersPerQuestionDTO;
 import ua.com.zno.online.domain.Answer;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.exceptions.ZnoUserException;
@@ -11,11 +11,11 @@ import ua.com.zno.online.exceptions.ZnoUserException;
  */
 
 @Service
-class OpenQuestionCheckStrategy implements Checker<TestResultDTO.UserAnswersPerQuestionDTO, Question> {
+class OpenQuestionCheckStrategy implements Checker<UserAnswersPerQuestionDTO, Question> {
 
 
     @Override
-    public Integer check(TestResultDTO.UserAnswersPerQuestionDTO dto, Question entity) throws ZnoUserException {
+    public Integer check(UserAnswersPerQuestionDTO dto, Question entity) throws ZnoUserException {
         if (dto.getAnswerText().isPresent()) {
             String userAnswer = dto.getAnswerText().get().trim();
 

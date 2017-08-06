@@ -16,9 +16,6 @@ public interface LoggedUserService extends UserService {
     @Transactional(readOnly = true)
     TestDTO getRandomizedTest(Long subjectId);
 
-    @Transactional
-    void saveTestResult(TestResultDTO testResultDTO) throws ZnoUserException;
-
     @Transactional(readOnly = true)
     TestDTO getFailedQuestions();
 

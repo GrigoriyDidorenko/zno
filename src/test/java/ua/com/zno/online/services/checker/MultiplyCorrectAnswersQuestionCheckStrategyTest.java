@@ -2,6 +2,7 @@ package ua.com.zno.online.services.checker;
 
 import org.junit.Test;
 import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.UserAnswersPerQuestionDTO;
 import ua.com.zno.online.domain.Answer;
 import ua.com.zno.online.domain.question.Question;
 
@@ -46,7 +47,7 @@ public class MultiplyCorrectAnswersQuestionCheckStrategyTest {
 
     @Test
     public void checkOneCorrectAnswer() throws Exception {
-        TestResultDTO.UserAnswersPerQuestionDTO userAnswer = new TestResultDTO().new UserAnswersPerQuestionDTO();
+        UserAnswersPerQuestionDTO userAnswer = new UserAnswersPerQuestionDTO();
         userAnswer.setAnswerIds(new ArrayList<>(Collections.singletonList(firstCorrectAnswer.getId())));
 
         int mark = multiplyCorrectAnswersQuestionCheckStrategy.check(userAnswer, question);
@@ -56,7 +57,7 @@ public class MultiplyCorrectAnswersQuestionCheckStrategyTest {
 
     @Test
     public void checkMultiplyCorrectAnswer() throws Exception {
-        TestResultDTO.UserAnswersPerQuestionDTO userAnswer = new TestResultDTO().new UserAnswersPerQuestionDTO();
+        UserAnswersPerQuestionDTO userAnswer = new UserAnswersPerQuestionDTO();
         userAnswer.setAnswerIds(new ArrayList<>(Arrays.asList(firstCorrectAnswer.getId(), secondCorrectAnswer.getId())));
 
         int mark = multiplyCorrectAnswersQuestionCheckStrategy.check(userAnswer, question);
@@ -66,7 +67,7 @@ public class MultiplyCorrectAnswersQuestionCheckStrategyTest {
 
     @Test
     public void checkIncorrectAnswer() throws Exception {
-        TestResultDTO.UserAnswersPerQuestionDTO userAnswer = new TestResultDTO().new UserAnswersPerQuestionDTO();
+        UserAnswersPerQuestionDTO userAnswer = new UserAnswersPerQuestionDTO();
         userAnswer.setAnswerIds(new ArrayList<>(Collections.singletonList(incorrectAnswer.getId())));
 
         int mark = multiplyCorrectAnswersQuestionCheckStrategy.check(userAnswer, question);

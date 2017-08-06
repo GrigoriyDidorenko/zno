@@ -1,9 +1,8 @@
 package ua.com.zno.online.services.checker;
 
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.UserAnswersPerQuestionDTO;
 import ua.com.zno.online.domain.Answer;
 import ua.com.zno.online.domain.question.Question;
 
@@ -47,7 +46,7 @@ public class OpenQuestionCheckStrategyTest {
 
     @Test
     public void checkCorrectAnswer() throws Exception {
-        TestResultDTO.UserAnswersPerQuestionDTO userAnswer = new TestResultDTO().new UserAnswersPerQuestionDTO();
+        UserAnswersPerQuestionDTO userAnswer = new UserAnswersPerQuestionDTO();
         userAnswer.setAnswerText("  " + correctAnswer.getAnswerText().toUpperCase() + "   ");
 
         int mark = openQuestionCheckStrategy.check(userAnswer, question);
@@ -57,7 +56,7 @@ public class OpenQuestionCheckStrategyTest {
 
     @Test
     public void checkIncorrectAnswer() throws Exception {
-        TestResultDTO.UserAnswersPerQuestionDTO userAnswer = new TestResultDTO().new UserAnswersPerQuestionDTO();
+        UserAnswersPerQuestionDTO userAnswer = new UserAnswersPerQuestionDTO();
         userAnswer.setAnswerText("  " + incorrectAnswer.getAnswerText().toUpperCase() + "   ±231");
 
         int mark = openQuestionCheckStrategy.check(userAnswer, question);

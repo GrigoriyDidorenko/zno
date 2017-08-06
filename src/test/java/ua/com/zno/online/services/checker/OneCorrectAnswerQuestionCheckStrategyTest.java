@@ -2,6 +2,7 @@ package ua.com.zno.online.services.checker;
 
 import org.junit.Test;
 import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.UserAnswersPerQuestionDTO;
 import ua.com.zno.online.domain.Answer;
 import ua.com.zno.online.domain.question.Question;
 
@@ -40,7 +41,7 @@ public class OneCorrectAnswerQuestionCheckStrategyTest {
 
     @Test
     public void checkCorrectAnswer() throws Exception {
-        TestResultDTO.UserAnswersPerQuestionDTO userAnswer = new TestResultDTO().new UserAnswersPerQuestionDTO();
+        UserAnswersPerQuestionDTO userAnswer = new UserAnswersPerQuestionDTO();
         userAnswer.setAnswerIds(new ArrayList<>(Collections.singletonList(correctAnswer.getId())));
 
         int mark = oneCorrectAnswerQuestionCheckStrategy.check(userAnswer, question);
@@ -50,7 +51,7 @@ public class OneCorrectAnswerQuestionCheckStrategyTest {
 
     @Test
     public void checkIncorrectAnswer() throws Exception {
-        TestResultDTO.UserAnswersPerQuestionDTO userAnswer = new TestResultDTO().new UserAnswersPerQuestionDTO();
+        UserAnswersPerQuestionDTO userAnswer = new UserAnswersPerQuestionDTO();
         userAnswer.setAnswerIds(new ArrayList<>(Collections.singletonList(incorrectAnswer.getId())));
 
         int mark = oneCorrectAnswerQuestionCheckStrategy.check(userAnswer, question);

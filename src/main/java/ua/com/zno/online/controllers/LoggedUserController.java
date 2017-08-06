@@ -32,13 +32,13 @@ public class LoggedUserController { //FIXME ZnoUserException{message='you are no
     //TODO: add redirects for post requests
 
     @PostMapping("result")
-    public ResponseEntity<Void> acceptTestResult(HttpServletRequest request, @RequestBody TestResultDTO testResultDTO) throws ZnoUserException {
+    public ResponseEntity<Double> acceptTestResult(HttpServletRequest request, @RequestBody TestResultDTO testResultDTO) throws ZnoUserException {
         if (requestFilter.isSpamming(request.getLocalAddr())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        defaultLoggedUserService.saveTestResult(testResultDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        double mark = defaultLoggedUserService.processTestResult(testResultDTO);
+        return new ResponseEntity<>(mark, HttpStatus.OK);
     }
 
     @PostMapping("failed/questions")

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ua.com.zno.online.DTOs.QuestionDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.UserAnswersPerQuestionDTO;
 import ua.com.zno.online.domain.FailedQuestion;
 import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.TestResult;
@@ -28,9 +29,6 @@ import java.util.stream.Collectors;
 @Service
 @PropertySource("classpath:custom.properties")
 public class DefaultLoggedUserService extends AbstractUserService implements LoggedUserService {
-
-    @Autowired
-    private QuestionCheckFactory questionCheckFactory;
 
     @Autowired
     private QuestionRepository questionRepository;
@@ -59,15 +57,18 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     }
 
     @Override
-    public void saveTestResult(TestResultDTO testResultDTO) throws ZnoUserException {
-        User user = getAuthenticatedUser();
+    public double processTestResult(TestResultDTO testResultDTO) throws ZnoUserException {
+        Map<Long, Long> markPerQuestion = super.computeMarkPerQuestion(testResultDTO);
+        double total = super.calculateTestResult(markPerQuestion);
 
-        Map<Long, Long> questionIdWithMark = checkTest(testResultDTO);
-        //get 0 mark question ids
-        //get total
+        this.updateFailedQuestions(markPerQuestion, testResultDTO.getId());
 
+        testResultRepository.save(new TestResult(testRepository.findOne(testResultDTO.getId()), testResultDTO.getDuration(), total, LocalDateTime.now()));
 
-        double total = questionIdWithMark.values().stream().mapToDouble(Long::doubleValue).sum() + 100;
+        return total;
+    }
+
+    private void updateFailedQuestions(Map<Long, Long> questionIdWithMark, Long testId) {
         List<Long> failedQuestionsIds = questionIdWithMark.entrySet().stream()
                 .filter(entry -> entry.getValue() == 0)
                 .map(Map.Entry::getValue)
@@ -81,20 +82,17 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
 
             else {
                 FailedQuestion newFailedQuestionToPersist = new FailedQuestion(getAuthenticatedUser().getId(),
-                        testRepository.findOne(testResultDTO.getId()).getSubject().getId(),
+                        testRepository.findOne(testId).getSubject().getId(),
                         failedQuestionsId, false, LocalDateTime.now(), LocalDateTime.now().plusDays(daysBetweenRemind.get(0)));
 
                 failedQuestionRepository.save(newFailedQuestionToPersist);
             }
         }
-
-
-        testResultRepository.save(new TestResult(testRepository.findOne(testResultDTO.getId()), testResultDTO.getDuration(), total, LocalDateTime.now()));
     }
 
     @Override
     public void saveFailedQuestionsResult(TestResultDTO testResultDTO) throws ZnoUserException {
-        Map<Long, Long> questionIdWithMark = checkTest(testResultDTO);
+        Map<Long, Long> questionIdWithMark = super.computeMarkPerQuestion(testResultDTO);
 
         questionIdWithMark.entrySet().stream()
                 .filter(entry -> entry.getValue() != 0)
@@ -109,17 +107,6 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
                 });
     }
 
-    private Map<Long, Long> checkTest(TestResultDTO testResultDTO) throws ZnoUserException {
-        Map<Long, Long> questionIdWithMark = new HashMap<>();
-
-        for (TestResultDTO.UserAnswersPerQuestionDTO userAnswer : testResultDTO.getUserAnswersPerQuestionDTO()) {
-            long mark = questionCheckFactory.check(userAnswer);
-            questionIdWithMark.put(userAnswer.getId(), mark);
-        }
-
-        return questionIdWithMark;
-
-    }
 
     @Override
     public TestDTO getFailedQuestions() {

@@ -82,8 +82,8 @@ public class Question extends AbstractEntity {
         this.type = type;
     }
 
-    public Optional<Long> getParentId() {
-        return Optional.ofNullable(parentId);
+    public Long getParentId() {
+        return parentId;
     }
 
     public void setParentId(Long parentId) {

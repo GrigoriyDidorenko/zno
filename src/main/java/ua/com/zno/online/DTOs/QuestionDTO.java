@@ -30,6 +30,8 @@ public class QuestionDTO extends AbstractDTO {
 
     private List<QuestionDTO> subQuestions;
 
+    private Long parentId;
+
     private byte[] image;
 
     public byte[] getImage() {
@@ -86,5 +88,13 @@ public class QuestionDTO extends AbstractDTO {
 
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 }

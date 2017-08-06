@@ -1,11 +1,11 @@
 package ua.com.zno.online.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import ua.com.zno.online.DTOs.TestResultDTO;
 import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.DTOs.SubjectDTO;
 import ua.com.zno.online.DTOs.TestDTO;
@@ -14,6 +14,7 @@ import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.services.user.UserService;
 import ua.com.zno.online.util.Constants;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,5 +62,11 @@ public class GuestController {
     public TestDTO getShuffledTest(@PathVariable Long subjectId) throws ZnoUserException {
         subjectId -= Constants.ID_APPENDER;
         return guestService.getShuffledTestBySubject(subjectId);
+    }
+
+    @PostMapping("result")
+    public ResponseEntity<Double> acceptTestResult(HttpServletRequest request, @RequestBody TestResultDTO testResultDTO) throws ZnoUserException {
+        double mark = guestService.processTestResult(testResultDTO);
+        return new ResponseEntity<>(mark, HttpStatus.OK);
     }
 }

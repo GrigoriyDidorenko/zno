@@ -15,5 +15,5 @@ public enum QuestionType {
     QUESTION_WITH_SUB_QUESTIONS,
 
     //question type where user must type answer
-    OPEN
+    QUESTION_OPEN
 }

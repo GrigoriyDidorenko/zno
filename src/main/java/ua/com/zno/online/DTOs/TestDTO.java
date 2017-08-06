@@ -3,6 +3,7 @@ package ua.com.zno.online.DTOs;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by quento on 26.03.17.
@@ -19,7 +20,7 @@ public class TestDTO extends AbstractDTO {
 
     private List<QuestionDTO> questions;
 
-    private String year;
+    private Integer year;
 
     private String subjectName;
 
@@ -43,7 +44,7 @@ public class TestDTO extends AbstractDTO {
         this.questions = questions;
     }
 
-    public TestDTO(String name, String subjectName, List<QuestionDTO> questions){
+    public TestDTO(String name, String subjectName, List<QuestionDTO> questions) {
         this.name = name;
         this.subjectName = subjectName;
         this.questions = questions;
@@ -56,11 +57,11 @@ public class TestDTO extends AbstractDTO {
         this.questions = questions;
     }
 
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
@@ -89,7 +90,8 @@ public class TestDTO extends AbstractDTO {
     }
 
     public List<QuestionDTO> getQuestions() {
-        return questions;
+        //todo bullshit
+        return questions.stream().filter(questionDTO -> questionDTO.getParentId() == null).collect(Collectors.toList());
     }
 
     public void setQuestions(List<QuestionDTO> questions) {
