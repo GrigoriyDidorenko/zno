@@ -11,21 +11,10 @@ import java.util.List;
  */
 public class TestResultDTO extends AbstractDTO { // FIXME added test and user to testResult
 
-    @NotNull
-    private Long testId;
-
     @Min(value = 0)
     private Integer duration;
 
     private List<UserAnswerDTO> userAnswerDTO;
-
-    public Long getTestId() {
-        return testId;
-    }
-
-    public void setTestId(Long testId) {
-        this.testId = testId;
-    }
 
     public Integer getDuration() {
         return duration;
