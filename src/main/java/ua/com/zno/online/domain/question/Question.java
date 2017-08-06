@@ -61,7 +61,7 @@ public class Question extends AbstractEntity {
     }
 
     public Set<Answer> getAnswers() {
-        if (type == QuestionType.COMPLEX)
+        if (type == QuestionType.QUESTION_WITH_SUB_QUESTIONS)
             return Collections.emptySet();
 
         if (!Hibernate.isInitialized(this.answers))
@@ -91,7 +91,7 @@ public class Question extends AbstractEntity {
     }
 
     public Set<Question> getSubQuestions() {
-        if (type == QuestionType.COMPLEX) {
+        if (type == QuestionType.QUESTION_WITH_SUB_QUESTIONS) {
             if (!Hibernate.isInitialized(this.subQuestions))
                 Hibernate.initialize(this.subQuestions);
 

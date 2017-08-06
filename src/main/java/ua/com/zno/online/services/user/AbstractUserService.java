@@ -70,13 +70,13 @@ abstract class AbstractUserService implements UserService {
         List<Question> questions = new ArrayList<>();
 
         tests.forEach(test -> questions.addAll(test.getQuestions()));
-        int avrgNumOfSimpleQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.SIMPLE, tests.size());
-        int avrgNumOfComplexQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.COMPLEX, tests.size());
+        int avrgNumOfSimpleQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.QUESTION_WITH_ONE_CORRECT_ANSWER, tests.size());
+        int avrgNumOfComplexQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.QUESTION_WITH_SUB_QUESTIONS, tests.size());
         int avrgNumOfOpenQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.OPEN, tests.size());
 
         Test test = new Test("Brainstorm", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)), 100); //FIXME duration
-        test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.SIMPLE, avrgNumOfSimpleQuestions));
-        test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.COMPLEX, avrgNumOfComplexQuestions));
+        test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.QUESTION_WITH_ONE_CORRECT_ANSWER, avrgNumOfSimpleQuestions));
+        test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.QUESTION_WITH_SUB_QUESTIONS, avrgNumOfComplexQuestions));
         test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.OPEN, avrgNumOfOpenQuestions));
         test.setId(-1L);
         test.setSubject(subjectRepository.findOne(subjectId));

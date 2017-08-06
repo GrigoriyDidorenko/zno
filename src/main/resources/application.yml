@@ -3,6 +3,11 @@ server:
     port: 8082
     session:
       timeout: -1
+    error:
+      whitelabel:
+        enabled: false
+      path: /errors
+
 
 spring:
   application:

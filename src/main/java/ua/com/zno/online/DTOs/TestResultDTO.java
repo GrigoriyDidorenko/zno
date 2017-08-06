@@ -1,10 +1,11 @@
 package ua.com.zno.online.DTOs;
 
-import ua.com.zno.online.domain.question.QuestionType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by quento on 09.04.17.
@@ -14,7 +15,7 @@ public class TestResultDTO extends AbstractDTO { // FIXME added test and user to
     @Min(value = 0)
     private Integer duration;
 
-    private List<UserAnswerDTO> userAnswerDTO;
+    private List<UserAnswersPerQuestionDTO> userAnswersPerQuestionDTO;
 
     public Integer getDuration() {
         return duration;
@@ -24,28 +25,31 @@ public class TestResultDTO extends AbstractDTO { // FIXME added test and user to
         this.duration = duration;
     }
 
-    public List<UserAnswerDTO> getUserAnswerDTO() {
-        return userAnswerDTO;
+    public List<UserAnswersPerQuestionDTO> getUserAnswersPerQuestionDTO() {
+        return userAnswersPerQuestionDTO;
     }
 
-    public void setUserAnswerDTO(List<UserAnswerDTO> userAnswerDTO) {
-        this.userAnswerDTO = userAnswerDTO;
+    public void setUserAnswersPerQuestionDTO(List<UserAnswersPerQuestionDTO> userAnswersPerQuestionDTO) {
+        this.userAnswersPerQuestionDTO = userAnswersPerQuestionDTO;
     }
 
-    public class UserAnswerDTO extends AbstractDTO {
-        private Long questionId;
+    public class UserAnswersPerQuestionDTO extends AbstractDTO {
+
+        private List<Long> answerIds = Collections.emptyList();
+
+        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String answerText;
 
-        public Long getQuestionId() {
-            return questionId;
+        public List<Long> getAnswerIds() {
+            return answerIds;
         }
 
-        public void setQuestionId(Long questionId) {
-            this.questionId = questionId;
+        public void setAnswerIds(List<Long> answerIds) {
+            this.answerIds = answerIds;
         }
 
-        public String getAnswerText() {
-            return answerText;
+        public Optional<String> getAnswerText() {
+            return Optional.ofNullable(answerText);
         }
 
         public void setAnswerText(String answerText) {

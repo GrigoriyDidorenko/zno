@@ -11,19 +11,13 @@ import ua.com.zno.online.exceptions.ZnoUserException;
  */
 
 @Service
-class OpenQuestionCheckStrategy implements Checker<TestResultDTO.UserAnswersPerQuestionDTO, Question> {
-
+class OneCorrectAnswerQuestionCheckStrategy implements Checker<TestResultDTO.UserAnswersPerQuestionDTO, Question> {
 
     @Override
     public Integer check(TestResultDTO.UserAnswersPerQuestionDTO dto, Question entity) throws ZnoUserException {
-        if (dto.getAnswerText().isPresent()) {
-            String userAnswer = dto.getAnswerText().get().trim();
-
-            for (Answer answer : entity.getAnswers()) {
-                if (userAnswer.equalsIgnoreCase(answer.getAnswerText()))
-                    return answer.getMark();
-            }
-        }
-        return 0;
+        return entity.getAnswers().stream()
+                .filter(answer -> answer.getId().equals(dto.getAnswerIds().get(0)))
+                .mapToInt(Answer::getMark)
+                .sum();
     }
 }

@@ -81,7 +81,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
 
             else {
                 FailedQuestion newFailedQuestionToPersist = new FailedQuestion(getAuthenticatedUser().getId(),
-                        testRepository.findOne(testResultDTO.getTestId()).getSubject().getId(),
+                        testRepository.findOne(testResultDTO.getId()).getSubject().getId(),
                         failedQuestionsId, false, LocalDateTime.now(), LocalDateTime.now().plusDays(daysBetweenRemind.get(0)));
 
                 failedQuestionRepository.save(newFailedQuestionToPersist);
@@ -89,7 +89,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         }
 
 
-        testResultRepository.save(new TestResult(testRepository.findOne(testResultDTO.getTestId()), testResultDTO.getDuration(), total, LocalDateTime.now()));
+        testResultRepository.save(new TestResult(testRepository.findOne(testResultDTO.getId()), testResultDTO.getDuration(), total, LocalDateTime.now()));
     }
 
     @Override
@@ -112,9 +112,9 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     private Map<Long, Long> checkTest(TestResultDTO testResultDTO) throws ZnoUserException {
         Map<Long, Long> questionIdWithMark = new HashMap<>();
 
-        for (TestResultDTO.UserAnswerDTO userAnswer : testResultDTO.getUserAnswerDTO()) {
+        for (TestResultDTO.UserAnswersPerQuestionDTO userAnswer : testResultDTO.getUserAnswersPerQuestionDTO()) {
             long mark = questionCheckFactory.check(userAnswer);
-            questionIdWithMark.put(userAnswer.getQuestionId(), mark);
+            questionIdWithMark.put(userAnswer.getId(), mark);
         }
 
         return questionIdWithMark;

@@ -26,11 +26,14 @@ public class QuestionCheckFactory {
     private OpenQuestionCheckStrategy openQuestionCheckStrategy;
 
     @Autowired
-    private SimpleQuestionCheckStrategy simpleQuestionCheckStrategy;
+    private OneCorrectAnswerQuestionCheckStrategy oneCorrectAnswerQuestionCheckStrategy;
+
+    @Autowired
+    private MultiplyCorrectAnswersQuestionCheckStrategy multiplyCorrectAnswersQuestionCheckStrategy;
 
 
-    public Integer check(TestResultDTO.UserAnswerDTO userAnswerDTO) throws ZnoUserException {
-        Optional<Question> question = Optional.ofNullable(questionRepository.findOne(userAnswerDTO.getQuestionId()));
+    public Integer check(TestResultDTO.UserAnswersPerQuestionDTO userAnswersPerQuestionDTO) throws ZnoUserException {
+        Optional<Question> question = Optional.ofNullable(questionRepository.findOne(userAnswersPerQuestionDTO.getId()));
 
         if (!question.isPresent())
             throw new ZnoUserException("Question with such id is not present, probably hacked JSON");
@@ -38,14 +41,16 @@ public class QuestionCheckFactory {
         switch (question.get().getType()) {
             default:
                 throw new ZnoUserException(String.format("Received complex question in test result with id %d",
-                        userAnswerDTO.getQuestionId()));
+                        userAnswersPerQuestionDTO.getId()));
 
             case OPEN:
-                return openQuestionCheckStrategy.check(userAnswerDTO, question.get());
+                return openQuestionCheckStrategy.check(userAnswersPerQuestionDTO, question.get());
 
-            case SUB_QUESTION:
-            case SIMPLE:
-                return simpleQuestionCheckStrategy.check(userAnswerDTO, question.get());
+            case QUESTION_WITH_ONE_CORRECT_ANSWER:
+                return oneCorrectAnswerQuestionCheckStrategy.check(userAnswersPerQuestionDTO, question.get());
+
+            case QUESTION_WITH_MULTIPLY_CORRECT_ANSWERS:
+                return multiplyCorrectAnswersQuestionCheckStrategy.check(userAnswersPerQuestionDTO, question.get());
         }
     }
 }

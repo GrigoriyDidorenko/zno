@@ -1,4 +1,4 @@
-package ua.com.zno.online.controllers;
+package ua.com.zno.online.controllers.error;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,20 +21,21 @@ public class GlobalErrorHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = ZnoServerException.class)
-    public
     @ResponseBody
-    String handleConflict(ZnoServerException e) {
+    public String handleConflict(ZnoServerException e) {
         LOG.debug("Handling ZnoServerException in GlobalErrorHandler", e);
         return e.getMessage();
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = ZnoUserException.class)
-    public
     @ResponseBody
-    String handleConflict(ZnoUserException e) {
+    public String handleConflict(ZnoUserException e) {
         LOG.debug("Handling ZnoUserException in GlobalErrorHandler", e);
         return e.getMessage();
     }
+
+
+
 
 }
