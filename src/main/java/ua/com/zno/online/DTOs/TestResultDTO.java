@@ -34,7 +34,6 @@ public class TestResultDTO extends AbstractDTO { // FIXME added test and user to
 
     public class UserAnswerDTO extends AbstractDTO {
         private Long questionId;
-        private Long answerId;
         private String answerText;
 
         public Long getQuestionId() {
@@ -43,14 +42,6 @@ public class TestResultDTO extends AbstractDTO { // FIXME added test and user to
 
         public void setQuestionId(Long questionId) {
             this.questionId = questionId;
-        }
-
-        public Long getAnswerId() {
-            return answerId;
-        }
-
-        public void setAnswerId(Long answerId) {
-            this.answerId = answerId;
         }
 
         public String getAnswerText() {
