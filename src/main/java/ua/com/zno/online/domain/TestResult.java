@@ -1,18 +1,40 @@
 package ua.com.zno.online.domain;
 
+import ua.com.zno.online.DTOs.statistic.SubjectStatistics;
 import ua.com.zno.online.domain.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 /**
  * Created by quento on 02.04.17.
  */
 @Entity
 @Table(catalog = "zno", name = "test_results")
+@NamedNativeQuery(query = "select s.name as subjectName, t.name as testName, tr.duration as duration, tr.mark as mark, tmp.count as numOfFailedQuestions" +
+        " from test_results tr" +
+        " join tests t on tr.test_id = t.id" +
+        " join subjects s on t.subject_id = s.id" +
+        " join (select test_id, count(*) as count from failed_questions fq group by test_id) as tmp on t.id = tmp.test_id" +
+        " where tr.user_id = ?1", name = "TestResult.getStatisticsForUser", resultSetMapping = "statistics")
+
+@SqlResultSetMapping(
+        name="statistics",
+        classes={
+                @ConstructorResult(
+                        targetClass=SubjectStatistics.TestStatistics.class,
+                        columns={
+                                @ColumnResult(name="subjectName", type = String.class),
+                                @ColumnResult(name="testName", type = String.class),
+                                @ColumnResult(name="duration", type = Integer.class),
+                                @ColumnResult(name="mark", type = Double.class),
+                                @ColumnResult(name="numOfFailedQuestions", type = Integer.class)
+                        }
+                )
+        }
+)
 public class TestResult extends AbstractEntity {
 
     @ManyToOne

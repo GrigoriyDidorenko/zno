@@ -40,8 +40,6 @@ public class EntityToDTO {
             entity.setId(dto.getId() - Constants.ID_APPENDER);
         }
 
-        //TODO: logic to update fields
-
         return entity;
     }
 

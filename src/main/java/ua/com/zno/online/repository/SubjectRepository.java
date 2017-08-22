@@ -16,4 +16,7 @@ public interface SubjectRepository extends AbstractRepository<Subject> {
             "where s.id = ?1", nativeQuery = true)
     Subject getSubjectWithTestNames(Long subjectId);
 
+    @Query(value = "select s.name from subjects s join tests t on s.id = t.subject_id where t.id = ?1", nativeQuery = true)
+    String findSubjectNameByTestId(long testId);
+
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import ua.com.zno.online.domain.FailedQuestion;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,4 +22,6 @@ public interface FailedQuestionRepository extends AbstractRepository<FailedQuest
     @Modifying
     @Query("update FailedQuestion f set f.resolved = true where f.userId=?1")
     void markResolved(Long id);
+
+    List<FailedQuestion> findAllByUserId(long userId);
 }

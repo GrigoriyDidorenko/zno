@@ -9,19 +9,21 @@ import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
 import ua.com.zno.online.controllers.filter.RequestFilter;
 import ua.com.zno.online.exceptions.ZnoUserException;
-import ua.com.zno.online.DTOs.statistic.Statistics;
+import ua.com.zno.online.DTOs.statistic.SubjectStatistics;
 import ua.com.zno.online.services.user.LoggedUserService;
 import ua.com.zno.online.util.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by quento on 28.03.17.
  */
 @Controller
 @RequestMapping("user")
-public class LoggedUserController { //FIXME ZnoUserException{message='you are not authenticated!' must redirect to login
+public class LoggedUserController {
 
     @Autowired
     private RequestFilter requestFilter;
@@ -53,10 +55,18 @@ public class LoggedUserController { //FIXME ZnoUserException{message='you are no
 
     @GetMapping("statistics")
     @ResponseBody
-    public Statistics getStatistics(Principal principal) throws ZnoUserException {
+    public List<SubjectStatistics> getStatistics(Principal principal) throws ZnoUserException {
         if (principal == null) throw new ZnoUserException("you are not authenticated!");
 
         return defaultLoggedUserService.getStatistics();
+    }
+
+    @GetMapping("failed/notification")
+    @ResponseBody
+    public Map<String, Integer> getNotificationFailed(Principal principal) throws ZnoUserException {
+        if (principal == null) throw new ZnoUserException("you are not authenticated!");
+
+        return defaultLoggedUserService.getNotificationFailed();
     }
 
     @GetMapping("failed/questions/{subjectId}")

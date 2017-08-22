@@ -14,8 +14,8 @@ public class FailedQuestion extends AbstractEntity {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "subject_id")
-    private Long subjectId;
+    @Column(name = "test_id")
+    private Long testId;
 
     @Column(name = "question_id", nullable = false)
     private Long questionId;
@@ -48,15 +48,18 @@ public class FailedQuestion extends AbstractEntity {
     @Column(name = "next_ask_time", nullable = false)
     private LocalDateTime nextAskTime;
 
-    public FailedQuestion(Long userId, Long subjectId, Long questionId, boolean resolved,
+    public FailedQuestion(Long userId, Long testId, Long questionId, boolean resolved,
                           LocalDateTime creationDate, LocalDateTime nextAskTime) {
         this.userId = userId;
-        this.subjectId = subjectId;
+        this.testId = testId;
         this.questionId = questionId;
         this.resolved = resolved;
         this.creationDate = creationDate;
         this.nextAskTime = nextAskTime;
         this.stage = 0;
+    }
+
+    public FailedQuestion() {
     }
 
     public Long getUserId() {
@@ -67,12 +70,12 @@ public class FailedQuestion extends AbstractEntity {
         this.userId = userId;
     }
 
-    public Long getSubjectId() {
-        return subjectId;
+    public Long getTestId() {
+        return testId;
     }
 
-    public void setSubjectId(Long subjectId) {
-        this.subjectId = subjectId;
+    public void setTestId(Long testId) {
+        this.testId = testId;
     }
 
     public Long getQuestionId() {
@@ -119,6 +122,7 @@ public class FailedQuestion extends AbstractEntity {
         this.nextAskTime = nextAskTime;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,7 +133,7 @@ public class FailedQuestion extends AbstractEntity {
 
         if (resolved != that.resolved) return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (subjectId != null ? !subjectId.equals(that.subjectId) : that.subjectId != null) return false;
+        if (testId != null ? !testId.equals(that.testId) : that.testId != null) return false;
         if (questionId != null ? !questionId.equals(that.questionId) : that.questionId != null) return false;
         if (creationDate != null ? !creationDate.equals(that.creationDate) : that.creationDate != null) return false;
         if (stage != null ? !stage.equals(that.stage) : that.stage != null) return false;
@@ -140,7 +144,7 @@ public class FailedQuestion extends AbstractEntity {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (subjectId != null ? subjectId.hashCode() : 0);
+        result = 31 * result + (testId != null ? testId.hashCode() : 0);
         result = 31 * result + (questionId != null ? questionId.hashCode() : 0);
         result = 31 * result + (resolved ? 1 : 0);
         result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);

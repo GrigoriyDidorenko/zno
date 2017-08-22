@@ -8,16 +8,13 @@ import org.springframework.stereotype.Service;
 import ua.com.zno.online.DTOs.QuestionDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
-import ua.com.zno.online.DTOs.UserAnswersPerQuestionDTO;
 import ua.com.zno.online.domain.FailedQuestion;
-import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.TestResult;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.ZnoUserException;
-import ua.com.zno.online.DTOs.statistic.Statistics;
+import ua.com.zno.online.DTOs.statistic.SubjectStatistics;
 import ua.com.zno.online.repository.*;
-import ua.com.zno.online.services.checker.QuestionCheckFactory;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -82,7 +79,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
 
             else {
                 FailedQuestion newFailedQuestionToPersist = new FailedQuestion(getAuthenticatedUser().getId(),
-                        testRepository.findOne(testId).getSubject().getId(),
+                        testId,
                         failedQuestionsId, false, LocalDateTime.now(), LocalDateTime.now().plusDays(daysBetweenRemind.get(0)));
 
                 failedQuestionRepository.save(newFailedQuestionToPersist);
@@ -138,25 +135,29 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     }
 
     @Override
-    public Statistics getStatistics() {
+    public List<SubjectStatistics> getStatistics() {
         long userId = getAuthenticatedUser().getId();
 
-        List<Subject> subjects = subjectRepository.findAll();
+        return testResultRepository.getStatisticsForUser(userId).stream()
+                .collect(Collectors.groupingBy(SubjectStatistics.TestStatistics::getSubjectName))
+                .entrySet().stream()
+                .map(e -> new SubjectStatistics(e.getKey(), e.getValue()))
+                .collect(Collectors.toList());
+    }
 
-        Map<String, Double> avrgMarkForSubject = new HashMap<>();
+    //TODO not tested because findAllByUserId throws java.io.EOFException: null (findAll does the same)
+    @Override
+    public Map<String, Integer> getNotificationFailed() {
+        long userId = getAuthenticatedUser().getId();
 
-        for (Subject subject : subjects) {
-            avrgMarkForSubject.put(subject.getName(), testResultRepository.avrgMarkForSubject(userId, subject.getId()));
-        }
-
-        return new Statistics(testResultRepository.avrgMark(userId),
-                avrgMarkForSubject,
-                testResultRepository.avrgDuration(userId),
-                testResultRepository.failedQuestionsCount(userId));
+        return failedQuestionRepository.findAllByUserId(userId).stream()
+                .collect(Collectors.groupingBy(FailedQuestion::getTestId))
+                .entrySet().stream()
+                .collect(Collectors.toMap(e -> subjectRepository.findSubjectNameByTestId(e.getKey()), e -> e.getValue().size()));
     }
 
     @Override
-    public User getAuthenticatedUser() { //TODO maybe create getAuthenticatedUserId()
+    public User getAuthenticatedUser() {
         org.springframework.security.core.userdetails.User user =
                 (org.springframework.security.core.userdetails.User)
                         SecurityContextHolder.getContext().getAuthentication().getPrincipal();

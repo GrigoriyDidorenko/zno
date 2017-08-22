@@ -29,7 +29,7 @@ public class UserDTO extends AbstractDTO {
     @NotNull
     @Pattern(regexp = Constants.EMAIL_VALIDATOR)
     private String email;
-    @JsonProperty("access_token")//todo remove secret
+    @JsonProperty(value = "access_token", access = JsonProperty.Access.WRITE_ONLY)
     private String secret;
 
     public UserDTO() {

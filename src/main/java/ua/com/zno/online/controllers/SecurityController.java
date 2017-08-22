@@ -21,6 +21,7 @@ import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.repository.UserRepository;
 import ua.com.zno.online.services.security.SecurityService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -85,9 +86,9 @@ public class SecurityController {
     }
 
     @GetMapping("confirmRegistration/{email}/{hash}")
-    public ResponseEntity<Void> confirmRegistration(@PathVariable String email, @PathVariable String hash) throws ZnoServerException, NoSuchAlgorithmException {
+    public void confirmRegistration(HttpServletResponse response, @PathVariable String email, @PathVariable String hash) throws ZnoServerException, NoSuchAlgorithmException, ZnoUserException, IOException {
         securityService.confirmRegistration(email, hash);
-        return new ResponseEntity<>(HttpStatus.OK);
+        response.sendRedirect("/statistics.html");
     }
 
     @GetMapping("loginStatus")

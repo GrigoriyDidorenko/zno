@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -26,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import ua.com.zno.online.DTOs.FBResponseDTO;
 import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.DTOs.UserDTO;
+import ua.com.zno.online.controllers.SecurityController;
 import ua.com.zno.online.domain.user.Authority;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.ZnoServerException;
@@ -185,7 +188,7 @@ public class SecurityService {
             ZnoUserException, NoSuchAlgorithmException {
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(userDTO.getEmail()));
         if (user.isPresent())
-            throw new ZnoUserException("This email already registered!"); //TODO not sure how to make feedback
+            throw new ZnoUserException("This email already registered!");
 
         String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
         User userToPersist = new User(userDTO.getEmail().substring(0, userDTO.getEmail().indexOf("@")),
@@ -195,7 +198,7 @@ public class SecurityService {
     }
 
     @Transactional
-    public void confirmRegistration(String email, String hash) throws NoSuchAlgorithmException, ZnoServerException {
+    public void confirmRegistration(String email, String hash) throws NoSuchAlgorithmException, ZnoServerException, ZnoUserException {
         if (!hash.equals(SecurityUtils.createSHA256URLSafeHash(email + env.getProperty("vk.client.secret")))) {
             throw new ZnoServerException("not valid hash");
         }
@@ -207,6 +210,7 @@ public class SecurityService {
         user.get().setEnabled(true);
         userRepository.save(user.get());
         mailService.sendEmail(email, "Ви успішно зареєстровані на 'zno.net.ua'.", createSuccessRegistrationContent());
+        authorizateUser(user.get());
     }
 
     @Transactional
@@ -246,7 +250,7 @@ public class SecurityService {
 
     private String createSuccessRegistrationContent() {
         //String beautyHtml = ...
-        return "Ви успішно зареєстровані на 'zno.net.ua'. Автризуйтеся і скоріше приступайте до роботи";
+        return "Ви успішно зареєстровані на 'zno.net.ua'.";
     }
 
     private String createConfirmationContent(String email) throws NoSuchAlgorithmException {

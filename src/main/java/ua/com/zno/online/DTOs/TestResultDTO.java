@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by quento on 09.04.17.
  */
-public class TestResultDTO extends AbstractDTO { // FIXME added test and user to testResult
+public class TestResultDTO extends AbstractDTO {
 
     @Min(value = 0)
     private Integer duration;
