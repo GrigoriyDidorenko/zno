@@ -151,6 +151,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         long userId = getAuthenticatedUser().getId();
 
         return failedQuestionRepository.findAllByUserId(userId).stream()
+                                                ////////BUG/////////////
                 .collect(Collectors.groupingBy(FailedQuestion::getTestId))
                 .entrySet().stream()
                 .collect(Collectors.toMap(e -> subjectRepository.findSubjectNameByTestId(e.getKey()), e -> e.getValue().size()));
