@@ -1,6 +1,7 @@
 package ua.com.zno.online.domain.user;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import ua.com.zno.online.domain.AbstractEntity;
 
 import javax.persistence.*;
@@ -26,8 +27,8 @@ public class User extends AbstractEntity {
     @Column(name = "email", nullable = false)
     private String email;
 
-    //TODO: add fixed length
     @Column(name = "password", nullable = false)
+    @Length(min = 60, max = 60)
     private String password;
 
     @Column(name = "creation_date", nullable = false)
