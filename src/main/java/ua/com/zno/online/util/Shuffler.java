@@ -11,13 +11,10 @@ import java.util.*;
 public final class Shuffler {
 
     private Shuffler() {
-
     }
 
-    public static TestDTO shuffle(TestDTO test) {
+    public static void shuffleAnswers(TestDTO test) {
         test.getQuestions().forEach(question -> shuffle(question.getAnswers()));
-        shuffle(test.getQuestions());
-        return test;
     }
 
     private static void shuffle(List<? extends AbstractDTO> entities) {

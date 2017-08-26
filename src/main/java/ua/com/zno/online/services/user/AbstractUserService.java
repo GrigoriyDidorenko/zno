@@ -51,7 +51,7 @@ abstract class AbstractUserService implements UserService {
         if (test.isPresent()) {
             Hibernate.initialize(test.get().getQuestions());
             TestDTO testDTO = entityToDTO.convertToDTO(test.get(), TestDTO.class);
-            Shuffler.shuffle(testDTO);//FIXME can not shuffle like that
+            Shuffler.shuffleAnswers(testDTO);
             return testDTO;
         }
 
