@@ -148,16 +148,14 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
                 .collect(Collectors.toList());
     }
 
-    //TODO not tested because findAllByUserId throws java.io.EOFException: null (findAll does the same)
     @Override
     public Map<String, Integer> getNotificationFailed() {
         long userId = getAuthenticatedUser().getId();
 
         return failedQuestionRepository.findAllByUserId(userId).stream()
-                ////////BUG/////////////
-                .collect(Collectors.groupingBy(FailedQuestion::getTestId))
+                .collect(Collectors.groupingBy(e -> subjectRepository.findSubjectNameByTestId(e.getTestId())))
                 .entrySet().stream()
-                .collect(Collectors.toMap(e -> subjectRepository.findSubjectNameByTestId(e.getKey()), e -> e.getValue().size()));
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().size()));
     }
 
     @Override
