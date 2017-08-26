@@ -71,7 +71,6 @@ public class LoggedUserController {
 
     @GetMapping("failed/questions/{subjectId}")
     public TestDTO getFailedQuestionsTest(@PathVariable Long subjectId) {
-        subjectId -= Constants.ID_APPENDER;
         return defaultLoggedUserService.getFailedQuestionsBySubject(subjectId);
     }
 

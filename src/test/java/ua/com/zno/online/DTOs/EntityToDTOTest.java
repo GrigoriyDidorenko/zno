@@ -45,7 +45,7 @@ public class EntityToDTOTest {
         QuestionDTO questionDTO = entityToDTO.convertToDTO(question, QuestionDTO.class);
 
 
-        Assert.assertEquals(question.getId() + Constants.ID_APPENDER, questionDTO.getId().longValue());
+        Assert.assertEquals(question.getId(), questionDTO.getId());
         Assert.assertEquals(question.getQuestionText(), questionDTO.getQuestionText());
         Assert.assertEquals(question.getAnswers().size(), questionDTO.getAnswers().size());
 

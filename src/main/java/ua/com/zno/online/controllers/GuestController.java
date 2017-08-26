@@ -36,7 +36,6 @@ public class GuestController {
     @GetMapping("test/{testId}")
     @ResponseBody
     public TestDTO getTest(@PathVariable Long testId) throws ZnoServerException {
-        testId -= Constants.ID_APPENDER;
         return guestService.getTest(testId);
     }
 
@@ -51,7 +50,6 @@ public class GuestController {
     @GetMapping("subject/{subjectId}")
     @ResponseBody
     public List<TestDTO> getTestsBySubject(@PathVariable Long subjectId) {
-        subjectId -= Constants.ID_APPENDER;
         return guestService.getTestsBySubject(subjectId).stream()
                 .map(test -> entityToDTO.convertToDTO(test, TestDTO.class))
                 .collect(Collectors.toList());
@@ -60,7 +58,6 @@ public class GuestController {
     @GetMapping("brainstorm/{subjectId}")
     @ResponseBody
     public TestDTO getShuffledTest(@PathVariable Long subjectId) throws ZnoUserException {
-        subjectId -= Constants.ID_APPENDER;
         return guestService.getShuffledTestBySubject(subjectId);
     }
 

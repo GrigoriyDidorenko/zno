@@ -30,16 +30,11 @@ public class EntityToDTO {
 
     public <T extends AbstractDTO> T convertToDTO(AbstractEntity entity, Class<T> dtoClass) {
         T dto = modelMapper.map(entity, dtoClass);
-        dto.setId(entity.getId() + Constants.ID_APPENDER);
         return dto;
     }
 
     public <T extends AbstractEntity> T DTOToEntity(AbstractDTO dto, Class<T> entityClass) {
         T entity = modelMapper.map(dto, entityClass);
-        if (dto.getId() != null) {
-            entity.setId(dto.getId() - Constants.ID_APPENDER);
-        }
-
         return entity;
     }
 
