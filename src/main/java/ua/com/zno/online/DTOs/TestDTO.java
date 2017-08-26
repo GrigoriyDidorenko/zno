@@ -91,7 +91,10 @@ public class TestDTO extends AbstractDTO {
 
     public List<QuestionDTO> getQuestions() {
         //todo bullshit
-        return questions.stream().filter(questionDTO -> questionDTO.getParentId() == null).collect(Collectors.toList());
+        if (questions != null)
+            return questions.stream().filter(questionDTO -> questionDTO.getParentId() == null).collect(Collectors.toList());
+
+        return null;
     }
 
     public void setQuestions(List<QuestionDTO> questions) {
