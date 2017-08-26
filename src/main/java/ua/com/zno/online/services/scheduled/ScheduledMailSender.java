@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import ua.com.zno.online.domain.mail.Mail;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.repository.UserRepository;
 import ua.com.zno.online.services.mail.MailService;
@@ -32,6 +33,6 @@ public class ScheduledMailSender {
         List<String> emails = userRepository.getEmailsOfUsersWithFailedQuestions();
         LOG.debug("Sending email to users, which has failed questions, num of users {}", emails.size());
 
-        emails.forEach(email -> mailService.sendEmail(email, "topic", "content"));
+        emails.forEach(email -> mailService.sendEmail(new Mail(email, "topic", "content")));
     }
 }

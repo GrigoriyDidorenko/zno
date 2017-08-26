@@ -1,5 +1,7 @@
 package ua.com.zno.online.services.mail;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import ua.com.zno.online.domain.mail.Mail;
 
 /**
  * Created by quento on 28.03.17.
@@ -25,6 +29,9 @@ public class MailService {
 
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private Configuration freeMarkerConfiguration;
+
 
     @Value(value = "${system.email}")
     private String from;
@@ -32,23 +39,28 @@ public class MailService {
     //could be tested : http://dolszewski.com/spring/sending-html-mail-with-spring-boot-and-thymeleaf/
 
     @Async(value = "mailSendingExecutorPool")
-    public void sendEmail(String to, String topic, String content) {
-
-        MimeMessagePreparator messagePreparator = mimeMessage -> {
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom(from);
-            messageHelper.setTo(to);
-            messageHelper.setSubject(topic);
-            messageHelper.setText(content);
-        };
-
+    public void sendEmail(Mail mail) {
         try {
-            mailSender.send(messagePreparator);
+
+            MimeMessagePreparator message = mimeMessage -> {
+                MimeMessageHelper messageBuilder = new MimeMessageHelper(mimeMessage);
+                messageBuilder.setFrom(from);
+                messageBuilder.setTo(mail.getMailTo());
+                messageBuilder.setSubject(mail.getMailSubject());
+
+                freeMarkerConfiguration.setClassForTemplateLoading(this.getClass(), "/templates");
+                Template template = freeMarkerConfiguration.getTemplate("mail.ftl");
+                String content = FreeMarkerTemplateUtils.processTemplateIntoString(template, mail.getModel());
+
+                messageBuilder.setText(content);
+            };
+
+            mailSender.send(message);
+            LOG.error("Send message to {} with topic {} and content {} ", mail.getMailTo(), mail.getMailSubject(), mail.getMailContent());
         } catch (MailException e) {
-            LOG.error("Failed to send message to {} with topic {} and content. Exception {} ", to, topic, content, e);
+            LOG.error("Failed to send message to {} with topic {} and content. Exception {} ", mail.getMailTo(), mail.getMailSubject(), mail.getMailContent(), e);
         }
     }
-
 
 }
 

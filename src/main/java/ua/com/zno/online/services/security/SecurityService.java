@@ -29,6 +29,7 @@ import ua.com.zno.online.DTOs.FBResponseDTO;
 import ua.com.zno.online.DTOs.mapper.EntityToDTO;
 import ua.com.zno.online.DTOs.UserDTO;
 import ua.com.zno.online.controllers.SecurityController;
+import ua.com.zno.online.domain.mail.Mail;
 import ua.com.zno.online.domain.user.Authority;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.ZnoServerException;
@@ -194,7 +195,7 @@ public class SecurityService {
         User userToPersist = new User(userDTO.getEmail().substring(0, userDTO.getEmail().indexOf("@")),
                 userDTO.getEmail(), userDTO.getEmail(), hashedPassword, LocalDateTime.now(), false, Collections.singleton(Authority.USER));
         userRepository.save(userToPersist);
-        mailService.sendEmail(userDTO.getEmail(), "Підтвердіть реєстрацію для 'zno.net.ua'.", this.createConfirmationContent(userDTO.getEmail()));
+        mailService.sendEmail(new Mail(userDTO.getEmail(), "Підтвердіть реєстрацію для 'zno.net.ua'.", this.createConfirmationContent(userDTO.getEmail())));
     }
 
     @Transactional
@@ -209,7 +210,7 @@ public class SecurityService {
 
         user.get().setEnabled(true);
         userRepository.save(user.get());
-        mailService.sendEmail(email, "Ви успішно зареєстровані на 'zno.net.ua'.", createSuccessRegistrationContent());
+        mailService.sendEmail(new Mail(email, "Ви успішно зареєстровані на 'zno.net.ua'.", createSuccessRegistrationContent()));
         authorizateUser(user.get());
     }
 
@@ -224,7 +225,7 @@ public class SecurityService {
         String hashedPassword = passwordEncoder.encode(password);
         user.get().setPassword(hashedPassword);
         userRepository.save(user.get());
-        mailService.sendEmail(email, "Відновлення паролю для 'zno.net.ua'", createResetContent(password));
+        mailService.sendEmail(new Mail(email, "Відновлення паролю для 'zno.net.ua'", createResetContent(password)));
     }
 
     @Transactional
@@ -240,7 +241,7 @@ public class SecurityService {
         String hashedPassword = passwordEncoder.encode(newPsswrd);
         user.get().setPassword(hashedPassword);
         userRepository.save(user.get());
-        mailService.sendEmail(email, "Зміна паролю для 'zno.net.ua'", createChangePasswordContent());
+        mailService.sendEmail(new Mail(email, "Зміна паролю для 'zno.net.ua'", createChangePasswordContent()));
     }
 
     private String createChangePasswordContent() {
