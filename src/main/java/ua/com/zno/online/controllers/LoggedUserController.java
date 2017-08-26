@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by quento on 28.03.17.
  */
-@Controller
+@RestController
 @RequestMapping("user")
 public class LoggedUserController {
 
@@ -54,7 +54,6 @@ public class LoggedUserController {
     }
 
     @GetMapping("statistics")
-    @ResponseBody
     public List<SubjectStatistics> getStatistics(Principal principal) throws ZnoUserException {
         if (principal == null) throw new ZnoUserException("you are not authenticated!");
 
@@ -62,7 +61,6 @@ public class LoggedUserController {
     }
 
     @GetMapping("failed/notification")
-    @ResponseBody
     public Map<String, Integer> getNotificationFailed(Principal principal) throws ZnoUserException {
         if (principal == null) throw new ZnoUserException("you are not authenticated!");
 

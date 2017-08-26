@@ -107,21 +107,24 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
 
     @Override
     public TestDTO getFailedQuestions() {
-        List<Question> failedQuestions = questionRepository.findAllFailedQuestions(getAuthenticatedUser().getId());
-        List<QuestionDTO> questionDTOs = new ArrayList<>(failedQuestions.size());
-        failedQuestions.forEach(question -> questionDTOs.add(super.entityToDTO.convertToDTO(question, QuestionDTO.class)));
+        List<QuestionDTO> questionDTOs = questionRepository
+                .findAllFailedQuestions(getAuthenticatedUser().getId()).stream()
+                .map(question -> entityToDTO.convertToDTO(question, QuestionDTO.class))
+                .collect(Collectors.toList());
 
         return new TestDTO("Failed questions", questionDTOs);
     }
 
     @Override
     public TestDTO getFailedQuestionsBySubject(Long subjectId) {
-        List<Question> failedQuestions = questionRepository.findAnllFailedQuestionsBySubject(subjectId, getAuthenticatedUser().getId());
-        List<QuestionDTO> questionDTOs = new ArrayList<>(failedQuestions.size());
-        failedQuestions.forEach(question -> questionDTOs.add(super.entityToDTO.convertToDTO(question, QuestionDTO.class)));
+        List<QuestionDTO> questionDTOs = questionRepository
+                .findAnllFailedQuestionsBySubject(subjectId, getAuthenticatedUser().getId()).stream()
+                .map(question -> entityToDTO.convertToDTO(question, QuestionDTO.class))
+                .collect(Collectors.toList());
+
         String subjectName = subjectRepository.findOne(subjectId).getName();
 
-        return new TestDTO("Failed questions by subject", subjectName, questionDTOs); //FIXME if there is no failed q - 404
+        return new TestDTO("Failed questions by subject", subjectName, questionDTOs);
     }
 
     private Optional<LocalDateTime> askNextTime(Long failedQuestionId) {
@@ -151,7 +154,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         long userId = getAuthenticatedUser().getId();
 
         return failedQuestionRepository.findAllByUserId(userId).stream()
-                                                ////////BUG/////////////
+                ////////BUG/////////////
                 .collect(Collectors.groupingBy(FailedQuestion::getTestId))
                 .entrySet().stream()
                 .collect(Collectors.toMap(e -> subjectRepository.findSubjectNameByTestId(e.getKey()), e -> e.getValue().size()));

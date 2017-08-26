@@ -16,7 +16,7 @@ public class TestDTO extends AbstractDTO {
 
     private Integer duration;
 
-    private Long subjectId; //TODO Do we need it?
+    private Long subjectId;
 
     private List<QuestionDTO> questions;
 

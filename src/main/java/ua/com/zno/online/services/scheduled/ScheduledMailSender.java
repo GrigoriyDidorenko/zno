@@ -28,7 +28,7 @@ public class ScheduledMailSender {
 
     @Scheduled(cron = "0 0 0 * * FRI")
     public void sendEmailToUsersWithFailedQuestions() {
-        //TODO: check query
+        //TODO: Grigoriy check query
         List<String> emails = userRepository.getEmailsOfUsersWithFailedQuestions();
         LOG.debug("Sending email to users, which has failed questions, num of users {}", emails.size());
 
