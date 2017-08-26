@@ -52,11 +52,11 @@ public class MailService {
                 Template template = freeMarkerConfiguration.getTemplate("mail.ftl");
                 String content = FreeMarkerTemplateUtils.processTemplateIntoString(template, mail.getModel());
 
-                messageBuilder.setText(content);
+                messageBuilder.setText(content, true);
             };
 
             mailSender.send(message);
-            LOG.error("Send message to {} with topic {} and content {} ", mail.getMailTo(), mail.getMailSubject(), mail.getMailContent());
+            LOG.info("Send message to {} with topic {} and content {} ", mail.getMailTo(), mail.getMailSubject(), mail.getMailContent());
         } catch (MailException e) {
             LOG.error("Failed to send message to {} with topic {} and content. Exception {} ", mail.getMailTo(), mail.getMailSubject(), mail.getMailContent(), e);
         }
