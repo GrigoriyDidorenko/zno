@@ -31,8 +31,6 @@ public class LoggedUserController {
     @Autowired
     private LoggedUserService defaultLoggedUserService;
 
-    //TODO: add redirects for post requests
-
     @PostMapping("result")
     public ResponseEntity<Double> acceptTestResult(HttpServletRequest request, @RequestBody TestResultDTO testResultDTO) throws ZnoUserException {
         if (requestFilter.isSpamming(request.getLocalAddr())) {
