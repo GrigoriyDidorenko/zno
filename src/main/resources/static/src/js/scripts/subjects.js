@@ -15,6 +15,6 @@ if ($('main').hasClass('subjects_page')) {
                 }
                 $('.pageSubjects').append('<a href="subject.html?subject=' + val.id + '" class="subject"><div class="subject_img"><img src='+imgUrl+' alt="' + val.name.toLowerCase() + '"></div><p>' + val.name + '</p></a>');
             });
-        },
+        }
     });
 }

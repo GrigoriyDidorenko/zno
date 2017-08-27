@@ -2,9 +2,196 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Statistics</title>
+    <title>ZNO online</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Raleway:400,500,600" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="src/css/style.css" />
 </head>
-<body>
-    statistics
+<body class="subject_page">
+<header>
+    <div class="header">
+        <div class="wrapper">
+            <a href="index.html" class="logo">
+                <img src="src/img/logo.png" alt="logo" title="logo">
+                <span>zno.online</span>
+            </a>
+            <nav class="header_menu">
+                    <span class="mob_menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                <ul class="menu">
+                    <li class="btn_close">
+                        <img src="src/img/close.svg" alt="close" title="close">
+                    </li>
+                    <li>
+                        <a href="subjects.html" class="btn">пройти тест</a>
+                    </li>
+                    <li class="header_registr">
+                        <a class="registration" data-toggle="modal" data-target="#signup">зареєструватися</a>
+                    </li>
+                    <li class="header_login">
+                        <a class="login" data-toggle="modal" data-target="#signin">увійти</a>
+                    </li>
+                    <li class="user_bell">
+                        <img src="src/img/bell.svg" alt="bell">
+                        <div class="user_bell-block">
+                            <div class="bell_subject" data-toggle="modal" data-target="#bell_subject">
+                                <p>Українська мова</p>
+                                <span>15</span>
+                            </div>
+                            <div class="bell_subject" data-toggle="modal" data-target="#bell_subject">
+                                <p>Математика</p>
+                                <span>15</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="header_user">
+                        <a href=""><img src="src/img/user.svg" alt="user"></a>
+                        <div class="header_header-info">
+                            <div class="header-info-main">
+                                <img src="src/img/user.svg" alt="user">
+                                <div>
+                                    <p class="header-info-username"></p>
+                                </div>
+                            </div>
+                            <div class="header-info-links">
+                                <a href="">Особистий кабінет</a>
+                                <a href="/logout">Вихід</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<main class="statistics_page">
+    <div class="wrapper">
+        <div class="statistic_subjects"></div>
+    </div>
+</main>
+
+<footer>
+
+</footer>
+
+<!-- Modal signin -->
+<div class="modal fade" id="signin" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Увійти</h4>
+            </div>
+            <div class="modal-body">
+                <div class="social">
+                    <a href="" class="btn btn_vk">вконтакті</a>
+                    <a href="" class="btn btn_fb">facebook</a>
+                </div>
+                <div class="modal_or">
+                    <hr>
+                    <p>або</p></div>
+                <form name="loginForm">
+                    <input type="email" name="email" id="loginEmail" placeholder="Email">
+                    <input type="password" name="password" id="loginPassword" placeholder="Пароль">
+                    <div class="login_error"></div>
+                    <button type="submit" class="btn" id="login">Увійти</button>
+                    <a class="form_lost-pass" id="lostPass" data-toggle="modal" data-target="#lost_password">Забули пароль?</a>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal confirm registration -->
+<div class="modal fade" id="registration_confirm" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Дякуємо за реєстрацію на нашому ресурсі!</p>
+                <p>На пошту <span id="user_email"></span> надіслано повідомлення з підтвердженням реєстрації.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal lost password -->
+<div class="modal fade" id="lost_password" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Вкажіть email</p>
+                <input type="email" name="email" id="lost-Email" placeholder="Email">
+                <button id="lost_email-sent">Надіслати</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal signup -->
+<div class="modal fade" id="modal_signup" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">зареєструватися</h4>
+            </div>
+            <div class="modal-body">
+                <div class="social">
+                    <a href="" class="btn btn_vk">вконтакті</a>
+                    <a href="" class="btn btn_fb">facebook</a>
+                </div>
+                <div class="modal_or"><hr><p>або</p></div>
+                <form name="registration">
+                    <input type="email" placeholder="Email" name="email" id="email">
+                    <input type="password" placeholder="Пароль" name="password" id="password">
+                    <div class="registration_error"></div>
+                    <button type="submit" class="btn" id="registration">зареєструватися</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal bell subjects -->
+<div class="modal fade" id="bell_subject" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <p>Розпочати тестування</p>
+                <a href="test.html?time=false&test=1" class="btn">Розпочати</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="src/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="src/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="src/js/jquery.fullPage.js"></script>
+<script type="text/javascript" src="src/js/script.js"></script>
+<script src="https://use.fontawesome.com/75e1b47c6b.js"></script>
+
 </body>
 </html>
