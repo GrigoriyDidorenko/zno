@@ -21,16 +21,16 @@ import java.time.LocalDateTime;
         " where tr.user_id = ?1", name = "TestResult.getStatisticsForUser", resultSetMapping = "statistics")
 
 @SqlResultSetMapping(
-        name="statistics",
-        classes={
+        name = "statistics",
+        classes = {
                 @ConstructorResult(
-                        targetClass=SubjectStatistics.TestStatistics.class,
-                        columns={
-                                @ColumnResult(name="subjectName", type = String.class),
-                                @ColumnResult(name="testName", type = String.class),
-                                @ColumnResult(name="duration", type = Integer.class),
-                                @ColumnResult(name="mark", type = Double.class),
-                                @ColumnResult(name="numOfFailedQuestions", type = Integer.class)
+                        targetClass = SubjectStatistics.TestStatistics.class,
+                        columns = {
+                                @ColumnResult(name = "subjectName", type = String.class),
+                                @ColumnResult(name = "testName", type = String.class),
+                                @ColumnResult(name = "duration", type = Integer.class),
+                                @ColumnResult(name = "mark", type = Double.class),
+                                @ColumnResult(name = "numOfFailedQuestions", type = Integer.class)
                         }
                 )
         }
@@ -60,8 +60,9 @@ public class TestResult extends AbstractEntity {
     public TestResult() {
     }
 
-    public TestResult(Test test, Integer duration, Double mark, LocalDateTime submissionTime) {
+    public TestResult(Test test, User user, Integer duration, Double mark, LocalDateTime submissionTime) {
         this.test = test;
+        this.user = user;
         this.duration = duration;
         this.mark = mark;
         this.submissionTime = submissionTime;

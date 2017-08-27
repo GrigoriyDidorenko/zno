@@ -60,12 +60,14 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
 
         this.updateFailedQuestions(markPerQuestion, testResultDTO.getId());
 
-        testResultRepository.save(new TestResult(testRepository.findOne(testResultDTO.getId()), testResultDTO.getDuration(), total, LocalDateTime.now()));
+        testResultRepository.save(new TestResult(testRepository.findOne(testResultDTO.getId()), getAuthenticatedUser(), testResultDTO.getDuration(), total, LocalDateTime.now()));
 
         return total;
     }
 
     private void updateFailedQuestions(Map<Long, Long> questionIdWithMark, Long testId) {
+        long userId = getAuthenticatedUser().getId();
+
         List<Long> failedQuestionsIds = questionIdWithMark.entrySet().stream()
                 .filter(entry -> entry.getValue() == 0)
                 .map(Map.Entry::getValue)
@@ -73,14 +75,12 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
 
 
         for (Long failedQuestionsId : failedQuestionsIds) {
-            if (failedQuestionRepository.exists(failedQuestionsId))
-                failedQuestionRepository.setNewAskDate(LocalDateTime.now().plusDays(daysBetweenRemind.get(0)),
-                        getAuthenticatedUser().getId());
-
-            else {
-                FailedQuestion newFailedQuestionToPersist = new FailedQuestion(getAuthenticatedUser().getId(),
-                        testId,
-                        failedQuestionsId, false, LocalDateTime.now(), LocalDateTime.now().plusDays(daysBetweenRemind.get(0)));
+            if (failedQuestionRepository.existsByUserIdAndQuestionId(userId, failedQuestionsId)) {
+                failedQuestionRepository
+                        .setNewAskDate(LocalDateTime.now().plusDays(daysBetweenRemind.get(0)), userId);
+            } else {
+                FailedQuestion newFailedQuestionToPersist = new FailedQuestion(userId, testId, failedQuestionsId,
+                        false, LocalDateTime.now(), LocalDateTime.now().plusDays(daysBetweenRemind.get(0)));
 
                 failedQuestionRepository.save(newFailedQuestionToPersist);
             }

@@ -3,6 +3,7 @@ package ua.com.zno.online.repository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import ua.com.zno.online.domain.FailedQuestion;
+import ua.com.zno.online.domain.question.Question;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,4 +25,6 @@ public interface FailedQuestionRepository extends AbstractRepository<FailedQuest
     void markResolved(Long id);
 
     List<FailedQuestion> findAllByUserId(long userId);
+
+    boolean existsByUserIdAndQuestionId(long userId, long questionId);
 }
