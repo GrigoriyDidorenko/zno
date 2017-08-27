@@ -1,0 +1,214 @@
+.header
+  background: rgba(0,0,0,0.3)
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  z-index: 2
+  padding: 10px 0
+  box-sizing: border-box
+  .wrapper
+    display: flex
+    justify-content: space-between
+    align-items: center
+    .logo
+      display: flex
+      align-items: center
+      img
+        width: auto
+        height: 40px
+        margin-right: 5px
+      span
+        color: white
+        font:
+          family: 'Raleway', sans-serif
+          size: 19px
+          weight: 500
+        letter-spacing: 0.7px
+nav.header_menu
+  .mob_menu
+    display: none
+    @media #{$mobile}
+      display: block
+      margin-top: 5px
+      cursor: pointer
+      span
+        display: block
+        width: 25px
+        height: 2px
+        background: rgb(255, 255, 255)
+        margin-bottom: 4px
+  ul
+    display: flex
+    align-items: center
+    padding: 0
+    list-style-type: none
+    margin: 0
+    position: relative
+    @media #{$mobile}
+      display: block
+      position: fixed
+      top: 0
+      right: -230px
+      background: rgba(0, 0, 0, 0.66)
+      box-shadow: 0 0 20px rgba(0,0,0,0.2)
+      height: 100vh
+      width: 200px
+      padding: 15px
+      box-sizing: border-box
+    li
+      padding: 0 10px
+      @media #{$mobile}
+        padding: 0 0 25px 0
+      a
+        font-size: 13px
+        color: white
+        letter-spacing: 0.7px
+        font-weight: 700
+        text-transform: uppercase
+        cursor: pointer
+        &:hover
+          color: $light_yellow
+        &.btn
+          &:hover
+              color: white
+      &.header_login
+        padding-right: 0
+        border-left: 0.5px solid rgba(255, 255, 255, 0.66)
+        a
+          color: $yellow_color
+          &:hover
+            color: $light_yellow
+      &.header_user
+        display: none
+        position: relative
+        a
+          img
+            height: 38px
+        .header_header-info
+          display: none
+          position: absolute
+          right: 0
+          background: transparent
+          width: 193px
+          top: 35px
+          padding-top: 14px
+          .header-info-main
+            position: relative
+            display: flex
+            background: rgba(243, 249, 255, 0.8)
+            padding: 9px 15px
+            align-items: center
+            justify-content: space-between
+            &::before
+              content: ''
+              position: absolute
+              top: -5px
+              right: 23px
+              width: 0
+              height: 0
+              border-style: solid
+              border-width: 0 5px 5px 5px
+              border-color: transparent transparent #bcd8ec transparent
+            img
+              width: 40px
+            p
+              margin: 0
+              text-transform: capitalize
+              font-size: 13px
+              text-align: right
+              line-height: 16px
+          .header-info-links
+            background: rgba(239, 239, 239, 0.95)
+            display: flex
+            flex-direction: column
+            border-bottom-left-radius: 2px
+            border-bottom-right-radius: 2px
+            a
+              font-weight: 400
+              font-size: 12px
+              letter-spacing: .3px
+              color: #070705
+              display: block
+              padding: 10px
+              border-bottom: 1px solid #c6d3dc
+              &:hover
+                background: rgba(255, 255, 255, 0.67)
+                color: $dark_blue
+              &:last-of-type
+                border-bottom: 0
+                border-bottom-left-radius: 2px
+                border-bottom-right-radius: 2px
+
+    .btn_close
+      display: none
+      img
+        width: 15px
+      @media #{$mobile}
+        display: block
+        cursor: pointer
+        position: absolute
+        top: 25px
+        left: -25px
+#menu
+  position: fixed
+  top: 130px
+  left: 30px
+  height: 40px
+  z-index: 70
+  width: 100%
+  padding: 0
+  margin: 0
+  @media (max-width: 767px)
+    display: none
+  li
+    display: flex
+    margin: 20px
+    width: 55px
+    height: 55px
+    color: #000
+    background: #fff
+    background: rgba(255,255,255, 0.5)
+    -webkit-border-radius: 10px
+    border-radius: 50px
+    justify-content: center
+    align-items: center
+    cursor: pointer
+    position: relative
+    @include transition(0.3s)
+    &.active
+      background: rgba(0, 0, 0, 0.32)
+      color: white
+    a
+      position: absolute
+      width: 100%
+      height: 100%
+      display: flex
+      align-items: center
+      justify-content: center
+      border-radius: 50px
+      img
+        width: 30px
+        height: 30px
+    &:after
+      position: absolute
+      content: ''
+      display: block
+      width: 1px
+      height: 12px
+      background: white
+      bottom: -16px
+      left: 28px
+    &:last-of-type
+      &:after
+        display: none
+    &:hover
+      background: rgba(255, 255, 255, 0.15)
+body.fp-viewing-welcome #menu
+  display: none
+
+.fp-tableCell
+  background: url('../img/pattern.png')
+  background-size: contain
+  background-repeat: repeat
+  position: relative

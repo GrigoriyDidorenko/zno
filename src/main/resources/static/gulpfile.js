@@ -1,23 +1,27 @@
 var gulp = require('gulp');
-var concatCss = require('gulp-concat-css');
 var cleanCSS = require('gulp-clean-css');
-var uncss = require('gulp-uncss');
 var sass = require('gulp-sass');
+var concat = require('gulp-concat');
+
 var browserSync = require('browser-sync');
 
 gulp.task ('css', function() {
-  return gulp.src('css/style.sass')
-  	.pipe(sass())
-    .pipe(concatCss("styles/style.css"))
-    .pipe(cleanCSS({compatibility: 'ie8'}))
-    .pipe(uncss({
-        html: ['*.html']
-    }))
-    .pipe(gulp.dest('out'))
-    .pipe(browserSync.stream());
+    return gulp.src('src/css/style.sass')
+        .pipe(sass())
+        .pipe(cleanCSS({compatibility: 'ie8'}))
+        .pipe(gulp.dest('src/css'))
+        .pipe(browserSync.stream());
 });
 
-gulp.task('server', function() {
+gulp.task('scripts', function() {
+    return gulp.src('src/js/scripts/*')
+        .pipe(concat('script.js'))
+        .pipe(gulp.dest('src/js'))
+        .pipe(browserSync.stream());
+});
+
+
+gulp.task('server', ['css', 'scripts'], function() {
     browserSync({
         server: {
             baseDir: ''
@@ -25,7 +29,8 @@ gulp.task('server', function() {
         port: 8080
     });
 
-    gulp.watch(["css/*"], ['css']);
+    gulp.watch(["src/css/*"], ['css']);
+    gulp.watch(["src/scripts/js/*"], ['scripts']);
     gulp.watch("*.html").on('change', browserSync.reload);
 
 });

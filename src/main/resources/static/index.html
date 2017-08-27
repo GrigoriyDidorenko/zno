@@ -4,25 +4,7 @@
     <meta charset="UTF-8">
     <title>ZNO online</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Raleway:400,500,600" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="out/styles/style.css"/>
-    <style>
-        #menu li.active {
-            background: rgba(0, 0, 0, 0.32);
-            color: #fff;
-        }
-
-        body.fp-viewing-welcome #menu {
-            display: none
-        }
-
-        .fp-tableCell {
-            background: url(img/pattern.png);
-            background-size: contain;
-            background-repeat: repeat;
-            position: relative;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="src/css/style.css"/>
 
     <script>
 
@@ -95,11 +77,12 @@
     </script>
 </head>
 <body>
+
 <header>
     <div class="header">
         <div class="wrapper">
-            <a href="index.html" class="logo">
-                <img src="img/logo.svg" alt="logo" title="logo">
+            <a href="/" class="logo">
+                <img src="src/img/logo.png" alt="logo" title="logo">
                 <span>zno.online</span>
             </a>
             <nav class="header_menu">
@@ -110,31 +93,47 @@
                     </span>
                 <ul class="menu">
                     <li class="btn_close">
-                        <img src="img/close.svg" alt="close" title="close">
+                        <img src="src/img/close.svg" alt="close" title="close">
                     </li>
                     <li>
                         <a href="subjects.html" class="btn">пройти тест</a>
                     </li>
-                    <li>
+                    <li class="header_registr">
                         <a class="registration" data-toggle="modal" data-target="#signup">зареєструватися</a>
                     </li>
-                    <li>
+                    <li class="header_login">
                         <a class="login" data-toggle="modal" data-target="#signin">увійти</a>
+                    </li>
+                    <li class="header_user">
+                        <a href=""><img src="src/img/user.svg" alt="user"></a>
+                        <div class="header_header-info">
+                            <div class="header-info-main">
+                                <img src="src/img/user.svg" alt="user">
+                                <div>
+                                    <p class="header-info-username"></p>
+                                </div>
+                            </div>
+                            <div class="header-info-links">
+                                <a href="">Особистий кабінет</a>
+                                <a href="/logout">Вихід</a>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </nav>
         </div>
     </div>
 </header>
-<main>
+
+<main class="home_page">
     <ul id="menu">
-        <li data-menuanchor="pass-test"><a href="#pass-test"><img src="img/testing.svg" alt="pass-test"
+        <li data-menuanchor="pass-test"><a href="#pass-test"><img src="src/img/testing.svg" alt="pass-test"
                                                                   title="pass-test"></a></li>
-        <li data-menuanchor="get-plan"><a href="#get-plan"><img src="img/education.svg" alt="get-plan" title="get-plan"></a>
+        <li data-menuanchor="get-plan"><a href="#get-plan"><img src="src/img/education.svg" alt="get-plan" title="get-plan"></a>
         </li>
-        <li data-menuanchor="start-test"><a href="#start-test"><img src="img/start-test.svg" alt="start-test"
+        <li data-menuanchor="start-test"><a href="#start-test"><img src="src/img/start-test.svg" alt="start-test"
                                                                     title="start-test"></a></li>
-        <li data-menuanchor="mobile-app"><a href="#mobile-app"><img src="img/application.svg" alt="mobile-app"
+        <li data-menuanchor="mobile-app"><a href="#mobile-app"><img src="src/img/application.svg" alt="mobile-app"
                                                                     title="mobile-app"></a></li>
     </ul>
     <div id="fullpage">
@@ -144,25 +143,25 @@
                     <div class="wrap">
                         <h1>Здай ЗНО на 200 балів </h1>
                         <h2>zno.online – это интересный и эффективный способ изучить Английский язык.<br>
-                            Уже более 16 миллионов человек с нами – присоединяйся и ты!</h2>
+                            Уже более 16 миллионов человек с нами – присоединяйся!</h2>
                         <div class="main_registration">
                             <div class="main_registration--about">
                                 <div>
-                                    <img src="img/interesting.svg" alt="interesting" title="interesting">
+                                    <img src="src/img/interesting.svg" alt="interesting" title="interesting">
                                     <div>
                                         <p>Увлекательный</p>
                                         <p>zno.online делает изучение языка увлекательным</p>
                                     </div>
                                 </div>
                                 <div>
-                                    <img src="img/individually.svg" alt="individually" title="individually">
+                                    <img src="src/img/individually.svg" alt="individually" title="individually">
                                     <div>
-                                        <p style="color: #ffbe35;">Индивидуальный</p>
+                                        <p>Индивидуальный</p>
                                         <p>zno.online делает изучение языка увлекательным</p>
                                     </div>
                                 </div>
                                 <div>
-                                    <img src="img/effectively.svg" alt="effectively" title="effectively">
+                                    <img src="src/img/effectively.svg" alt="effectively" title="effectively">
                                     <div>
                                         <p>Эффективный</p>
                                         <p>zno.online делает изучение языка увлекательным</p>
@@ -171,25 +170,26 @@
                             </div>
                             <div class="main_registration--signin">
                                 <p>Безкоштовна реєстрація</p>
-                                <form>
-                                    <input type="email" placeholder="Email">
-                                    <input type="password" placeholder="Пароль">
+                                <form name="registration">
+                                    <input type="email" placeholder="Email" id="email" name="email">
+                                    <input type="password" placeholder="Пароль" id="password" name="password">
+                                    <div class="registration_error"></div>
+                                    <button type="submit" class="btn btn_registration" id="registration">зареєструватися</button>
                                 </form>
-                                <a class="btn btn_registration">зареєструватися</a>
                                 <div class="registration_or">
                                     <hr>
                                     <p>або</p></div>
                                 <div class="social">
-                                    <a><img src="img/vk.svg" alt="vk" title="vk"></a>
-                                    <a onclick="fb_login();"><img src="img/facebook.svg" alt="facebook" title="facebook"></a>
-                                    <a><img src="img/google-plus.svg" alt="google-plus" title="google-plus"></a>
+                                    <a><img src="src/img/vk.svg" alt="vk" title="vk"></a>
+                                    <a onclick="fb_login();"><img src="src/img/facebook.svg" alt="facebook" title="facebook"></a>
+                                    <a><img src="src/img/google-plus.svg" alt="google-plus" title="google-plus"></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <a href="#pass-test">
                         <div class="navigation_bottom">
-                            <img src="img/down-arrow.svg" alt="down" title="down" class="down_img first-page">
+                            <img src="src/img/down-arrow.svg" alt="down" title="down" class="down_img first-page">
                             <p>Як це працює?</p>
                         </div>
                     </a>
@@ -203,12 +203,12 @@
                     <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, fugiat earum aut ea in. Quia quos, minus deleniti hic incidunt illum. Asperiores rerum quo, facere quas dicta incidunt blanditiis omnis.</span>
                 </div>
                 <div class="wrap_right">
-                    <img src="img/testing.png" alt="">
+                    <img src="src/img/testing.png" alt="">
                 </div>
             </div>
             <a href="#get-plan">
                 <div class="navigation_bottom">
-                    <img src="img/down-arrow.svg" alt="down" title="down" class="down_img first-page">
+                    <img src="src/img/down-arrow.svg" alt="down" title="down" class="down_img first-page">
                     <p>Отримай програму</p>
                 </div>
             </a>
@@ -220,7 +220,7 @@
                     <hr>
                     <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, fugiat earum aut ea in. Quia quos, minus deleniti hic incidunt illum. Asperiores rerum quo, facere quas dicta incidunt blanditiis omnis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, fugiat earum aut ea in. Quia quos, minus deleniti hic incidunt illum. Asperiores rerum quo, facere quas dicta incidunt blanditiis omnis.</span>
                     <div class="section_img">
-                        <img src="img/idea.svg" alt="">
+                        <img src="src/img/idea.svg" alt="">
                         <div class="section_img-dots">
                             <p></p>
                             <p></p>
@@ -228,7 +228,7 @@
                             <p></p>
                             <p></p>
                         </div>
-                        <img src="img/realisation.svg" alt="">
+                        <img src="src/img/realisation.svg" alt="">
                         <div class="section_img-dots">
                             <p></p>
                             <p></p>
@@ -236,14 +236,14 @@
                             <p></p>
                             <p></p>
                         </div>
-                        <img src="img/result.svg" alt="">
+                        <img src="src/img/result.svg" alt="">
                     </div>
                     <a href="subjects.html" class="btn">обрати тест</a>
                 </div>
             </div>
             <a href="#start-test">
                 <div class="navigation_bottom">
-                    <img src="img/down-arrow.svg" alt="down" title="down" class="down_img first-page">
+                    <img src="src/img/down-arrow.svg" alt="down" title="down" class="down_img first-page">
                     <p>Отримай програму</p>
                 </div>
             </a>
@@ -255,18 +255,30 @@
                     <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, fugiat earum aut ea in. Quia quos, minus deleniti hic incidunt illum. Asperiores rerum quo, facere quas dicta incidunt blanditiis omnis.</span>
                 </div>
                 <div class="wrap_right">
-                    <img src="img/app.png" alt="">
+                    <img src="src/img/testing.png" alt="">
                 </div>
             </div>
-            <a href="#get-plan">
+            <a href="#mobile-app">
                 <div class="navigation_bottom">
-                    <img src="img/down-arrow.svg" alt="down" title="down" class="down_img first-page">
+                    <img src="src/img/down-arrow.svg" alt="down" title="down" class="down_img first-page">
                     <p>Отримай програму</p>
                 </div>
             </a>
         </div>
+        <div class="section">
+            <div class="page_wrap">
+                <div class="wrap_left">
+                    <p>Learn how to build setup.</p>
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, fugiat earum aut ea in. Quia quos, minus deleniti hic incidunt illum. Asperiores rerum quo, facere quas dicta incidunt blanditiis omnis.</span>
+                </div>
+                <div class="wrap_right">
+                    <img src="src/img/app.png" alt="">
+                </div>
+            </div>
+        </div>
     </div>
 </main>
+
 <!-- Modal signin -->
 <div class="modal fade" id="signin" role="dialog">
     <div class="modal-dialog">
@@ -285,40 +297,44 @@
                 <div class="modal_or">
                     <hr>
                     <p>або</p></div>
-                <form>
-                    <input type="email" id="loginEmail" placeholder="Email">
-                    <input type="password" id="loginPassword" placeholder="Пароль">
-                    <a href="#" class="btn" id="login">Увійти</a>
-                    <a href="" class="form_lost-pass">Забули пароль?</a>
+                <form name="loginForm">
+                    <input type="email" name="email" id="loginEmail" placeholder="Email">
+                    <input type="password" name="password" id="loginPassword" placeholder="Пароль">
+                    <div class="login_error"></div>
+                    <button type="submit" class="btn" id="login">Увійти</button>
+                    <a class="form_lost-pass" id="lostPass" data-toggle="modal" data-target="#lost_password">Забули пароль?</a>
                 </form>
             </div>
         </div>
 
     </div>
 </div>
-<!-- Modal signup -->
-<div class="modal fade" id="signup" role="dialog">
+
+<!-- Modal confirm registration -->
+<div class="modal fade" id="registration_confirm" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">зареєструватися</h4>
-            </div>
             <div class="modal-body">
-                <div class="social">
-                    <a href="" class="btn btn_vk">вконтакті</a>
-                    <a href="" class="btn btn_fb">facebook</a>
-                </div>
-                <div class="modal_or">
-                    <hr>
-                    <p>або</p></div>
-                <form>
-                    <input type="email" id="email" placeholder="Email">
-                    <input type="password" id="password" placeholder="Пароль">
-                    <a href="#" class="btn" id="registration">Зареєструватися</a>
-                </form>
+                <p>Дякуємо за реєстрацію на нашому ресурсі!</p>
+                <p>На пошту <span id="user_email"></span> надіслано повідомлення з підтвердженням реєстрації.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal lost password -->
+<div class="modal fade" id="lost_password" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Вкажіть email</p>
+                <input type="email" name="email" id="lost-Email" placeholder="Email">
+                <button id="lost_email-sent">Надіслати</button>
             </div>
         </div>
 
@@ -326,9 +342,10 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/jquery.fullPage.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="src/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="src/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="src/js/jquery.fullPage.js"></script>
+<script type="text/javascript" src="src/js/script.js"></script>
 <script src="https://use.fontawesome.com/75e1b47c6b.js"></script>
 
 
