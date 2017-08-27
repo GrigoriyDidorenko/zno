@@ -32,7 +32,7 @@ public class LoggedUserController {
     @Autowired
     private LoggedUserService defaultLoggedUserService;
 
-    @PostMapping(value = "result", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "result")
     public ResponseEntity<Double> acceptTestResult(HttpServletRequest request, @RequestBody TestResultDTO testResultDTO) throws ZnoUserException {
 //        if (requestFilter.isSpamming(request.getLocalAddr())) {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
