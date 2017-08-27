@@ -730,6 +730,7 @@ if ($('main').hasClass('test_page')) {
         $('#test_finish').modal('toggle');
 
         final_duration = $('#timer').text();
+        final_duration = final_duration.substring(0, final_duration.indexOf(':'));
         clearInterval(refreshIntervalId);
 
         var userAnswersPerQuestionDTO = [];
@@ -743,7 +744,7 @@ if ($('main').hasClass('test_page')) {
 
                     userAnswersPerQuestionDTO.push({
                         "answerText": $(this).find('textarea').val(),
-                        "id": final_questionId
+                        "id": +final_questionId
                     });
 
                     if($(this).find('textarea').val() == ''){
@@ -757,9 +758,9 @@ if ($('main').hasClass('test_page')) {
                     final_answerText = $(this).find('form label input:checked').parent().text();
 
                     userAnswersPerQuestionDTO.push({
-                        "answerIds": [final_answerId],
+                        "answerIds": [+final_answerId],
                         "answerText": final_answerText,
-                        "id": final_questionId
+                        "id": +final_questionId
                     });
 
                     user_answer = $(this).find('form label input:checked');
@@ -781,9 +782,9 @@ if ($('main').hasClass('test_page')) {
                         final_answerText = $(this).parent().text();
 
                         userAnswersPerQuestionDTO.push({
-                            "answerIds": [final_answerId],
+                            "answerIds": [+final_answerId],
                             "answerText": final_answerText,
-                            "id": final_questionId
+                            "id": +final_questionId
                         });
 
                         user_answer = $(this).parent();
@@ -811,9 +812,9 @@ if ($('main').hasClass('test_page')) {
                         final_answerText = $(this).find('option:selected').text();
 
                         userAnswersPerQuestionDTO.push({
-                            "answerIds": [final_answerId],
+                            "answerIds": [+final_answerId],
                             "answerText": final_answerText,
-                            "id": final_questionId
+                            "id": +final_questionId
                         });
                     });
                 break;
@@ -822,22 +823,24 @@ if ($('main').hasClass('test_page')) {
         });
 
         var testObject = {
-            "duration": final_duration,
+            "duration": +final_duration,
             "id": final_testId,
             "userAnswersPerQuestionDTO": userAnswersPerQuestionDTO
         };
 
-        console.log(testObject);
+        console.log(JSON.stringify(testObject));
 
         $.ajax({
             type: "POST",
             url: testResultUrl,
-            data: testObject,
+            data: JSON.stringify(testObject),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
             success: function (data, textStatus, request) {
-                console.log(request.getResponseHeader());
+                $('.test_result').text('Ваша оцінка ' + data);
             },
             error: function (request, textStatus, errorThrown) {
-                console.log(request.getResponseHeader());
+                console.log(data);
             }
         });
     })
