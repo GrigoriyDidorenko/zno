@@ -40,6 +40,31 @@ jQuery.ajax({
                 $('.header_header-info').fadeOut();
             });
 
+            $('.user_bell').css('display', 'block').click(function () {
+
+                $('.user_bell-block').fadeIn();
+
+                $('.bell_subject').click(function () {
+                    var subjectName = $(this).find('p').text();
+                    $('#bell_subject .modal-title').text(subjectName);
+                });
+
+
+                jQuery.ajax({
+                    type: "GET",
+                    url: "/user/failed/notification",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+
+            });
+
             $.each(data, function (key, val) {
                 if(key == 'username'){
                     $('.header-info-username').text(val);
