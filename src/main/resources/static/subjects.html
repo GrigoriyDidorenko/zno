@@ -93,8 +93,39 @@
                     <input type="password" name="password" id="loginPassword" placeholder="Пароль">
                     <div class="login_error"></div>
                     <button type="submit" class="btn" id="login">Увійти</button>
-                    <a href="" class="form_lost-pass">Забули пароль?</a>
+                    <a class="form_lost-pass" id="lostPass" data-toggle="modal" data-target="#lost_password">Забули пароль?</a>
                 </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal confirm registration -->
+<div class="modal fade" id="registration_confirm" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Дякуємо за реєстрацію на нашому ресурсі!</p>
+                <p>На пошту <span id="user_email"></span> надіслано повідомлення з підтвердженням реєстрації.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal lost password -->
+<div class="modal fade" id="lost_password" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Вкажіть email</p>
+                <input type="email" name="email" id="lost-Email" placeholder="Email">
+                <button id="lost_email-sent">Надіслати</button>
             </div>
         </div>
 
@@ -123,21 +154,6 @@
                     <div class="registration_error"></div>
                     <button type="submit" class="btn" id="registration">зареєструватися</button>
                 </form>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- Modal confirm registration -->
-<div class="modal fade" id="registration_confirm" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>Дякуємо за реєстрацію на нашому ресурсі!</p>
-                <p>На пошту <span id="user_email"></span> надіслано повідомлення з підтвердженням реєстрації.</p>
             </div>
         </div>
 
