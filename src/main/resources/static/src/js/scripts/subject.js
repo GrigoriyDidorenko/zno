@@ -90,6 +90,7 @@ if ($('main').hasClass('subject_page')) {
 
                 if (subjectId == val.id) {
                     $('.subject_brainshtorm p span').text(brainshtorm);
+                    $('.subject_brainshtorm').attr('href', 'test.html?test='+val.id);
                 }
 
             });
