@@ -15,3 +15,6 @@ target/
 
 # Log folder
 logs
+
+# node_modules folder
+src/main/resources/static/node_modules
