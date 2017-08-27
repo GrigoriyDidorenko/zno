@@ -227,7 +227,8 @@ $('#lostPass').click(function () {
             type: "POST",
             contentType: "application/json; charset=utf-8",
             url: "/lostPassword",
-            data: username,
+            data: JSON.stringify({"username":username}),
+            dataType: "json",
             success: function () {
                 $('#lost_password .modal-body').html('<p>На пошту <span id="user_email">username</span> надіслано повідомлення з паролем.</p>')
             },
