@@ -68,6 +68,7 @@ abstract class AbstractUserService implements UserService {
         return testRepository.findTestsBySubjectId(subjectId);
     }
 
+    //todo bullshit
     @Override
     public TestDTO getShuffledTestBySubject(Long subjectId) throws ZnoUserException {
         List<Test> tests = testRepository.findTestsBySubjectId(subjectId);

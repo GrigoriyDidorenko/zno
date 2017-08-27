@@ -215,10 +215,11 @@ public class SecurityService {
     }
 
     @Transactional
-    public void resetPassword(String email) throws ZnoServerException {
+    public ResponseEntity<Void> resetPassword(String email) throws ZnoServerException {
         Optional<User> user = Optional.ofNullable(userRepository.findUserByEmail(email));
-        if (!user.isPresent()) throw new ZnoServerException("User with this email does not exist");
-        if (!user.get().isEnabled()) throw new ZnoServerException("Account is not enabled yet");
+        //TODO return different statuses
+        if (!user.isPresent()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!user.get().isEnabled()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         String password = RandomStringUtils.random(5, characters);
@@ -226,6 +227,7 @@ public class SecurityService {
         user.get().setPassword(hashedPassword);
         userRepository.save(user.get());
         mailService.sendEmail(new Mail(email, "Відновлення паролю для 'zno.net.ua'", createResetContent(password)));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Transactional

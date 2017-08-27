@@ -71,6 +71,7 @@ public class LoggedUserController {
         return defaultLoggedUserService.getFailedQuestionsBySubject(subjectId);
     }
 
+    //TODO not needed
     @GetMapping("failed/questions")
     public TestDTO getFailedQuestionsTest() {
         return defaultLoggedUserService.getFailedQuestions();
