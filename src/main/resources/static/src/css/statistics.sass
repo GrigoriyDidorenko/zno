@@ -1,9 +1,17 @@
+.statistics_page
+  padding: 40px 0
+  h1
+    margin: 0 0 18px 0
+    font-weight: 600
+    color: #2980b9
+    font-size: 18px
 .statistic_subjects
   display: flex
-  align-items: center
+  align-items: baseline
   justify-content: space-between
+  flex-wrap: wrap
   .statistic_subject
-    width: 50%
+    width: 32%
     border-radius: 2px
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05)
     box-shadow: 0 1px 1px rgba(0,0,0,.05)
@@ -11,18 +19,71 @@
     margin: 5px
     display: inline-block
     font-size: 12px
-    padding: 9px 10px
     line-height: 14px
     background: #fff
     color: #000
     border: 1px solid #61b994
-    .subject_info
+    border-bottom-width: 3px
+    .subject_info, .test_inform
       display: flex
-      align-items: center
-      justify-content: space-around
+      flex-direction: column
+      padding: 15px 15px 10px 15px
+      > p
+        font-size: 14px
+        margin: 0
+        font-weight: 600
+        color: #17aa3d
+        cursor: pointer
+      .subject_info-data
+        display: flex
+        div
+          width: 33%
+          text-align: center
+          p
+            color: #b5b5b5
+            margin-bottom: 4px
+            font-size: 11px
+          &:last-of-type
+            p:nth-child(2)
+              display: flex
+              align-items: center
+              justify-content: center
+              width: 47px
+              height: 47px
+              border-radius: 50px
+              margin: 0 auto
+              font-size: 14px
+              border: 3px solid crimson
+              cursor: pointer
+              color: #333
+    .test_inform
+      border-bottom: 2px solid #f1f1f1
+      &:last-of-type
+        border-bottom: 0
+    .test_info
+      padding: 0
+      display: none
+      border-top: 3px solid #eaeaea
 
-.statistic_subject-test
-  display: flex
-  align-items: center
-  justify-content: space-around
-  @extend .statistic_subject
+.circle-chart__circle
+  animation: circle-chart-fill 1s reverse
+  transform: rotate(-90deg)
+  transform-origin: center
+
+
+.circle-chart__circle--negative
+  transform: rotate(-90deg) scale(1,-1)
+
+.circle-chart__info
+  animation: circle-chart-appear 1s forwards
+  opacity: 0
+  transform: translateY(0.3em)
+
+@keyframes circle-chart-fill
+  to
+    stroke-dasharray: 0 100
+
+@keyframes circle-chart-appear
+  to
+    opacity: 1
+    transform: translateY(0)

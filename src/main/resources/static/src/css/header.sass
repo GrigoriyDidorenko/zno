@@ -58,6 +58,7 @@ nav.header_menu
       box-sizing: border-box
     li
       padding: 0 10px
+      cursor: pointer
       @media #{$mobile}
         padding: 0 0 25px 0
       a
@@ -90,7 +91,7 @@ nav.header_menu
           position: absolute
           right: 0
           background: transparent
-          width: 193px
+          min-width: 193px
           top: 35px
           padding-top: 14px
           .header-info-main
@@ -113,8 +114,7 @@ nav.header_menu
             img
               width: 40px
             p
-              margin: 0
-              text-transform: capitalize
+              margin: 0 0 0 5px
               font-size: 13px
               text-align: right
               line-height: 16px
@@ -237,3 +237,13 @@ body.fp-viewing-welcome #menu
     background: rgba(0, 0, 0, 0.25)
   p
     margin: 0
+  span
+    display: flex
+    width: 18px
+    height: 18px
+    background: #ff5273
+    align-items: center
+    justify-content: center
+    border-radius: 50px
+    font-size: 10px
+    border: 1px solid white

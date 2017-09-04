@@ -15,6 +15,10 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 var testResultUrl;
 
+$(document).on('click', function (e) {
+    $('.user_bell-block').fadeOut();
+});
+
 jQuery.ajax({
     type: "GET",
     url: "/loginStatus",
@@ -31,7 +35,8 @@ jQuery.ajax({
 
             if($('main').hasClass('home_page')){
                 window.location.href = "subjects.html";
-            };
+            }
+
             $('.header_registr, .header_login').css('display', 'none');
 
             $('.header_user').css('display', 'block').on('mouseover', function () {
@@ -40,28 +45,38 @@ jQuery.ajax({
                 $('.header_header-info').fadeOut();
             });
 
-            $('.user_bell').css('display', 'block').click(function () {
 
-                $('.user_bell-block').fadeIn();
+            jQuery.ajax({
+                type: "GET",
+                url: "/user/failed/notification",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
+                },
+                success: function (data) {
+                    console.log(data);
 
-                $('.bell_subject').click(function () {
-                    var subjectName = $(this).find('p').text();
-                    $('#bell_subject .modal-title').text(subjectName);
-                });
+                    var failed = data;
 
+                    $.each(failed, function (key, val) {
+                        $('.user_bell-block').append('<div class="bell_subject" data-toggle="modal" data-target="#bell_subject"><p>'+key+'</p><span>'+val+'</span></div>')
+                    });
 
-                jQuery.ajax({
-                    type: "GET",
-                    url: "/user/failed/notification",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
-                    },
-                    success: function (data) {
-                        console.log(data);
+                    $('.bell_subject').click(function () {
+                        var subjectName = $(this).find('p').text();
+                        $('#bell_subject .modal-title').text(subjectName);
+                        $('#bell_subject').modal('toggle');
+                    });
+
+                    if(failed.length !== 0){
+                        $('.user_bell').css('display', 'block').click(function (e) {
+                            $('.user_bell-block').fadeIn();
+                            e.stopPropagation();
+                        });
+
                     }
-                });
+                }
 
             });
 
@@ -224,16 +239,15 @@ $('#lostPass').click(function () {
         username = $('#lost-Email').val();
 
         $.ajax({
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            url: "/lostPassword",
-            data: JSON.stringify({"username":username}),
+            type: "GET",
+            url: "/resetPassword",
             dataType: "json",
-            success: function () {
-                $('#lost_password .modal-body').html('<p>На пошту <span id="user_email">username</span> надіслано повідомлення з паролем.</p>')
+            contentType: "application/json; charset=utf-8",
+            error: function (XMLHttpRequest) {
+                console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
             },
-            error: function (exception) {
-                $('.login_error').text(exception.responseText);
+            success: function (data) {
+                console.log(data);
             }
         })
     });
@@ -260,19 +274,33 @@ if ($('main').hasClass('statistics_page')) {
 
             $.each(json, function (key, val) {
                 $.each(val, function (subject, data) {
-                    switch (subject){
+                    switch (subject) {
                         case 'avrgDuration':
                             avrgDuration = data;
-                        break;
+                            break;
                         case 'avrgMark':
                             avrgMark = data;
-                        break;
+                            break;
                         case 'numOfFailedQuestions':
                             numOfFailedQuestions = data;
-                        break;
+                            break;
                         case 'subjectName':
                             subjectName = data;
-                        break;
+                            break;
+                    }
+                });
+                $('.statistic_subjects').append('<div class="statistic_subject">' +
+                    '<div class="subject_info"><p class="test_name">' + subjectName + '</p><div class="subject_info-data"><div><p>cередній час</p><section><svg class="circle-chart" viewbox="0 0 33.83098862 33.83098862" width="50" height="50" xmlns="http://www.w3.org/2000/svg">' +
+                    '<circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />' +
+                    '<circle class="circle-chart__circle" stroke="#FF9800" stroke-width="2" stroke-dasharray="' + Math.round(avrgDuration) + ',100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />' +
+                    '<g class="circle-chart__info"><text class="circle-chart__percent" x="16.91549431" y="15.5" alignment-baseline="central" text-anchor="middle" font-size="9">' + Math.round(avrgDuration) + 'хв</text></g></svg></section></div>' +
+                    '<div><p>cередній бал</p><section><svg class="circle-chart" viewbox="0 0 33.83098862 33.83098862" width="50" height="50" xmlns="http://www.w3.org/2000/svg">' +
+                    '<circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />' +
+                    '<circle class="circle-chart__circle" stroke="#00acc1" stroke-width="2" stroke-dasharray="' + Math.round(avrgMark-100) + ',100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />' +
+                    '<g class="circle-chart__info"><text class="circle-chart__percent" x="16.91549431" y="15.5" alignment-baseline="central" text-anchor="middle" font-size="9">' + Math.round(avrgMark) + '%</text></g></svg></section></div><div class="failed_test"><p>нп відповіді</p><p>' + numOfFailedQuestions + '</p></div></div>' +
+                    '</div><div class="test_info" name="' + key + '"></div>');
+                $.each(val, function (subject, data) {
+                    switch (subject) {
                         case 'testStatistics':
                             $.each(data, function (tests, values) {
                                 $.each(values, function (test, value) {
@@ -291,22 +319,31 @@ if ($('main').hasClass('statistics_page')) {
                                             break;
                                     }
                                 });
+                                $('.test_info[name="' + key + '"]').append('<div class="test_inform"><p class="test_name">' + testName + '</p><div class="subject_info-data"><div><p>cередній час</p><section><svg class="circle-chart" viewbox="0 0 33.83098862 33.83098862" width="50" height="50" xmlns="http://www.w3.org/2000/svg">' +
+                                    '<circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />' +
+                                    '<circle class="circle-chart__circle" stroke="#FF9800" stroke-width="2" stroke-dasharray="' + Math.round(duration) + ',100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />' +
+                                    '<g class="circle-chart__info"><text class="circle-chart__percent" x="16.91549431" y="15.5" alignment-baseline="central" text-anchor="middle" font-size="9">' + Math.round(duration) + 'хв</text></g></svg></section></div>' +
+                                    '<div><p>cередній бал</p><section><svg class="circle-chart" viewbox="0 0 33.83098862 33.83098862" width="50" height="50" xmlns="http://www.w3.org/2000/svg">' +
+                                    '<circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />' +
+                                    '<circle class="circle-chart__circle" stroke="#00acc1" stroke-width="2" stroke-dasharray="' + Math.round(mark-100) + ',100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />' +
+                                    '<g class="circle-chart__info"><text class="circle-chart__percent" x="16.91549431" y="15.5" alignment-baseline="central" text-anchor="middle" font-size="9">' + Math.round(mark) + '%</text></g></svg></section></div><div class="failed_test"><p>нп відповіді</p><p>' + testNumOfFailedQuestions + '</p></div></div>' +
+                                    '</div>');
                             });
-                        break;
-
+                            break;
                     }
                 });
-                $('.statistic_subjects').append('<div class="statistic_subject"><div class="subject_info"><p>'+avrgDuration+'</p>' +
-                    '<p>'+avrgMark+'</p><p>'+numOfFailedQuestions+'</p><p>'+subjectName+'</p></div>' +
-                    '<div class="test_info"><div class="statistic_subject-test"><p>'+duration+'</p><p>'+mark+'</p>' +
-                    '<p>'+testNumOfFailedQuestions+'</p><p>'+testName+'</p>' +
-                    '</div></div></div>');
             });
-
-
         }
     });
 }
+
+$('body').on('click', '.test_name', function () {
+    $(this).parent().next().fadeToggle()
+}).on('click', '.failed_test', function () {
+    var moduleName = $(this).parent().prev().text();
+    $('#test_info .modal-title').text(moduleName);
+    $('#test_info').modal('show');
+});
 if ($('main').hasClass('subject_page')) {
 
     var subjectId = getUrlParameter('subject');
@@ -446,28 +483,23 @@ if ($('main').hasClass('subject_page')) {
                     }).click();
                 $.each(json, function(key, value) {
                     if(value.year == val){
-                        $('.panel-body_'+i).append('<a data-toggle="modal" data-target="#testinfo_'+key+'" class="test_link" name="'+value.id+'">'+
+                        $('.panel-body_'+i).append('<a data-toggle="modal" data-target="#test_info" class="test_link" name="'+value.id+'" value="'+value.duration+'">'+
                             value.name+'</a>');
                     }
-
-                    <!-- Modal testinfo -->
-                    $('body').append('<div class="modal fade testinfo" name="'+value.id+'" id="testinfo_'+key+'" role="dialog">'+
-                        '<div class="modal-dialog"><div class="modal-content"><div class="modal-header">'+
-                        '<button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">'+
-                        value.name+'</h4></div><div class="modal-body">'+
-                        '<div><p>Кількість питань: <span class="questions_numb"></span></p><p>Тривалість тесту: <span>'+value.duration+' хв</span></p></div>'+
-                        '<label for="time'+key+'" class="button-remember" name="'+value.id+'"><input type="checkbox" id="time'+key+'" name="time" value="on"'+
-                        ' checked><i class="fa" aria-hidden="true"></i>з урахуванням часу</label><a class="btn btn_test">Розпочати</a></div></div></div></div>');
                 });
                 $('.panel-group').append('</div></div></div>');
             });
 
             $('body').on('click','.btn_test', function() {
                 var inp = $(this).prev().find('input').is(":checked");
-                var test = $(this).prev().attr('name');
+                var test = $('#test_info .modal-title').attr('name');
                 $(this).attr("href", "test.html?time="+inp+"&test="+test+"");
             }).on('click','.test_link', function() {
+
                 var modalTest = $(this).attr('name');
+                $('#test_info .modal-title').text($(this).text()).attr('name', modalTest);
+                $('#test_info .test_duration').text($(this).attr('value'));
+
                 jQuery.ajax({
                     type: "GET",
                     url: "/api/test/" + modalTest,
@@ -478,7 +510,7 @@ if ($('main').hasClass('subject_page')) {
                             switch(key) {
                                 case 'questions':
                                     questions_numb = val.length;
-                                    $('.modal[name="'+modalTest+'"]').find('.questions_numb').text(questions_numb);
+                                    $('#test_info').find('.questions_numb').text(questions_numb);
                             }})
                     }
                 });

@@ -15,6 +15,10 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 var testResultUrl;
 
+$(document).on('click', function (e) {
+    $('.user_bell-block').fadeOut();
+});
+
 jQuery.ajax({
     type: "GET",
     url: "/loginStatus",
@@ -31,7 +35,8 @@ jQuery.ajax({
 
             if($('main').hasClass('home_page')){
                 window.location.href = "subjects.html";
-            };
+            }
+
             $('.header_registr, .header_login').css('display', 'none');
 
             $('.header_user').css('display', 'block').on('mouseover', function () {
@@ -40,28 +45,38 @@ jQuery.ajax({
                 $('.header_header-info').fadeOut();
             });
 
-            $('.user_bell').css('display', 'block').click(function () {
 
-                $('.user_bell-block').fadeIn();
+            jQuery.ajax({
+                type: "GET",
+                url: "/user/failed/notification",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
+                },
+                success: function (data) {
+                    console.log(data);
 
-                $('.bell_subject').click(function () {
-                    var subjectName = $(this).find('p').text();
-                    $('#bell_subject .modal-title').text(subjectName);
-                });
+                    var failed = data;
 
+                    $.each(failed, function (key, val) {
+                        $('.user_bell-block').append('<div class="bell_subject" data-toggle="modal" data-target="#bell_subject"><p>'+key+'</p><span>'+val+'</span></div>')
+                    });
 
-                jQuery.ajax({
-                    type: "GET",
-                    url: "/user/failed/notification",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
-                    },
-                    success: function (data) {
-                        console.log(data);
+                    $('.bell_subject').click(function () {
+                        var subjectName = $(this).find('p').text();
+                        $('#bell_subject .modal-title').text(subjectName);
+                        $('#bell_subject').modal('toggle');
+                    });
+
+                    if(failed.length !== 0){
+                        $('.user_bell').css('display', 'block').click(function (e) {
+                            $('.user_bell-block').fadeIn();
+                            e.stopPropagation();
+                        });
+
                     }
-                });
+                }
 
             });
 
@@ -224,16 +239,15 @@ $('#lostPass').click(function () {
         username = $('#lost-Email').val();
 
         $.ajax({
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            url: "/lostPassword",
-            data: JSON.stringify({"username":username}),
+            type: "GET",
+            url: "/resetPassword",
             dataType: "json",
-            success: function () {
-                $('#lost_password .modal-body').html('<p>На пошту <span id="user_email">username</span> надіслано повідомлення з паролем.</p>')
+            contentType: "application/json; charset=utf-8",
+            error: function (XMLHttpRequest) {
+                console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
             },
-            error: function (exception) {
-                $('.login_error').text(exception.responseText);
+            success: function (data) {
+                console.log(data);
             }
         })
     });

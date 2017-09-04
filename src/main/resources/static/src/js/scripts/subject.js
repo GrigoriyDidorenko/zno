@@ -137,28 +137,23 @@ if ($('main').hasClass('subject_page')) {
                     }).click();
                 $.each(json, function(key, value) {
                     if(value.year == val){
-                        $('.panel-body_'+i).append('<a data-toggle="modal" data-target="#testinfo_'+key+'" class="test_link" name="'+value.id+'">'+
+                        $('.panel-body_'+i).append('<a data-toggle="modal" data-target="#test_info" class="test_link" name="'+value.id+'" value="'+value.duration+'">'+
                             value.name+'</a>');
                     }
-
-                    <!-- Modal testinfo -->
-                    $('body').append('<div class="modal fade testinfo" name="'+value.id+'" id="testinfo_'+key+'" role="dialog">'+
-                        '<div class="modal-dialog"><div class="modal-content"><div class="modal-header">'+
-                        '<button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">'+
-                        value.name+'</h4></div><div class="modal-body">'+
-                        '<div><p>Кількість питань: <span class="questions_numb"></span></p><p>Тривалість тесту: <span>'+value.duration+' хв</span></p></div>'+
-                        '<label for="time'+key+'" class="button-remember" name="'+value.id+'"><input type="checkbox" id="time'+key+'" name="time" value="on"'+
-                        ' checked><i class="fa" aria-hidden="true"></i>з урахуванням часу</label><a class="btn btn_test">Розпочати</a></div></div></div></div>');
                 });
                 $('.panel-group').append('</div></div></div>');
             });
 
             $('body').on('click','.btn_test', function() {
                 var inp = $(this).prev().find('input').is(":checked");
-                var test = $(this).prev().attr('name');
+                var test = $('#test_info .modal-title').attr('name');
                 $(this).attr("href", "test.html?time="+inp+"&test="+test+"");
             }).on('click','.test_link', function() {
+
                 var modalTest = $(this).attr('name');
+                $('#test_info .modal-title').text($(this).text()).attr('name', modalTest);
+                $('#test_info .test_duration').text($(this).attr('value'));
+
                 jQuery.ajax({
                     type: "GET",
                     url: "/api/test/" + modalTest,
@@ -169,7 +164,7 @@ if ($('main').hasClass('subject_page')) {
                             switch(key) {
                                 case 'questions':
                                     questions_numb = val.length;
-                                    $('.modal[name="'+modalTest+'"]').find('.questions_numb').text(questions_numb);
+                                    $('#test_info').find('.questions_numb').text(questions_numb);
                             }})
                     }
                 });
