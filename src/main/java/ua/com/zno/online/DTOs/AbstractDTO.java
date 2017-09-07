@@ -7,6 +7,12 @@ import ua.com.zno.online.util.Constants;
  */
 public class AbstractDTO {
 
+    public AbstractDTO(){}
+
+    public AbstractDTO(Long id) {
+        this.id = id;
+    }
+
     private Long id;
 
     public Long getId() {

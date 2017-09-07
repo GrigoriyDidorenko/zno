@@ -6,9 +6,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.com.zno.online.DTOs.QuestionDTO;
+import ua.com.zno.online.DTOs.SubjectDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.notification.SubjectFailedQuestionAmountDTO;
 import ua.com.zno.online.domain.FailedQuestion;
+import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.TestResult;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.domain.user.User;
@@ -70,7 +73,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
 
         List<Long> failedQuestionsIds = questionIdWithMark.entrySet().stream()
                 .filter(entry -> entry.getValue() == 0)
-                .map(Map.Entry::getValue)
+                .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
 
@@ -142,20 +145,26 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         long userId = getAuthenticatedUser().getId();
 
         return testResultRepository.getStatisticsForUser(userId).stream()
-                .collect(Collectors.groupingBy(SubjectStatistics.TestStatistics::getSubjectName))
+                .collect(Collectors.groupingBy(SubjectStatistics.TestStatistics::getSubjectId))
                 .entrySet().stream()
-                .map(e -> new SubjectStatistics(e.getKey(), e.getValue()))
+                .map(e -> new SubjectStatistics(e.getKey(), subjectRepository.findByTestsId(e.getKey()).getName(), e.getValue()))
                 .collect(Collectors.toList());
     }
 
+    //TODO redo this better
     @Override
-    public Map<String, Integer> getNotificationFailed() {
+    public List<SubjectFailedQuestionAmountDTO> getNotificationFailed() {
         long userId = getAuthenticatedUser().getId();
 
-        return failedQuestionRepository.findAllByUserId(userId).stream()
-                .collect(Collectors.groupingBy(e -> subjectRepository.findSubjectNameByTestId(e.getTestId())))
+        Map<Subject, Integer> map = failedQuestionRepository.findAllByUserId(userId).stream()
+                .collect(Collectors.groupingBy(e -> subjectRepository.findByTestsId(e.getTestId())))
                 .entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().size()));
+
+        List<SubjectFailedQuestionAmountDTO> failedQuestionAmount = new ArrayList<>(map.size());
+
+        map.keySet().forEach(key -> failedQuestionAmount.add(new SubjectFailedQuestionAmountDTO(key.getId(), key.getName(), map.get(key))));
+        return failedQuestionAmount;
     }
 
     @Override

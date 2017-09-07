@@ -13,7 +13,7 @@ import java.util.List;
 
 
 public interface TestResultRepository extends AbstractRepository<TestResult> {
-    List<SubjectStatistics.TestStatistics> getStatisticsForUser(long userId);
 
+    List<SubjectStatistics.TestStatistics> getStatisticsForUser(long userId);
 
 }

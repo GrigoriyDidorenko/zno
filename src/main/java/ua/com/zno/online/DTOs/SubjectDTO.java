@@ -39,4 +39,6 @@ public class SubjectDTO extends AbstractDTO {
     public void setArticleJSON(String articleJSON) {
         this.articleJSON = articleJSON;
     }
+
+
 }

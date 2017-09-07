@@ -1,8 +1,11 @@
 package ua.com.zno.online.services.user;
 
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.zno.online.DTOs.SubjectDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.notification.SubjectFailedQuestionAmountDTO;
+import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.DTOs.statistic.SubjectStatistics;
@@ -34,6 +37,6 @@ public interface LoggedUserService extends UserService {
     User getAuthenticatedUser();
 
     @Transactional
-    Map<String,Integer> getNotificationFailed();
+    List<SubjectFailedQuestionAmountDTO> getNotificationFailed();
 
 }

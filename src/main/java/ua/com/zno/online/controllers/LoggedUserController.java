@@ -1,14 +1,21 @@
 package ua.com.zno.online.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import ua.com.zno.online.DTOs.SubjectDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.DTOs.notification.SubjectFailedQuestionAmountDTO;
 import ua.com.zno.online.controllers.filter.RequestFilter;
+import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.DTOs.statistic.SubjectStatistics;
 import ua.com.zno.online.services.user.LoggedUserService;
@@ -26,11 +33,14 @@ import java.util.Map;
 @RequestMapping("user")
 public class LoggedUserController {
 
-    @Autowired
-    private RequestFilter requestFilter;
+    private final RequestFilter requestFilter;
+    private final LoggedUserService defaultLoggedUserService;
 
     @Autowired
-    private LoggedUserService defaultLoggedUserService;
+    public LoggedUserController(RequestFilter requestFilter, LoggedUserService defaultLoggedUserService) {
+        this.requestFilter = requestFilter;
+        this.defaultLoggedUserService = defaultLoggedUserService;
+    }
 
     @PostMapping(value = "result")
     public ResponseEntity<Double> acceptTestResult(HttpServletRequest request, @RequestBody TestResultDTO testResultDTO) throws ZnoUserException {
@@ -53,15 +63,12 @@ public class LoggedUserController {
     }
 
     @GetMapping("statistics")
-    public List<SubjectStatistics> getStatistics(Principal principal) throws ZnoUserException {
-        if (principal == null) throw new ZnoUserException("you are not authenticated!");
-
+    public List<SubjectStatistics> getStatistics() throws ZnoUserException {
         return defaultLoggedUserService.getStatistics();
     }
 
     @GetMapping("failed/notification")
-    public Map<String, Integer> getNotificationFailed(Principal principal) throws ZnoUserException {
-        if (principal == null) throw new ZnoUserException("you are not authenticated!");
+    public List<SubjectFailedQuestionAmountDTO> getNotificationFailed() throws ZnoUserException, JsonProcessingException {
 
         return defaultLoggedUserService.getNotificationFailed();
     }

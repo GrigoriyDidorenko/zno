@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(catalog = "zno", name = "test_results")
-@NamedNativeQuery(query = "select s.name as subjectName, t.name as testName, tr.duration as duration, tr.mark as mark, tmp.count as numOfFailedQuestions" +
+@NamedNativeQuery(query = "select s.id as subjectId, t.name as testName, tr.duration as duration, tr.mark as mark, tmp.count as numOfFailedQuestions" +
         " from test_results tr" +
         " join tests t on tr.test_id = t.id" +
         " join subjects s on t.subject_id = s.id" +
@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
                 @ConstructorResult(
                         targetClass = SubjectStatistics.TestStatistics.class,
                         columns = {
-                                @ColumnResult(name = "subjectName", type = String.class),
+                                @ColumnResult(name = "subjectId", type = Long.class),
                                 @ColumnResult(name = "testName", type = String.class),
                                 @ColumnResult(name = "duration", type = Integer.class),
                                 @ColumnResult(name = "mark", type = Double.class),

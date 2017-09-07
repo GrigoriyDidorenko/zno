@@ -11,7 +11,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.com.zno.online.DTOs.UserDTO;
@@ -138,17 +137,17 @@ public class SecurityController {
 
         private final boolean loggedIn;
         private final String username;
-        private String reason;
+        private String failReason;
 
         public LoginStatus(boolean loggedIn, String username) {
             this.loggedIn = loggedIn;
             this.username = username;
         }
 
-        public LoginStatus(boolean loggedIn, String username, String reason) {
+        public LoginStatus(boolean loggedIn, String username, String failReason) {
             this.loggedIn = loggedIn;
             this.username = username;
-            this.reason = reason;
+            this.failReason = failReason;
         }
 
         public boolean isLoggedIn() {
@@ -159,8 +158,8 @@ public class SecurityController {
             return username;
         }
 
-        public String getReason() {
-            return reason;
+        public String getFailReason() {
+            return failReason;
         }
     }
 
