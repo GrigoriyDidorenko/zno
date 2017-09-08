@@ -29,9 +29,9 @@ spring:
     port: 587
     host: mail.zno.net.ua
 
-
-#logging:
-#  config: logback-spring.xml
+  output:
+    ansi:
+      enabled: detect
 
 
 
