@@ -121,7 +121,7 @@ public class SecurityController {
         }
     }
 
-    @GetMapping("resetPassword")
+    @PostMapping("resetPassword")
     public ResponseEntity<Void> resetPassword(@RequestParam String email) throws ZnoServerException {
         return securityService.resetPassword(email);
     }

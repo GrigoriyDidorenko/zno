@@ -239,7 +239,7 @@ $('#lostPass').click(function () {
         username = $('#lost-Email').val();
 
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/resetPassword",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
