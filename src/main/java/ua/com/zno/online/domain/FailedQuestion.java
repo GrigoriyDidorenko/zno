@@ -1,5 +1,8 @@
 package ua.com.zno.online.domain;
 
+import ua.com.zno.online.domain.question.Question;
+import ua.com.zno.online.domain.user.User;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,14 +14,17 @@ import java.time.LocalDateTime;
         uniqueConstraints = @UniqueConstraint(columnNames = {"question_id", "user_id"}))
 public class FailedQuestion extends AbstractEntity {
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
 
-    @Column(name = "test_id")
-    private Long testId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "test_id", referencedColumnName = "id", nullable = false)
+    private Test test;
 
-    @Column(name = "question_id", nullable = false)
-    private Long questionId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "question_id", referencedColumnName = "id", nullable = false)
+    private Question question;
 
     /*
     *
@@ -48,11 +54,11 @@ public class FailedQuestion extends AbstractEntity {
     @Column(name = "next_ask_time", nullable = false)
     private LocalDateTime nextAskTime;
 
-    public FailedQuestion(Long userId, Long testId, Long questionId, boolean resolved,
+    public FailedQuestion(User user, Test test, Question question, boolean resolved,
                           LocalDateTime creationDate, LocalDateTime nextAskTime) {
-        this.userId = userId;
-        this.testId = testId;
-        this.questionId = questionId;
+        this.user = user;
+        this.test = test;
+        this.question = question;
         this.resolved = resolved;
         this.creationDate = creationDate;
         this.nextAskTime = nextAskTime;
@@ -62,28 +68,28 @@ public class FailedQuestion extends AbstractEntity {
     public FailedQuestion() {
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getTestId() {
-        return testId;
+    public Test getTest() {
+        return test;
     }
 
-    public void setTestId(Long testId) {
-        this.testId = testId;
+    public void setTest(Test test) {
+        this.test = test;
     }
 
-    public Long getQuestionId() {
-        return questionId;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public boolean isResolved() {
@@ -122,34 +128,4 @@ public class FailedQuestion extends AbstractEntity {
         this.nextAskTime = nextAskTime;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        FailedQuestion that = (FailedQuestion) o;
-
-        if (resolved != that.resolved) return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (testId != null ? !testId.equals(that.testId) : that.testId != null) return false;
-        if (questionId != null ? !questionId.equals(that.questionId) : that.questionId != null) return false;
-        if (creationDate != null ? !creationDate.equals(that.creationDate) : that.creationDate != null) return false;
-        if (stage != null ? !stage.equals(that.stage) : that.stage != null) return false;
-        return nextAskTime != null ? nextAskTime.equals(that.nextAskTime) : that.nextAskTime == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (testId != null ? testId.hashCode() : 0);
-        result = 31 * result + (questionId != null ? questionId.hashCode() : 0);
-        result = 31 * result + (resolved ? 1 : 0);
-        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
-        result = 31 * result + (stage != null ? stage.hashCode() : 0);
-        result = 31 * result + (nextAskTime != null ? nextAskTime.hashCode() : 0);
-        return result;
-    }
 }

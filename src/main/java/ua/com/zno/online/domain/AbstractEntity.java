@@ -16,6 +16,11 @@ public abstract class AbstractEntity {
     @Column(name = "deleted", nullable = false, length = 1)
     private boolean deleted;
 
+    public AbstractEntity(Long id) {
+        this();
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

@@ -28,8 +28,8 @@ public class Test extends AbstractEntity {
     @Min(value = 0, message = "Duration must be positive")
     private Integer duration;
 
-    @ManyToOne
-    @JoinColumn(name = "subject_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
     @OneToMany(mappedBy = "test", fetch = FetchType.LAZY)
@@ -42,6 +42,10 @@ public class Test extends AbstractEntity {
     }
 
     public Test() {
+    }
+
+    public Test(Long id) {
+        super(id);
     }
 
     public String getName() {

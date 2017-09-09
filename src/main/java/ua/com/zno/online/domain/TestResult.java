@@ -37,11 +37,11 @@ import java.time.LocalDateTime;
 )
 public class TestResult extends AbstractEntity {
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @PrimaryKeyJoinColumn
     private Test test;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @PrimaryKeyJoinColumn
     private User user;
 

@@ -15,13 +15,13 @@ import java.util.Set;
 public interface FailedQuestionRepository extends AbstractRepository<FailedQuestion> {
 
     @Modifying
-    @Query("update FailedQuestion f set f.nextAskTime = ?1 , f.resolved = false where f.userId = ?2")
+    @Query("update FailedQuestion f set f.nextAskTime = ?1 , f.resolved = false where f.user.id = ?2")
     void setNewAskDate(LocalDateTime newAskDate, Long userId);
 
     Set<Long> findIdByDeletedFalseAndUserId(Long userId);
 
     @Modifying
-    @Query("update FailedQuestion f set f.resolved = true where f.userId=?1")
+    @Query("update FailedQuestion f set f.resolved = true where f.user.id=?1")
     void markResolved(Long id);
 
     List<FailedQuestion> findAllByUserId(long userId);

@@ -18,26 +18,26 @@ public class Subject extends AbstractEntity {
     /**
      * Schema:
      * {
-     *     "adviceTitle": "String",
-     *     "advices": "Map<String, String>",
-     *     "additionalResourcesTitle": "String"
-     *     "additionalResources": "List<String>"
+     * "adviceTitle": "String",
+     * "advices": "Map<String, String>",
+     * "additionalResourcesTitle": "String"
+     * "additionalResources": "List<String>"
      * }
-     *
+     * <p>
      * Example:
-     *
+     * <p>
      * {
-     *     "adviceTitle": "Корисні поради",
-     *     "advices": {
-     *         "Елена Кононенко, учитель математики Технического лицея НТУУ 'КПИ'" : "Прогоните дополнительно тесты по
-     *         самым проблемным темам, а перед тестированием все полностью, чтобы довести навыки до автоматизма.",
-     *         "Елена Кирдягенко" "блааа"
-     *     },
-     *     "additionalResourcesTitle" : "Додаткові матеріали",
-     *     "additionalResources": [
-     *          "Критерії оцінювання завдання з розгорнутою відповіддю з математики (2016 рік)",
-     *          "Критерії оцінювання завдання з розгорнутою відповіддю з математики (2017 рік)"
-     *     ]
+     * "adviceTitle": "Корисні поради",
+     * "advices": {
+     * "Елена Кононенко, учитель математики Технического лицея НТУУ 'КПИ'" : "Прогоните дополнительно тесты по
+     * самым проблемным темам, а перед тестированием все полностью, чтобы довести навыки до автоматизма.",
+     * "Елена Кирдягенко" "блааа"
+     * },
+     * "additionalResourcesTitle" : "Додаткові матеріали",
+     * "additionalResources": [
+     * "Критерії оцінювання завдання з розгорнутою відповіддю з математики (2016 рік)",
+     * "Критерії оцінювання завдання з розгорнутою відповіддю з математики (2017 рік)"
+     * ]
      * }
      */
     @Column(name = "article", nullable = false, length = 1000)
@@ -45,6 +45,13 @@ public class Subject extends AbstractEntity {
 
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
     private Set<Test> tests;
+
+    public Subject() {
+    }
+
+    public Subject(Long id) {
+        super.setId(id);
+    }
 
     public String getName() {
         return name;

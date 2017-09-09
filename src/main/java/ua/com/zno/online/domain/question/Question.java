@@ -24,8 +24,8 @@ public class Question extends AbstractEntity {
     @Column(name = "question", nullable = false, length = 500)
     private String questionText;
 
-    @ManyToOne
-    @JoinColumn(name = "test_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "test_id", nullable = false)
     private Test test;
 
     @OneToMany(mappedBy = "question")
@@ -43,6 +43,12 @@ public class Question extends AbstractEntity {
 
     @Column(name = "image")
     private byte[] image;
+
+    public Question(Long id){
+        super(id);
+    }
+
+    public Question(){}
 
     public String getQuestionText() {
         return questionText;

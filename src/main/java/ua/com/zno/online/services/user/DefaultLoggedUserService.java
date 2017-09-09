@@ -12,6 +12,7 @@ import ua.com.zno.online.DTOs.TestResultDTO;
 import ua.com.zno.online.DTOs.notification.SubjectFailedQuestionAmountDTO;
 import ua.com.zno.online.domain.FailedQuestion;
 import ua.com.zno.online.domain.Subject;
+import ua.com.zno.online.domain.Test;
 import ua.com.zno.online.domain.TestResult;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.domain.user.User;
@@ -82,7 +83,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
                 failedQuestionRepository
                         .setNewAskDate(LocalDateTime.now().plusDays(daysBetweenRemind.get(0)), userId);
             } else {
-                FailedQuestion newFailedQuestionToPersist = new FailedQuestion(userId, testId, failedQuestionsId,
+                FailedQuestion newFailedQuestionToPersist = new FailedQuestion(getAuthenticatedUser(), new Test(testId), new Question(failedQuestionsId),
                         false, LocalDateTime.now(), LocalDateTime.now().plusDays(daysBetweenRemind.get(0)));
 
                 failedQuestionRepository.save(newFailedQuestionToPersist);
@@ -157,7 +158,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         long userId = getAuthenticatedUser().getId();
 
         Map<Subject, Integer> map = failedQuestionRepository.findAllByUserId(userId).stream()
-                .collect(Collectors.groupingBy(e -> subjectRepository.findByTestsId(e.getTestId())))
+                .collect(Collectors.groupingBy(e -> subjectRepository.findByTestsId(e.getTest().getId())))
                 .entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().size()));
 
