@@ -3,6 +3,7 @@
     width: 400px
     .modal-header
       border-bottom: 1.5px solid #e5e5e5
+      border-top: 3px solid #2196f3
       padding: 13px
       .modal-title
         text-align: center
@@ -44,10 +45,10 @@
       input
         display: inline-block
         width: 170px
-        border: none
         padding: 10px 15px
         border-radius: 50px
         background: rgba(255, 255, 255, 0.73)
+        border: 1px solid #e5e5e5
         margin: 0 5px
         box-sizing: border-box
         font-size: 13px
@@ -79,6 +80,11 @@
         margin-bottom: 20px
       .btn
         margin: 5px auto
+        cursor: pointer
+        &:focus
+          outline: none
+          color: white
+          text-decoration: none
 
 .modal-content
   border-radius: 2px

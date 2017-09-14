@@ -5,7 +5,12 @@
     <title>ZNO online</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Raleway:400,500,600" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="src/css/style.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="src/js/scripts/user.js"></script>
+    <script type="text/javascript" src="src/js/scripts/subjects.js"></script>
 </head>
+
 <body>
 
 <header>
@@ -25,9 +30,6 @@
                     <li class="btn_close">
                         <img src="src/img/close.svg" alt="close" title="close">
                     </li>
-                    <li>
-                        <a href="subjects.html" class="btn">пройти тест</a>
-                    </li>
                     <li class="header_registr">
                         <a class="registration" data-toggle="modal" data-target="#signup">зареєструватися</a>
                     </li>
@@ -36,6 +38,7 @@
                     </li>
                     <li class="user_bell">
                         <img src="src/img/bell.svg" alt="bell">
+                        <span class="user_bell-numb"></span>
                         <div class="user_bell-block"></div>
                     </li>
                     <li class="header_user">
@@ -59,7 +62,7 @@
     </div>
 </header>
 
-<main class="subjects_page">
+<main>
     <div id="fullpage">
         <div class="section subjects_page">
             <div class="subjects_wrapper">
@@ -183,11 +186,9 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="src/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="src/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="src/js/jquery.fullPage.js"></script>
-<script type="text/javascript" src="src/js/script.js"></script>
-<script src="https://use.fontawesome.com/75e1b47c6b.js"></script>
+
 </body>
 </html>

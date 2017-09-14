@@ -6,6 +6,9 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Raleway:400,500,600" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="src/css/style.css"/>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="src/js/scripts/user.js"></script>
+
     <!--<script>-->
 
         <!--function send(accessToken, userID, name, email) {-->
@@ -294,17 +297,18 @@
                 <h4 class="modal-title">Увійти</h4>
             </div>
             <div class="modal-body">
-                <div class="social">
-                    <a href="" class="btn btn_vk">вконтакті</a>
-                    <a href="" class="btn btn_fb">facebook</a>
-                </div>
-                <div class="modal_or">
-                    <hr>
-                    <p>або</p></div>
                 <form name="loginForm">
                     <input type="email" name="email" id="loginEmail" placeholder="Email">
                     <input type="password" name="password" id="loginPassword" placeholder="Пароль">
                     <div class="login_error"></div>
+                    <div class="modal_or">
+                        <hr>
+                        <p>або</p>
+                    </div>
+                    <div class="social">
+                        <a href="" class="btn btn_vk">вконтакті</a>
+                        <a href="" class="btn btn_fb">facebook</a>
+                    </div>
                     <button type="submit" class="btn" id="login">Увійти</button>
                     <a class="form_lost-pass" id="lostPass" data-toggle="modal" data-target="#lost_password">Забули пароль?</a>
                 </form>
@@ -345,14 +349,10 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="src/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="src/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="src/js/jquery.fullPage.js"></script>
-<script type="text/javascript" src="src/js/script.js"></script>
-<script src="https://use.fontawesome.com/75e1b47c6b.js"></script>
-
-
+<script type="text/javascript" src="src/js/scripts/index.js"></script>
 
 </body>
 </html>

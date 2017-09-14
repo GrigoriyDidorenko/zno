@@ -1,5 +1,4 @@
-if ($('main').hasClass('statistics_page')) {
-    jQuery.ajax({
+jQuery.ajax({
         type: "GET",
         url: "/user/statistics",
         dataType: "json",
@@ -81,12 +80,15 @@ if ($('main').hasClass('statistics_page')) {
             });
         }
     });
-}
 
-$('body').on('click', '.test_name', function () {
-    $(this).parent().next().fadeToggle()
-}).on('click', '.failed_test', function () {
-    var moduleName = $(this).parent().prev().text();
-    $('#test_info .modal-title').text(moduleName);
-    $('#test_info').modal('show');
+$( document ).ready(function() {
+
+    $('body').on('click', '.test_name', function () {
+        $(this).parent().next().fadeToggle()
+    }).on('click', '.failed_test', function () {
+        var moduleName = $(this).parent().prev().text();
+        $('#test_info .modal-title').text(moduleName);
+        $('#test_info').modal('show');
+    });
+
 });

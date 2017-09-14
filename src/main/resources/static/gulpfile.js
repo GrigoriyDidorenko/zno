@@ -13,15 +13,8 @@ gulp.task ('css', function() {
         .pipe(browserSync.stream());
 });
 
-gulp.task('scripts', function() {
-    return gulp.src('src/js/scripts/*')
-        .pipe(concat('script.js'))
-        .pipe(gulp.dest('src/js'))
-        .pipe(browserSync.stream());
-});
 
-
-gulp.task('server', ['css', 'scripts'], function() {
+gulp.task('server', ['css'], function() {
     browserSync({
         server: {
             baseDir: ''
@@ -30,7 +23,6 @@ gulp.task('server', ['css', 'scripts'], function() {
     });
 
     gulp.watch(["src/css/*"], ['css']);
-    gulp.watch(["src/scripts/js/*"], ['scripts']);
     gulp.watch("*.html").on('change', browserSync.reload);
 
 });
