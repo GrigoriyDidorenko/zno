@@ -50,7 +50,7 @@ jQuery.ajax({
                         var subjectName = $(this).find('p').text();
                         $('#test_info .modal-title').text(subjectName);
                         $('#test_info').modal('toggle');
-                        $('#test_info .btn').attr('href', 'test.html?time=false&test='+$(this).find('p').attr('name'))
+                        $('#test_info .btn').attr('href', 'test.html?failed=true&time=false&test='+$(this).find('p').attr('name'))
 
                     });
 
@@ -71,7 +71,9 @@ jQuery.ajax({
                 }
             });
         } else{
-            testResultUrl = '/api/result';
+            if($('main').hasClass('statistics_page')){
+                window.location.href = "index.html";
+            }
         }
     }
 });

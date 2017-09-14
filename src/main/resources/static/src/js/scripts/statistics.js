@@ -90,7 +90,7 @@ $( document ).ready(function() {
         var moduleName = $(this).parent().prev().text();
         $('#test_info .modal-title').text(moduleName);
         $('#test_info').modal('show');
-        $('#test_info .btn').attr('href', 'test.html?time=false&test='+$(this).parent().prev().attr('name'));
+        $('#test_info .btn').attr('href', 'test.html?failed=true&time=false&test='+$(this).parent().prev().attr('name'));
     });
 
 });

@@ -104,7 +104,7 @@ $( document ).ready(function() {
 
                 if (subjectId == val.id) {
                     $('.subject_brainshtorm p span').text(brainshtorm);
-                    $('.subject_brainshtorm').attr('href', 'test.html?test=' + val.id);
+                    $('.subject_brainshtorm').attr('href', 'test.html?time=false&brainstorm=true&test=' + val.id);
                 }
 
             });

@@ -29,13 +29,25 @@ $( document ).ready(function() {
 
         var testId = getUrlParameter('test');
         var testTime = getUrlParameter('time');
+        var failedTest = getUrlParameter('failed');
+        var brainstormTest = getUrlParameter('brainstorm');
         var refreshIntervalId;
 
         var final_testId;
 
+        var testUrl;
+
+        if(failedTest == 'true'){
+            testUrl = "/user/failed/questions/"+testId;
+        } else if(brainstormTest == 'true'){
+            testUrl = "/api/brainstorm/"+testId;
+        } else{
+            testUrl = "/api/test/"+testId;
+        }
+
         jQuery.ajax({
             type: "GET",
-            url: "/api/test/"+testId,
+            url: testUrl,
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (json) {
@@ -54,10 +66,18 @@ $( document ).ready(function() {
                             final_testId = val;
                             break;
                         case 'subjectName':
-                            $('h1').text(val);
+                            if(json.name == 'Brainstorm'){
+                                $('h1').text('Brainstorm');
+                            } else{
+                                $('h1').text(val);
+                            }
                             break;
                         case 'name':
-                            $('h2').text(val);
+                            if(val == 'Brainstorm'){
+                                $('h2').text(json.subjectName);
+                            } else{
+                                $('h2').text(val);
+                            }
                             break;
                         case 'duration':
                             var Minutes = 60 * val,
