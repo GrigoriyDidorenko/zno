@@ -43,13 +43,15 @@ jQuery.ajax({
                     $('.user_bell-numb').text(failed.length);
 
                     $.each(failed, function (key, val) {
-                        $('.user_bell-block').append('<div class="bell_subject" data-toggle="modal" data-target="#bell_subject"><p>'+val.name+'</p><span>'+val.failedQuestionsAmount+'</span></div>')
+                        $('.user_bell-block').append('<div class="bell_subject" data-toggle="modal" data-target="#bell_subject"><p name="'+val.id+'">'+val.name+'</p><span>'+val.failedQuestionsAmount+'</span></div>')
                     });
 
                     $('.bell_subject').click(function () {
                         var subjectName = $(this).find('p').text();
-                        $('#bell_subject .modal-title').text(subjectName);
-                        $('#bell_subject').modal('toggle');
+                        $('#test_info .modal-title').text(subjectName);
+                        $('#test_info').modal('toggle');
+                        $('#test_info .btn').attr('href', 'test.html?time=false&test='+$(this).find('p').attr('name'))
+
                     });
 
                     if(failed.length !== 0){

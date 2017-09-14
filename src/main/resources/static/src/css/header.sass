@@ -236,6 +236,18 @@ body.fp-viewing-welcome #menu
   cursor: pointer
   &:hover
     background: rgba(0, 0, 0, 0.25)
+  &:first-of-type
+    position: relative
+    &:after
+      content: ''
+      position: absolute
+      top: -5px
+      right: 15px
+      width: 0
+      height: 0
+      border-style: solid
+      border-width: 0 5px 5px 5px
+      border-color: transparent transparent rgba(0, 0, 0, 0.26) transparent
   p
     margin: 0
   span

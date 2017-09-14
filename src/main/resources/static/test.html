@@ -5,8 +5,14 @@
     <title>ZNO online</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Raleway:400,500,600" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="src/css/style.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="src/js/scripts/user.js"></script>
+    <script type="text/javascript" src="src/js/scripts/test.js"></script>
+
 </head>
 <body class="subject_page">
+
 <header>
     <div class="header">
         <div class="wrapper">
@@ -35,6 +41,7 @@
                     </li>
                     <li class="user_bell">
                         <img src="src/img/bell.svg" alt="bell">
+                        <span class="user_bell-numb"></span>
                         <div class="user_bell-block"></div>
                     </li>
                     <li class="header_user">
@@ -60,6 +67,7 @@
 
 <main class="test_page">
     <div class="wrapper test_list testPage">
+        <div id="timer">Залишилось <span></span> хвилин</div>
         <div class="test_iframe">&#032;</div>
         <div class="test__block">
             <h1></h1>
@@ -69,7 +77,6 @@
 
                 </ul>
             </div>
-            <div id="timer"></div>
             <ul class="test_blocks">
 
             </ul>
@@ -215,11 +222,8 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="src/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="src/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="src/js/jquery.fullPage.js"></script>
-<script type="text/javascript" src="src/js/script.js"></script>
 <script src="https://use.fontawesome.com/75e1b47c6b.js"></script>
 
 </body>
