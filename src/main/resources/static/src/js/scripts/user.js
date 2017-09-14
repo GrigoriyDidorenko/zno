@@ -185,20 +185,24 @@ $( document ).ready(function() {
         var username;
         $('#lost_email-sent').click(function () {
 
+            $('.lost_pass-error').css('display', 'none');
+
             username = $('#lost-Email').val();
 
-            $.ajax({
-                type: "POST",
-                url: "/resetPassword",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                error: function (XMLHttpRequest) {
-                    console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
-                },
-                success: function (data) {
-                    console.log(data);
-                }
-            })
+            if(username == ''){
+                $('.lost_pass-error').css('display', 'block').text('Вкажіть email');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/resetPassword?email="+username,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    error: function (XMLHttpRequest) {
+                        $('.lost_pass-error').css('display', 'block').text('На вказаний email надіслано новий пароль');
+                        console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
+                    }
+                })
+            }
         });
     });
 
