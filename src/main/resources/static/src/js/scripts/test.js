@@ -375,7 +375,8 @@ $( document ).ready(function() {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data, textStatus, request) {
-                    $('.test_result').text('Ваша оцінка ' + data);
+                    $('.test_result').fadeIn();
+                    $('.test_result-data').text(data);
                 },
                 error: function (request, textStatus, errorThrown) {
                     console.log(data);

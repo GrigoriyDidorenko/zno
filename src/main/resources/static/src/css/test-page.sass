@@ -19,8 +19,6 @@
       padding: 20px 0
       &:first-of-type
         padding-top: 0
-      &.user_ignore
-        background: #eaeaea
       p
         display: inline
         img
@@ -34,18 +32,39 @@
           margin-bottom: 5px
           font-weight: normal
           cursor: pointer
-          &.correct_answer
-            background: $green_color
+          &.correct_answer, &.user_answer_correct
+            background: rgba(23, 170, 61, 0.1)
+            padding: 10px 20px
+            border-radius: 2px
+            position: relative
+            &:after
+              content: 'вірна відповідь'
+              display: block
+              position: absolute
+              top: 2px
+              right: 10px
+              font-size: 10px
+              color: #4CAF50
           &.user_answer_incorrect
-            background: #ffc107
-          &.user_answer_correct
-            background: #00BCD4
+            background: rgba(170, 70, 23, 0.1)
+            padding: 10px 20px
+            border-radius: 2px
+            position: relative
+            &:after
+              content: 'невірна відповідь'
+              display: block
+              position: absolute
+              top: 2px
+              right: 10px
+              font-size: 10px
+              color: #FF5722
       .radio
         margin-top: 0
         margin-bottom: 5px
 .test_list
   display: flex
   justify-content: space-between
+  margin-bottom: 100px
   .test_iframe
     background: #fff2f5
     margin-top: 123px
@@ -109,7 +128,15 @@
   z-index: 9
 .test-end
   width: 180px
-  margin: 30px auto 50px auto
+  margin: 30px auto
+
+.test_result
+  display: none
+  text-align: center
+  padding-bottom: 25px
+  p
+    &:first-of-type
+      margin-bottom: 5px
 
 #timer
   position: fixed

@@ -81,7 +81,10 @@
 
             </ul>
             <a data-toggle="modal" data-target="#test_finish" class="btn test-end">Завершити тест</a>
-            <div class="test_result"></div>
+            <div class="test_result">
+                <p>Ваш результат: <span class="test_result-data"></span> балів</p>
+                <a href="/statistics.html">Перейти до особистого кабінету</a>
+            </div>
         </div>
         <div class="test_iframe">&#032;</div>
     </div>
@@ -192,11 +195,11 @@
                 <h4 class="modal-title">завершити тест</h4>
             </div>
             <div class="modal-body">
-                Завершення тесту?
+                Завершити тест?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn" data-dismiss="modal">Close</button>
-                <button type="button" class="btn" id="test-save">Save changes</button>
+                <button type="button" class="btn" data-dismiss="modal">Ні</button>
+                <button type="button" class="btn" id="test-save">Так</button>
             </div>
         </div>
 
