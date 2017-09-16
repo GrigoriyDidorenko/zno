@@ -1,6 +1,7 @@
 package ua.com.zno.online.domain;
 
-import ua.com.zno.online.DTOs.statistic.SubjectStatistics;
+import ua.com.zno.online.DTOs.statistics.SubjectStatistics;
+import ua.com.zno.online.DTOs.statistics.TestStatistics;
 import ua.com.zno.online.domain.user.User;
 
 import javax.persistence.*;
@@ -13,28 +14,52 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(catalog = "zno", name = "test_results")
-@NamedNativeQuery(query = "select s.id as subjectId, t.name as testName, tr.duration as duration, tr.mark as mark, tmp.count as numOfFailedQuestions" +
-        " from test_results tr" +
-        " join tests t on tr.test_id = t.id" +
-        " join subjects s on t.subject_id = s.id" +
-        " left join (select test_id, count(*) as count from failed_questions fq group by test_id) as tmp on t.id = tmp.test_id" +
-        " where tr.user_id = ?1", name = "TestResult.getStatisticsForUser", resultSetMapping = "statistics")
+@NamedNativeQueries({
+        @NamedNativeQuery(query = "select s.id, s.`name`, count(f.id) as failed_questions_amount from subjects s " +
+                "join tests t on t.subject_id = s.id " +
+                "left join failed_questions f on f.test_id = t.id and f.deleted = 0  and f.resolved = 0 and f.user_id=?1 " +
+                "where s.deleted = 0 and t.deleted = 0 " +
+                "group by s.id, s.`name`",
+                name = "TestResult.getSubjectStatistics", resultSetMapping = "subjectStatistics"),
 
-@SqlResultSetMapping(
-        name = "statistics",
-        classes = {
-                @ConstructorResult(
-                        targetClass = SubjectStatistics.TestStatistics.class,
-                        columns = {
-                                @ColumnResult(name = "subjectId", type = Long.class),
-                                @ColumnResult(name = "testName", type = String.class),
-                                @ColumnResult(name = "duration", type = Integer.class),
-                                @ColumnResult(name = "mark", type = Double.class),
-                                @ColumnResult(name = "numOfFailedQuestions", type = Integer.class)
-                        }
-                )
-        }
-)
+        @NamedNativeQuery(query = "select t.name as testName, tr.duration as duration, tr.mark as mark , tr.failed_questions_amount as failed_questions_amount " +
+                " from test_results tr\n" +
+                " join tests t on tr.test_id = t.id\n" +
+                " where tr.user_id = ?1 and t.subject_id =?2 and tr.deleted = 0 and t.deleted = 0",
+                name = "TestResult.getTestsStatisticsBySubject", resultSetMapping = "testStatistics")
+})
+
+@SqlResultSetMappings({
+
+        @SqlResultSetMapping(
+                name = "subjectStatistics",
+                classes = {
+                        @ConstructorResult(
+                                targetClass = SubjectStatistics.class,
+                                columns = {
+                                        @ColumnResult(name = "id", type = Long.class),
+                                        @ColumnResult(name = "name", type = String.class),
+                                        @ColumnResult(name = "failed_questions_amount", type = Integer.class)
+                                }
+                        )}
+        ),
+
+        @SqlResultSetMapping(
+                name = "testStatistics",
+                classes = {
+                        @ConstructorResult(
+                                targetClass = TestStatistics.class,
+                                columns = {
+                                        @ColumnResult(name = "testName", type = String.class),
+                                        @ColumnResult(name = "duration", type = Integer.class),
+                                        @ColumnResult(name = "mark", type = Double.class),
+                                        @ColumnResult(name = "failed_questions_amount", type = Integer.class)
+                                }
+                        )
+                }
+        )
+})
+
 public class TestResult extends AbstractEntity {
 
     @ManyToOne(optional = false)
@@ -57,15 +82,19 @@ public class TestResult extends AbstractEntity {
     @Column(name = "submission_time", nullable = false)
     private LocalDateTime submissionTime;
 
+    @Column(name = "failed_questions_amount", nullable = false)
+    private Integer failedQuestionsAmount;
+
     public TestResult() {
     }
 
-    public TestResult(Test test, User user, Integer duration, Double mark, LocalDateTime submissionTime) {
+    public TestResult(Test test, User user, Integer duration, Double mark, LocalDateTime submissionTime, Integer failedQuestionsAmount) {
         this.test = test;
         this.user = user;
         this.duration = duration;
         this.mark = mark;
         this.submissionTime = submissionTime;
+        this.failedQuestionsAmount = failedQuestionsAmount;
     }
 
     public Integer getDuration() {
@@ -106,6 +135,14 @@ public class TestResult extends AbstractEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getFailedQuestionsAmount() {
+        return failedQuestionsAmount;
+    }
+
+    public void setFailedQuestionsAmount(Integer failedQuestionsAmount) {
+        this.failedQuestionsAmount = failedQuestionsAmount;
     }
 
     @Override

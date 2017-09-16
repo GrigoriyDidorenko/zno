@@ -16,7 +16,7 @@ import ua.com.zno.online.domain.TestResult;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.ZnoUserException;
-import ua.com.zno.online.DTOs.statistic.SubjectStatistics;
+import ua.com.zno.online.DTOs.statistics.SubjectStatistics;
 import ua.com.zno.online.repository.*;
 
 import java.time.LocalDateTime;
@@ -59,23 +59,27 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     @Override
     public double processTestResult(TestResultDTO testResultDTO) throws ZnoUserException {
         Map<Long, Long> markPerQuestion = super.computeMarkPerQuestion(testResultDTO);
+
+        List<Long> failedQuestionsIds = findFailedQuestions(markPerQuestion);
+        updateFailedQuestions(failedQuestionsIds, testResultDTO.getId());
+
         double total = super.calculateTestResult(markPerQuestion);
 
-        this.updateFailedQuestions(markPerQuestion, testResultDTO.getId());
-
-        testResultRepository.save(new TestResult(testRepository.findOne(testResultDTO.getId()), getAuthenticatedUser(), testResultDTO.getDuration(), total, LocalDateTime.now()));
+        testResultRepository.save(new TestResult(testRepository.findOne(testResultDTO.getId()),
+                getAuthenticatedUser(), testResultDTO.getDuration(), total, LocalDateTime.now(), failedQuestionsIds.size()));
 
         return total;
     }
 
-    private void updateFailedQuestions(Map<Long, Long> questionIdWithMark, Long testId) {
-        long userId = getAuthenticatedUser().getId();
-
-        List<Long> failedQuestionsIds = questionIdWithMark.entrySet().stream()
+    private List<Long> findFailedQuestions(Map<Long, Long> markPerQuestion) {
+        return markPerQuestion.entrySet().stream()
                 .filter(entry -> entry.getValue() == 0)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
+    }
 
+    private void updateFailedQuestions(List<Long> failedQuestionsIds, Long testId) {
+        long userId = getAuthenticatedUser().getId();
 
         for (Long failedQuestionsId : failedQuestionsIds) {
             if (failedQuestionRepository.existsByUserIdAndQuestionId(userId, failedQuestionsId)) {
@@ -144,27 +148,15 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     public List<SubjectStatistics> getStatistics() {
         long userId = getAuthenticatedUser().getId();
 
-        return testResultRepository.getStatisticsForUser(userId).stream()
-                .collect(Collectors.groupingBy(SubjectStatistics.TestStatistics::getSubjectId))
-                .entrySet().stream()
-                .map(e -> new SubjectStatistics(e.getKey(), subjectRepository.findByTestsId(e.getKey()).getName(), e.getValue()))
+        return testResultRepository.getSubjectStatistics(userId).stream()
+                .map(subject -> new SubjectStatistics(subject, testResultRepository.getTestsStatisticsBySubject(userId, subject.getId())))
                 .collect(Collectors.toList());
     }
 
-    //TODO redo this better
     @Override
-    public List<SubjectFailedQuestionAmountDTO> getNotificationFailed() {
+    public List<SubjectStatistics> getNotificationFailed() {
         long userId = getAuthenticatedUser().getId();
-
-        Map<Subject, Integer> map = failedQuestionRepository.findAllByUserId(userId).stream()
-                .collect(Collectors.groupingBy(e -> subjectRepository.findByTestsId(e.getTest().getId())))
-                .entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().size()));
-
-        List<SubjectFailedQuestionAmountDTO> failedQuestionAmount = new ArrayList<>(map.size());
-
-        map.keySet().forEach(key -> failedQuestionAmount.add(new SubjectFailedQuestionAmountDTO(key.getId(), key.getName(), map.get(key))));
-        return failedQuestionAmount;
+        return testResultRepository.getSubjectStatistics(userId);
     }
 
     @Override

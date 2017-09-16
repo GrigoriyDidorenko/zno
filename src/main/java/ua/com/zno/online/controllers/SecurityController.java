@@ -14,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.com.zno.online.DTOs.UserDTO;
+import ua.com.zno.online.DTOs.security.LoginStatusDTO;
+import ua.com.zno.online.DTOs.security.UserCredentialsDTO;
 import ua.com.zno.online.domain.user.User;
 import ua.com.zno.online.exceptions.ZnoServerException;
 import ua.com.zno.online.exceptions.ZnoUserException;
@@ -92,18 +94,18 @@ public class SecurityController {
 
     @GetMapping("loginStatus")
     @ResponseBody
-    public LoginStatus getStatus() {
+    public LoginStatusDTO getStatus() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && !auth.getName().equals("anonymousUser") && auth.isAuthenticated()) {
-            return new LoginStatus(true, userRepository.findUserByEmail(auth.getName()).getName());
+            return new LoginStatusDTO(true, userRepository.findUserByEmail(auth.getName()).getName());
         } else {
-            return new LoginStatus(false, null);
+            return new LoginStatusDTO(false, null);
         }
     }
 
     @PostMapping("login")
     @ResponseBody
-    public ResponseEntity<LoginStatus> login(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<LoginStatusDTO> login(@RequestBody UserDTO userDTO) {
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDTO.getEmail(), userDTO.getPassword());
         User details = userRepository.findUserByEmail(userDTO.getEmail());
@@ -112,12 +114,12 @@ public class SecurityController {
         try {
             Authentication auth = authenticationManager.authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
-            return new ResponseEntity<>(new LoginStatus(auth.isAuthenticated(), auth.getName()), HttpStatus.OK);
+            return new ResponseEntity<>(new LoginStatusDTO(auth.isAuthenticated(), auth.getName()), HttpStatus.OK);
         } catch (BadCredentialsException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(new LoginStatus(false, null, "Bad credentials"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new LoginStatusDTO(false, null, "Bad credentials"), HttpStatus.BAD_REQUEST);
         } catch (DisabledException e) {
-            return new ResponseEntity<>(new LoginStatus(false, null, "User is not activated"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new LoginStatusDTO(false, null, "User is not activated"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -127,40 +129,10 @@ public class SecurityController {
     }
 
     @PostMapping("changePassword")
-    public ResponseEntity<Void> changePassword(@RequestParam String email, @RequestParam String oldPsswrd, @RequestParam String newPsswrd) throws ZnoServerException {
-        securityService.changePassword(email, oldPsswrd, newPsswrd);
+    public ResponseEntity<Void> changePassword(@RequestBody UserCredentialsDTO credentials) throws ZnoServerException {
+        securityService.changePassword(credentials.getEmail(), credentials.getOldPassword(), credentials.getNewPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-    public class LoginStatus {
-
-        private final boolean loggedIn;
-        private final String username;
-        private String failReason;
-
-        public LoginStatus(boolean loggedIn, String username) {
-            this.loggedIn = loggedIn;
-            this.username = username;
-        }
-
-        public LoginStatus(boolean loggedIn, String username, String failReason) {
-            this.loggedIn = loggedIn;
-            this.username = username;
-            this.failReason = failReason;
-        }
-
-        public boolean isLoggedIn() {
-            return loggedIn;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public String getFailReason() {
-            return failReason;
-        }
-    }
 
 }
