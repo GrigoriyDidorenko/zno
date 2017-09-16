@@ -264,7 +264,7 @@ public class SecurityService {
     private String createResetContent(String password) {
         //String beautyHtml = ...
         return "Ваш тимчасовий пароль: " + password + ". Ви можете змінити його в особистому кабінеті:\n" +
-                env.getProperty("host.uri") + "changePasswordPage";
+                env.getProperty("host.uri") + "changePasswordPage.html";
     }
 
     private String makeVkUrl(String code) {
