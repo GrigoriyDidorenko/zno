@@ -18,10 +18,10 @@ public interface QuestionRepository extends AbstractRepository<Question> {
             nativeQuery = true)
     List<Question> findAllFailedQuestions(Long userId);
 
-    @Query(value = "select * from questions q join failed_questions f on f.question_id = q.id " +
-            "where f.user_id = ?2 and f.deleted = false and f.resolved = false and f.next_ask_time < current_date and f.subject_id = ?1",
+    @Query(value = "select * from questions q join failed_questions f on f.question_id = q.id JOIN tests t on f.test_id = t.id " +
+            "where f.user_id = ?2 and f.deleted = false and f.resolved = false and f.next_ask_time < current_date and t.subject_id = ?1",
             nativeQuery = true)
-    List<Question> findAnllFailedQuestionsBySubject(Long subjectId, Long userId);
+    List<Question> findFailedQuestionsBySubject(Long subjectId, Long userId);
 
     @Query(value = "select round(avg(nn.num)) INTO @myLimit FROM (SELECT COUNT(*) as num FROM questions q JOIN tests t on q.test_id = t.id join subjects s on t.subject_id = s.id where q.type = 0 and s.id = ?1 group by t.id) as nn; PREPARE STMT FROM 'select * from questions order by rand() limit ?'; EXECUTE STMT USING @myLimit",
             nativeQuery = true)

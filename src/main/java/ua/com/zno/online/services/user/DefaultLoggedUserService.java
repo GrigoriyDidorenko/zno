@@ -6,7 +6,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.com.zno.online.DTOs.QuestionDTO;
-import ua.com.zno.online.DTOs.SubjectDTO;
 import ua.com.zno.online.DTOs.TestDTO;
 import ua.com.zno.online.DTOs.TestResultDTO;
 import ua.com.zno.online.DTOs.notification.SubjectFailedQuestionAmountDTO;
@@ -122,7 +121,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     @Override
     public TestDTO getFailedQuestionsBySubject(Long subjectId) {
         List<QuestionDTO> questionDTOs = questionRepository
-                .findAnllFailedQuestionsBySubject(subjectId, getAuthenticatedUser().getId()).stream()
+                .findFailedQuestionsBySubject(subjectId, getAuthenticatedUser().getId()).stream()
                 .map(question -> entityToDTO.convertToDTO(question, QuestionDTO.class))
                 .collect(Collectors.toList());
 

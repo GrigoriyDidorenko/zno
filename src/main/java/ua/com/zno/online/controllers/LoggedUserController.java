@@ -69,7 +69,6 @@ public class LoggedUserController {
 
     @GetMapping("failed/notification")
     public List<SubjectFailedQuestionAmountDTO> getNotificationFailed() throws ZnoUserException, JsonProcessingException {
-
         return defaultLoggedUserService.getNotificationFailed();
     }
 
