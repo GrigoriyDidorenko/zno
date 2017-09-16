@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
         " from test_results tr" +
         " join tests t on tr.test_id = t.id" +
         " join subjects s on t.subject_id = s.id" +
-        " join (select test_id, count(*) as count from failed_questions fq group by test_id) as tmp on t.id = tmp.test_id" +
+        " left join (select test_id, count(*) as count from failed_questions fq group by test_id) as tmp on t.id = tmp.test_id" +
         " where tr.user_id = ?1", name = "TestResult.getStatisticsForUser", resultSetMapping = "statistics")
 
 @SqlResultSetMapping(

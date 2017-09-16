@@ -6,13 +6,14 @@ import ua.com.zno.online.DTOs.AbstractDTO;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 /**
  * Created by mac on 13.05.2017.
  */
-public class SubjectStatistics  extends AbstractDTO{
+public class SubjectStatistics extends AbstractDTO {
     private String subjectName;
     private double avrgDuration;
     private double avrgMark;
@@ -39,12 +40,12 @@ public class SubjectStatistics  extends AbstractDTO{
         private double mark;
         private int numOfFailedQuestions;
 
-        public TestStatistics(Long subjectId, String testName, int duration, double mark, int numOfFailedQuestions) {
+        public TestStatistics(Long subjectId, String testName, int duration, double mark, Integer numOfFailedQuestions) {
             this.subjectId = subjectId;
             this.testName = testName;
             this.duration = duration;
             this.mark = mark;
-            this.numOfFailedQuestions = numOfFailedQuestions;
+            this.numOfFailedQuestions = Optional.ofNullable(numOfFailedQuestions).orElse(0);
         }
 
         public TestStatistics() {
