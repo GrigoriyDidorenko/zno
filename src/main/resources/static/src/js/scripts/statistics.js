@@ -27,16 +27,16 @@ $( document ).ready(function() {
             $.each(json, function (key, val) {
                 $.each(val, function (subject, data) {
                     switch (subject) {
-                        case 'avrgDuration':
+                        case 'avgDuration':
                             avrgDuration = data;
                             break;
-                        case 'avrgMark':
+                        case 'avgMark':
                             avrgMark = data;
                             break;
-                        case 'numOfFailedQuestions':
+                        case 'failedQuestionsAmount':
                             numOfFailedQuestions = data;
                             break;
-                        case 'subjectName':
+                        case 'name':
                             subjectName = data;
                             break;
                         case 'id':
@@ -63,10 +63,10 @@ $( document ).ready(function() {
                                         case 'mark':
                                             mark = value;
                                             break;
-                                        case 'numOfFailedQuestions':
+                                        case 'failedQuestionsAmount':
                                             testNumOfFailedQuestions = value;
                                             break;
-                                        case 'testName':
+                                        case 'name':
                                             testName = value;
                                             break;
                                     }

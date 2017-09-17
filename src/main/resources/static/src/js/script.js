@@ -275,16 +275,16 @@ if ($('main').hasClass('statistics_page')) {
             $.each(json, function (key, val) {
                 $.each(val, function (subject, data) {
                     switch (subject) {
-                        case 'avrgDuration':
+                        case 'avgDuration':
                             avrgDuration = data;
                             break;
-                        case 'avrgMark':
+                        case 'avgMark':
                             avrgMark = data;
                             break;
-                        case 'numOfFailedQuestions':
+                        case 'failedQuestionsAmount':
                             numOfFailedQuestions = data;
                             break;
-                        case 'subjectName':
+                        case 'name':
                             subjectName = data;
                             break;
                     }
