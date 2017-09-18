@@ -16,6 +16,25 @@
         color: #2980b9
     .social
       text-align: center
+      a
+        display: flex
+        margin: 0 5px
+        align-items: center
+        justify-content: center
+        padding: 6px 12px 6px 2px
+        border-radius: 50px
+        background: #4d76a1
+        color: white
+        font-size: 11px
+        letter-spacing: 0.3px
+        &.fb
+          background: #3b5998
+        img
+          width: 25px
+          background: none
+          padding: 0
+          border-radius: 0
+          margin: 0 3px
       .btn
         background: $blue_btn
         width: 170px
@@ -25,22 +44,22 @@
           background: #1b30a7
     .modal_or
       text-align: center
-      margin: 15px 0
+      margin: 18px 0
       position: relative
       hr
         position: absolute
         top: 0
-        right: 0
-        width: 100%
+        width: 40%
         margin: 10px auto
         z-index: 0
+        left: 30%
       p
         position: relative
         background: white
         width: 50px
         margin: 0 auto
-        color: #eee
-        font-size: 13px
+        color: #dcdcdc
+        font-size: 12px
     form
       text-align: center
       margin: 0 auto
@@ -50,7 +69,7 @@
         padding: 10px 15px
         border-radius: 50px
         background: rgba(255, 255, 255, 0.73)
-        border: 1px solid #e5e5e5
+        border: 1px solid #81c7ff
         margin: 0 5px
         box-sizing: border-box
         font-size: 13px
@@ -113,19 +132,17 @@
 #lost_password
   input
     display: inline-block
-    width: 200px
+    width: 250px
     border: 1px solid #dcdcdc
     padding: 9px 15px
     border-radius: 50px
     background: rgba(255,255,255,.65)
-    margin: 7px auto
+    margin: 15px auto 5px auto
     box-sizing: border-box
   .btn
-    display: inline-block
-    text-transform: none
-    font-weight: 400
-    width: 110px
-    margin: 10px auto 0 auto
+    letter-spacing: 1px
+    width: 170px
+    margin: 5px auto 10px auto
 
 .change_email
   display: flex
@@ -151,6 +168,18 @@
 
 .modal_owl
   position: absolute
-  top: -23px
+  top: -73px
   left: 10px
   width: 33px
+
+#registration_confirm, #lost_password
+  .modal-dialog
+    margin-top: 100px
+    width: 350px
+    p
+      font-size: 13px
+      margin: 0
+      &:first-of-type
+        margin-bottom: 5px
+    span
+      color: #2196F3

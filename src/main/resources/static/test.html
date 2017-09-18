@@ -106,12 +106,13 @@
             </div>
             <div class="modal-body">
                 <div class="social">
-                    <a href="" class="btn btn_vk">вконтакті</a>
-                    <a href="" class="btn btn_fb">facebook</a>
+                    <a href="" class="vk"><img src="src/img/vk-modal.svg" alt="vk" title="vk"><span>Увійти через Вконтакті</span></a>
+                    <a href="" class="fb"><img src="src/img/facebook-modal.svg" alt="facebook" title="facebook"><span>Увійти через Facebook</span></a>
                 </div>
                 <div class="modal_or">
                     <hr>
-                    <p>або</p></div>
+                    <p>або</p>
+                </div>
                 <form name="loginForm">
                     <input type="email" name="email" id="loginEmail" placeholder="Email">
                     <input type="password" name="password" id="loginPassword" placeholder="Пароль">
@@ -129,6 +130,10 @@
 <div class="modal fade" id="registration_confirm" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">підтвердження реєстрації</h4>
+            </div>
             <div class="modal-body">
                 <img src="src/img/logo_letter.png" alt="zno.online" class="modal_owl">
                 <p>Дякуємо за реєстрацію на нашому ресурсі!</p>
@@ -141,11 +146,14 @@
 <!-- Modal lost password -->
 <div class="modal fade" id="lost_password" role="dialog">
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">відновлення пароля</h4>
+            </div>
             <div class="modal-body">
-                <p>Вкажіть email</p>
+                <p>Введите email, указанный при регистрации. На него мы вышлем инструкции по восстановлению пароля.</p>
                 <input type="email" name="email" id="lost-Email" placeholder="Email">
                 <button id="lost_email-sent" class="btn">Надіслати</button>
                 <div class="lost_pass-error"></div>
@@ -167,10 +175,13 @@
             </div>
             <div class="modal-body">
                 <div class="social">
-                    <a href="" class="btn btn_vk">вконтакті</a>
-                    <a href="" class="btn btn_fb">facebook</a>
+                    <a href="" class="vk"><img src="src/img/vk-modal.svg" alt="vk" title="vk"><span>Зареєструватися через Вконтакті</span></a>
+                    <a href="" class="fb"><img src="src/img/facebook-modal.svg" alt="facebook" title="facebook"><span>Зареєструватися через Facebook</span></a>
                 </div>
-                <div class="modal_or"><hr><p>або</p></div>
+                <div class="modal_or">
+                    <hr>
+                    <p>або</p>
+                </div>
                 <form name="registration">
                     <input type="email" placeholder="Email" name="email" id="email">
                     <input type="password" placeholder="Пароль" name="password" id="password">
