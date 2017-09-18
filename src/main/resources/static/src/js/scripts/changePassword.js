@@ -18,8 +18,8 @@ $( document ).ready(function() {
 
         var changePassObject = {
             "email": pass_email,
-            "oldPsswrd": old_pass,
-            "newPsswrd": new_pass
+            "oldPassword": old_pass,
+            "newPassword": new_pass
         };
 
         console.log(JSON.stringify(changePassObject));
