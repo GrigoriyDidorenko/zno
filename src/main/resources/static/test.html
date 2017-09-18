@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="src/css/style.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="src/js/raphael-2.1.4.min.js"></script>
+    <script src="src/js/justgage.js"></script>
     <script type="text/javascript" src="src/js/scripts/user.js"></script>
     <script type="text/javascript" src="src/js/scripts/test.js"></script>
 
@@ -67,7 +69,7 @@
 
 <main class="test_page">
     <div class="wrapper test_list testPage">
-        <div id="timer">Залишилось <span></span> хвилин</div>
+        <div id="timer">Залишилось <span>00:00</span> хвилин</div>
         <div class="test_iframe">&#032;</div>
         <div class="test__block">
             <h1></h1>
@@ -82,8 +84,9 @@
             </ul>
             <a data-toggle="modal" data-target="#test_finish" class="btn test-end">Завершити тест</a>
             <div class="test_result">
-                <p>Ваш результат: <span class="test_result-data"></span> балів</p>
-                <a href="/statistics.html">Перейти до особистого кабінету</a>
+                <div id="test-result" class="gauge"></div>
+                <p>Ваш результат <img src="src/img/test_result.svg" alt="test_result"></p>
+                <a href="/statistics.html">Переглянути профіль</a>
             </div>
         </div>
         <div class="test_iframe">&#032;</div>

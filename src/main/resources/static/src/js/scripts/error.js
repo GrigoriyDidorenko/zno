@@ -1,5 +1,5 @@
 $('#fullpage').fullpage({
-    sectionsColor: ['#5f47a2'],
+    sectionsColor: ['#c73145'],
     anchors: ['welcome'],
     menu: '#menu'
 });

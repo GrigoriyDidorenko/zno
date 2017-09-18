@@ -83,6 +83,7 @@ $( document ).ready(function() {
                             var Minutes = 60 * val,
                                 display = document.querySelector('#timer span');
                             if(testTime == 'true'){
+                                $('#timer').css('display','block');
                                 startTimer(Minutes, display);
                             }
 
@@ -266,6 +267,7 @@ $( document ).ready(function() {
 
         $('#test-save').click(function () {
             $('#test_finish').modal('toggle');
+            $('.test-end').css('display', 'none');
 
             final_duration = $('#timer span').text();
             final_duration = final_duration.substring(0, final_duration.indexOf(':'));
@@ -376,7 +378,23 @@ $( document ).ready(function() {
                 dataType: "json",
                 success: function (data, textStatus, request) {
                     $('.test_result').fadeIn();
-                    $('.test_result-data').text(data);
+
+                    new JustGage({
+                        id: 'test-result',
+                        value: data,
+                        min: 100,
+                        max: 200,
+                        symbol: '',
+                        pointer: true,
+                        pointerOptions: {
+                            toplength: 8,
+                            bottomlength: -20,
+                            bottomwidth: 6,
+                            color: '#8e8e93'
+                        },
+                        gaugeWidthScale: 0.1,
+                        counter: true
+                    });
                 },
                 error: function (request, textStatus, errorThrown) {
                     console.log(data);
