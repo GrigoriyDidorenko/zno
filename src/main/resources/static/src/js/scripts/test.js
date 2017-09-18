@@ -39,6 +39,7 @@ $( document ).ready(function() {
 
         if(failedTest == 'true'){
             testUrl = "/user/failed/questions/"+testId;
+            testResultUrl = '/user/failed/questions';
         } else if(brainstormTest == 'true'){
             testUrl = "/api/brainstorm/"+testId;
         } else{
@@ -401,7 +402,7 @@ $( document ).ready(function() {
                     });
                 },
                 error: function (request, textStatus, errorThrown) {
-                    console.log(data);
+                    console.log(request);
                 }
             });
         })
