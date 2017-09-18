@@ -1,0 +1,48 @@
+.change_pass
+  .subjects_wrapper
+    h2
+      margin-bottom: 20px
+
+.change_email
+  display: flex
+  flex-direction: column
+  width: 250px
+  margin: 0 auto
+  input
+    display: block
+    width: 100%
+    border: 1px solid white
+    padding: 9px 15px
+    border-radius: 50px
+    background: none
+    margin: 7px auto 10px auto
+    box-sizing: border-box
+    color: white
+    @extend .type-style
+  .btn
+    border: none
+    width: 200px
+    margin: 20px auto 0 auto
+    background: #ecb107
+    transition: 0.3s
+    &:hover
+      background: #ffc724
+
+  @mixin placeholder()
+    input::-webkit-input-placeholder
+      @content
+    input:-moz-placeholder
+      @content
+    input::-moz-placeholder
+      @content
+    input:-ms-input-placeholder
+      @content
+
+  .type-style
+    font-size: 15px
+    font-family: sans-serif
+    letter-spacing: 1px
+  
+  @include placeholder()
+    color: white
+    @extend .type-style
