@@ -116,7 +116,7 @@
     </tr>
     <tr style="background: #35b8e8;border-top-left-radius: 2px;border-top-right-radius: 2px;">
         <td style="padding: 25px 0;border-top-left-radius: 2px;border-top-right-radius: 2px;">
-            <p style="text-align: center;font-size: 25px;letter-spacing: 1px;font-weight: 100;margin:0;color: white; ">Відновлення паролю</p>
+            <p style="text-align: center;font-size: 25px;letter-spacing: 1px;font-weight: 100;margin:0;color: white; ">Відновлення пароля</p>
         </td>
     </tr>
     <tr style="background: #f9f9f9;">
