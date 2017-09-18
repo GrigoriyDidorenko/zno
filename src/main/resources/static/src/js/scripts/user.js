@@ -71,6 +71,7 @@ jQuery.ajax({
                 }
             });
         } else{
+            testResultUrl = '/api/result';
             if($('main').hasClass('statistics_page')){
                 window.location.href = "index.html";
             }

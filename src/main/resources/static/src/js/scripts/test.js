@@ -379,6 +379,10 @@ $( document ).ready(function() {
                 success: function (data, textStatus, request) {
                     $('.test_result').fadeIn();
 
+                    if(testResultUrl == '/api/result'){
+                        $('.test_result a').css('display','none');
+                    }
+
                     new JustGage({
                         id: 'test-result',
                         value: data,
