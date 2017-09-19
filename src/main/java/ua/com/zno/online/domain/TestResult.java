@@ -15,16 +15,23 @@ import java.time.LocalDateTime;
 @Entity
 @Table(catalog = "zno", name = "test_results")
 @NamedNativeQueries({
-        @NamedNativeQuery(query = "select s.id, s.`name`, count(f.id) as failed_questions_amount from subjects s " +
-                "join tests t on t.subject_id = s.id " +
-                "left join failed_questions f on f.test_id = t.id and f.deleted = 0  and f.resolved = 0 and f.user_id=?1 " +
-                "where s.deleted = 0 and t.deleted = 0 " +
+        @NamedNativeQuery(query = "select s.id, s.`name`, count(f.id) as failed_questions_amount  from " +
+                "(select t.id as `t_id`, t.subject_id as `subject_id` from test_results ts " +
+                "join tests t on t.id = ts.test_id " +
+                "where ts.deleted = 0 and t.deleted = 0 and ts.user_id=?1 " +
+                "group by t.subject_id, t.id) sub " +
+                "join subjects s " +
+                "on sub.`subject_id` = s.id " +
+                "left join failed_questions f " +
+                "on f.test_id = sub.`t_id` " +
+                "and f.deleted = 0  and f.resolved = 0 and f.user_id=?1 " +
+                "where  s.deleted = 0 " +
                 "group by s.id, s.`name`",
                 name = "TestResult.getSubjectStatistics", resultSetMapping = "subjectStatistics"),
 
         @NamedNativeQuery(query = "select t.name as testName, tr.duration as duration, tr.mark as mark , tr.failed_questions_amount as failed_questions_amount " +
-                " from test_results tr\n" +
-                " join tests t on tr.test_id = t.id\n" +
+                " from test_results tr " +
+                " join tests t on tr.test_id = t.id " +
                 " where tr.user_id = ?1 and t.subject_id =?2 and tr.deleted = 0 and t.deleted = 0",
                 name = "TestResult.getTestsStatisticsBySubject", resultSetMapping = "testStatistics")
 })
