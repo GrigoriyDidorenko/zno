@@ -19,7 +19,7 @@ public interface QuestionRepository extends AbstractRepository<Question> {
     List<Question> findAllFailedQuestions(Long userId);
 
     @Query(value = "select * from questions q join failed_questions f on f.question_id = q.id JOIN tests t on f.test_id = t.id " +
-            "where f.user_id = ?2 and f.deleted = false and f.resolved = false and f.next_ask_time < current_date and t.subject_id = ?1",
+            "where f.user_id = ?2 and f.deleted = false and f.resolved = false and f.next_ask_time < now() and t.subject_id = ?1",
             nativeQuery = true)
     List<Question> findFailedQuestionsBySubject(Long subjectId, Long userId);
 

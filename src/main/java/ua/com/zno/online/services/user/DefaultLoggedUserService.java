@@ -84,7 +84,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         for (Long failedQuestionsId : failedQuestionsIds) {
             if (failedQuestionRepository.existsByUserIdAndQuestionId(userId, failedQuestionsId)) {
                 failedQuestionRepository
-                        .setNewAskDate(LocalDateTime.now().plusDays(daysBetweenRemind.get(0)), userId);
+                        .setNewAskDate(LocalDateTime.now().plusDays(daysBetweenRemind.get(0)), userId, failedQuestionsId);
             } else {
                 FailedQuestion newFailedQuestionToPersist = new FailedQuestion(getAuthenticatedUser(), new Test(testId), new Question(failedQuestionsId),
                         false, LocalDateTime.now(), LocalDateTime.now().plusDays(daysBetweenRemind.get(0)));
@@ -97,17 +97,18 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     @Override
     public void saveFailedQuestionsResult(TestResultDTO testResultDTO) throws ZnoUserException {
         Map<Long, Long> questionIdWithMark = super.computeMarkPerQuestion(testResultDTO);
+        long userId = getAuthenticatedUser().getId();
 
         questionIdWithMark.entrySet().stream()
                 .filter(entry -> entry.getValue() != 0)
                 .map(Map.Entry::getKey)
-                .forEach(id -> {
-                    Optional<LocalDateTime> askNextTime = this.askNextTime(id);
+                .forEach(questionId -> {
+                    Optional<LocalDateTime> askNextTime = askNextTime(questionId);
 
                     if (askNextTime.isPresent())
-                        failedQuestionRepository.setNewAskDate(askNextTime.get(), id);
+                        failedQuestionRepository.setNewAskDate(askNextTime.get(), userId, questionId);
                     else
-                        failedQuestionRepository.markResolved(id);
+                        failedQuestionRepository.markResolved(userId, questionId);
                 });
     }
 
@@ -139,7 +140,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         int newStage = failedQuestion.incAndGetStage();
 
         if (daysBetweenRemind.size() > newStage)
-            return Optional.of(failedQuestion.getCreationDate().plusDays(daysBetweenRemind.get(newStage)));
+            return Optional.of(failedQuestion.getNextAskTime().plusDays(daysBetweenRemind.get(newStage)));
 
         return Optional.empty();
     }

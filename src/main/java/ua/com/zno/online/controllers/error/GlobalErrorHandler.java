@@ -35,7 +35,11 @@ public class GlobalErrorHandler {
         return e.getMessage();
     }
 
-
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = Exception.class)
+    public void handleConflict(Exception e) {
+        LOG.error("Handling Exception in GlobalErrorHandler", e);
+    }
 
 
 }

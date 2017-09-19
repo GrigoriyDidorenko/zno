@@ -15,16 +15,12 @@ import java.util.Set;
 public interface FailedQuestionRepository extends AbstractRepository<FailedQuestion> {
 
     @Modifying
-    @Query("update FailedQuestion f set f.nextAskTime = ?1 , f.resolved = false where f.user.id = ?2")
-    void setNewAskDate(LocalDateTime newAskDate, Long userId);
-
-    Set<Long> findIdByDeletedFalseAndUserId(Long userId);
+    @Query("update FailedQuestion f set f.nextAskTime = ?1 , f.resolved = false where f.user.id = ?2 and f.question.id=?3")
+    void setNewAskDate(LocalDateTime newAskDate, Long userId, Long questionId);
 
     @Modifying
-    @Query("update FailedQuestion f set f.resolved = true where f.user.id=?1")
-    void markResolved(Long id);
-
-    List<FailedQuestion> findAllByUserId(long userId);
+    @Query("update FailedQuestion f set f.resolved = true where f.user.id=?1 and f.question.id=?2")
+    void markResolved(Long userId, Long questionId);
 
     boolean existsByUserIdAndQuestionId(long userId, long questionId);
 }
