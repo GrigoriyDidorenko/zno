@@ -195,7 +195,7 @@ public class SecurityService {
         User userToPersist = new User(userDTO.getEmail().substring(0, userDTO.getEmail().indexOf("@")),
                 userDTO.getEmail(), userDTO.getEmail(), hashedPassword, LocalDateTime.now(), false, Collections.singleton(Authority.USER));
         userRepository.save(userToPersist);
-        mailService.sendEmail(new Mail(userDTO.getEmail(), "Підтвердіть реєстрацію для 'zno.net.ua'.", this.createConfirmationContent(userDTO.getEmail())));
+        mailService.sendEmail(new Mail(MailService.TEMPLATE_REGISTRATION, userDTO.getEmail(), "Підтвердіть реєстрацію для 'zno.net.ua'.", this.createConfirmationContent(userDTO.getEmail())));
     }
 
     @Transactional
@@ -210,7 +210,7 @@ public class SecurityService {
 
         user.get().setEnabled(true);
         userRepository.save(user.get());
-        mailService.sendEmail(new Mail(email, "Ви успішно зареєстровані на 'zno.net.ua'.", createSuccessRegistrationContent()));
+        mailService.sendEmail(new Mail(MailService.TEMPLATE_REGISTRATION, email, "Ви успішно зареєстровані на 'zno.net.ua'.", createSuccessRegistrationContent()));
         authorizateUser(user.get());
     }
 
@@ -226,7 +226,7 @@ public class SecurityService {
         String hashedPassword = passwordEncoder.encode(password);
         user.get().setPassword(hashedPassword);
         userRepository.save(user.get());
-        mailService.sendEmail(new Mail(email, "Відновлення паролю для 'zno.net.ua'", createResetContent(password)));
+        mailService.sendEmail(new Mail(MailService.TEMPLATE_PASSWORD_RECOVERING, email, "Відновлення паролю для 'zno.net.ua'", createResetContent(password)));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -243,7 +243,7 @@ public class SecurityService {
         String hashedPassword = passwordEncoder.encode(newPsswrd);
         user.get().setPassword(hashedPassword);
         userRepository.save(user.get());
-        mailService.sendEmail(new Mail(email, "Зміна паролю для 'zno.net.ua'", createChangePasswordContent()));
+        mailService.sendEmail(new Mail(MailService.TEMPLATE_PASSWORD_RECOVERING, email, "Зміна паролю для 'zno.net.ua'", createChangePasswordContent()));
     }
 
     private String createChangePasswordContent() {

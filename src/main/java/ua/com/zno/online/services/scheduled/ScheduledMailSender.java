@@ -33,6 +33,6 @@ public class ScheduledMailSender {
         List<String> emails = userRepository.getEmailsOfUsersWithFailedQuestions();
         LOG.debug("Sending email to users, which has failed questions, num of users {}", emails.size());
 
-        emails.forEach(email -> mailService.sendEmail(new Mail(email, "topic", "content")));
+        emails.forEach(email -> mailService.sendEmail(new Mail(MailService.TEMPLATE_WELCOME, email, "topic", "content")));
     }
 }

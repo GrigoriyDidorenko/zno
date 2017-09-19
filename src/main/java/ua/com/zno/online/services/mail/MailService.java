@@ -27,14 +27,22 @@ public class MailService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MailService.class.getName());
 
-    @Autowired
-    private JavaMailSender mailSender;
-    @Autowired
-    private Configuration freeMarkerConfiguration;
-
+    public static final String TEMPLATE_PASSWORD_RECOVERING = "change_password.ftl";
+    public static final String TEMPLATE_REGISTRATION = "registration.ftl";
+    public static final String TEMPLATE_WELCOME = "welcome.ftl";
 
     @Value(value = "${system.email}")
     private String from;
+
+    private final JavaMailSender mailSender;
+    private final Configuration freeMarkerConfiguration;
+
+
+    @Autowired
+    public MailService(JavaMailSender mailSender, Configuration freeMarkerConfiguration) {
+        this.mailSender = mailSender;
+        this.freeMarkerConfiguration = freeMarkerConfiguration;
+    }
 
     //could be tested : http://dolszewski.com/spring/sending-html-mail-with-spring-boot-and-thymeleaf/
 

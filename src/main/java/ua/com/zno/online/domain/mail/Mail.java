@@ -17,19 +17,21 @@ public class Mail {
     private String mailBcc;
     private String mailSubject;
     private String mailContent;
+    private String emailTemplate;
 
     private List<Object> attachments;
     private Map<String, Object> model = new HashMap<>(7, 1);
 
-    public Mail(String mailTo, String mailSubject, String mailContent) {
-        this(mailTo, mailSubject, mailContent, null);
+    public Mail(String emailTemplate, String mailTo, String mailSubject, String mailContent) {
+        this(emailTemplate, mailTo, mailSubject, mailContent, null);
     }
 
-    public Mail(String mailTo, String mailSubject, String mailContent, List<Object> attachments) {
+    public Mail(String emailTemplate, String mailTo, String mailSubject, String mailContent, List<Object> attachments) {
         this.mailTo = mailTo;
         this.mailSubject = mailSubject;
         this.mailContent = mailContent;
         this.attachments = attachments;
+        this.emailTemplate = emailTemplate;
 
         model.put("text", this.mailContent);
         model.put("signature", "ZNO.NET.UA Team");
