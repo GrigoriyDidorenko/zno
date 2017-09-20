@@ -31,6 +31,8 @@ $( document ).ready(function() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             error: function (XMLHttpRequest) {
+                $('#changePass_confirm').modal('toggle');
+                $('#user_changePass').text(pass_email);
                 console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
             }
         })

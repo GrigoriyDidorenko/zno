@@ -199,7 +199,9 @@ $( document ).ready(function() {
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     error: function (XMLHttpRequest) {
-                        $('.lost_pass-error').css('display', 'block').text('На вказаний email надіслано новий пароль');
+                        $('#lost_password').modal('toggle');
+                        $('#resetPass_confirm').modal('toggle');
+                        $('#user_resetPass').text(username);
                         console.log('user status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
                     }
                 })

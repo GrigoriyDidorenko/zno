@@ -15,14 +15,23 @@
     padding: 9px 15px
     border-radius: 50px
     background: none
-    margin: 7px auto 10px auto
+    margin: 3px auto 15px auto
     box-sizing: border-box
     color: white
     @extend .type-style
+  label
+    display: inline-block
+    max-width: 100%
+    margin-bottom: 0
+    font-weight: 400
+    color: white
+    font-size: 13px
+    padding-left: 15px
+    letter-spacing: 0.3px
   .btn
     border: none
     width: 200px
-    margin: 20px auto 0 auto
+    margin: 15px auto 0 auto
     background: #ecb107
     transition: 0.3s
     &:hover
@@ -44,5 +53,5 @@
     letter-spacing: 1px
 
   @include placeholder()
-    color: white
+    color: rgba(255, 255, 255, 0.54)
     @extend .type-style
