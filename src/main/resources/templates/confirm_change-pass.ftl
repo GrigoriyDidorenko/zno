@@ -1,0 +1,38 @@
+<html>
+<head>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
+
+    <style>
+        html, body{
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<table style="width: 500px; margin: 0 auto 30px auto;border-spacing: 0;">
+    <tbody>
+    <tr>
+        <td colspan="2" style="padding: 20px 20px 10px 20px;text-align: center;">
+            <img src="https://samples.edusson.com/wp-content/themes/html5blank-stable/img/logo_conf.png" alt="zno.online" style="width: 100px;">
+        </td>
+    </tr>
+    <tr style="background: #35b8e8;border-top-left-radius: 2px;border-top-right-radius: 2px;">
+        <td style="padding: 25px 0;border-top-left-radius: 2px;border-top-right-radius: 2px;">
+            <p style="text-align: center;font-size: 25px;letter-spacing: 1px;font-weight: 100;margin:0;color: white; ">Ваш пароль змінено</p>
+        </td>
+    </tr>
+    <tr style="background: #f9f9f9;">
+        <td colspan="2" style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
+            <p style="margin: 10px 10px 30px 10px;text-align: center;font-size: 14px;">${text}</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+
+</html>
