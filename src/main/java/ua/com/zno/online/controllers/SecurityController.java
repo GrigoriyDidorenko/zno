@@ -54,30 +54,17 @@ public class SecurityController {
     }
 
     @PostMapping("googleLogin")
-    public ResponseEntity<Void> googleLogin(@RequestParam(name = "id_token") String idToken, Principal principal) throws GeneralSecurityException, IOException, ZnoUserException {
+    public ResponseEntity<Void> googleLogin(@RequestBody String idToken, Principal principal) throws GeneralSecurityException, IOException, ZnoUserException {
         if (principal != null) return null;
         securityService.authenticateGoogleUser(idToken);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //TODO delete this
-    @GetMapping("gLoginPage")
-    public String gLoginPage() {
-        return "googleLogin.html";
-    }
-
-    @PostMapping("facebookLogin") //TODO button works only from second attempt
-    public ResponseEntity<Void> facebookLogin(@RequestParam String accessToken, @RequestParam String userId,
-                                              @RequestParam String name,
-                                              @RequestParam String email, Principal principal) throws ZnoServerException, IOException, ZnoUserException {
+    @PostMapping("facebookLogin")
+    public ResponseEntity<Void> facebookLogin(Principal principal, @RequestBody @Valid UserDTO userDTO) throws ZnoServerException, IOException, ZnoUserException {
         if (principal != null) return null;
-        securityService.authenticateFacebookUser(accessToken, userId, name, email);
+        securityService.authenticateFacebookUser(userDTO);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("fLoginPage")
-    public String fLoginPage() {
-        return "fbLogin.html";
     }
 
     @PostMapping(value = "registration", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -97,7 +84,7 @@ public class SecurityController {
     public LoginStatusDTO getStatus() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && !auth.getName().equals("anonymousUser") && auth.isAuthenticated()) {
-            return new LoginStatusDTO(true, userRepository.findUserByEmail(auth.getName()).getName());
+            return new LoginStatusDTO(true, userRepository.findUserByEmail(auth.getName()).getName());//FIXME
         } else {
             return new LoginStatusDTO(false, null);
         }

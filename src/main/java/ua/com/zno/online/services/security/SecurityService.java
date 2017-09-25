@@ -114,13 +114,12 @@ public class SecurityService {
 
                 String login = payload.getSubject();
                 String email = payload.getEmail();
-                String name = (String) payload.get("given_name");
-                String surname = (String) payload.get("family_name");
+                String name = (String) payload.get("name");
 
                 Optional<User> user = Optional.ofNullable(userRepository.findUserByLogin(login));
 
                 if (!user.isPresent()) {
-                    User userToPersist = new User(name, login, email, login, LocalDateTime.now(), true, Collections.singleton(Authority.USER));
+                    User userToPersist = new User(name, login, email, passwordEncoder.encode(idToken), LocalDateTime.now(), true, Collections.singleton(Authority.USER));
                     userRepository.save(userToPersist);
                     user = Optional.of(userToPersist);
                 }
@@ -142,11 +141,11 @@ public class SecurityService {
     }
 
     @Transactional
-    public void authenticateFacebookUser(String accessToken, String userId, String name, String email) throws ZnoServerException, IOException, ZnoUserException {
+    public void authenticateFacebookUser(UserDTO userDTO) throws ZnoServerException, IOException, ZnoUserException {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = null;
         try {
-            response = restTemplate.getForEntity(makeFbUrl(accessToken), String.class);
+            response = restTemplate.getForEntity(makeFbUrl(userDTO.getSecret()), String.class);
         } catch (Exception e) {
             throw new ZnoServerException("Can not authenticate via FB");
         }
@@ -159,7 +158,8 @@ public class SecurityService {
         Optional<User> user = Optional.ofNullable(userRepository.findUserByLogin(fbResponseDTO.getUserId()));
 
         if (!user.isPresent()) {
-            User userToPersist = new User(name, userId, email, accessToken, LocalDateTime.now(),
+            User userToPersist = new User(userDTO.getName(), userDTO.getLogin(), userDTO.getEmail(),
+                passwordEncoder.encode(userDTO.getSecret()), LocalDateTime.now(),
                     true, Collections.singleton(Authority.USER));
             userRepository.save(userToPersist);
             user = Optional.of(userToPersist);

@@ -29,7 +29,7 @@ public class UserDTO extends AbstractDTO {
     @NotNull
     @Pattern(regexp = Constants.EMAIL_VALIDATOR)
     private String email;
-    @JsonProperty(value = "access_token", access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(value = "access_token", access = JsonProperty.Access.WRITE_ONLY) //FIXME we do need this for vk authorization, if we change the way vk authorization works, we should use password field except of access_token to prevent duplicates
     private String secret;
 
     public UserDTO() {
