@@ -15,7 +15,7 @@ import java.util.Set;
 public interface FailedQuestionRepository extends AbstractRepository<FailedQuestion> {
 
     @Modifying
-    @Query("update FailedQuestion f set f.nextAskTime = ?1 , f.resolved = false where f.user.id = ?2 and f.question.id=?3")
+    @Query("update FailedQuestion f set f.nextAskTime = ?1 , f.resolved = false, f.stage = 0 where f.user.id = ?2 and f.question.id=?3")
     void setNewAskDate(LocalDateTime newAskDate, Long userId, Long questionId);
 
     @Modifying
