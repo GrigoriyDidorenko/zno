@@ -64,4 +64,8 @@ public class Mail {
     public Map<String, Object> getModel() {
         return model;
     }
+
+    public String getEmailTemplate() {
+        return emailTemplate;
+    }
 }

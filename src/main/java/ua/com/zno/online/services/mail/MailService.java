@@ -57,7 +57,7 @@ public class MailService {
                 messageBuilder.setSubject(mail.getMailSubject());
 
                 freeMarkerConfiguration.setClassForTemplateLoading(this.getClass(), "/templates");
-                Template template = freeMarkerConfiguration.getTemplate("mail.ftl");
+                Template template = freeMarkerConfiguration.getTemplate(mail.getEmailTemplate());
                 String content = FreeMarkerTemplateUtils.processTemplateIntoString(template, mail.getModel());
 
                 messageBuilder.setText(content, true);
