@@ -1,27 +1,27 @@
 $( document ).ready(function() {
     var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
 
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
 
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
         }
-    }
-};
+    };
 
     $(window).scroll(function () {
-    if ($(window).scrollTop() >= 200) {
-        $('.test_navigation').addClass('fixed');
-    } else {
-        $('.test_navigation').removeClass('fixed');
-    }
+        if ($(window).scrollTop() >= 200) {
+            $('.test_navigation').addClass('fixed');
+        } else {
+            $('.test_navigation').removeClass('fixed');
+        }
 
-});
+    });
 
     $('.collapse').collapse();
 
@@ -197,7 +197,7 @@ $( document ).ready(function() {
                                                                 if(key == 'id'){
                                                                     subId = val;
                                                                     $('.quest_form-'+questionId+' .sub_variables .selectpicker').each(function(){
-                                                                        $(this).append('<option href="'+mark+'" name="'+subId+'">'+alphabet[alph]+'</option>');
+                                                                        $(this).append('<option href="false" name="'+subId+'" val="'+alphabet[alph]+'">'+alphabet[alph]+'</option>');
                                                                     });
                                                                     alph = alph+1;
                                                                 }
@@ -205,21 +205,37 @@ $( document ).ready(function() {
                                                                     $('.quest_form-'+questionId+' .sub_answers').append('<li class="button-remember button-remember_'+radio+'">'+val+'</li>');
                                                                 }
                                                             });
-                                                            $.each(y, function(key, val) {
-                                                                if(key == 'mark'){
-                                                                    if(val > 0){
-                                                                        mark = 'true';
-                                                                    } else{
-                                                                        mark = 'false';
-                                                                    }
-                                                                    subId = val;
-                                                                    $('.quest_form-'+questionId+' .sub_variables .selectpicker').each(function(){
-                                                                        $('option[name="'+subId+'"]').attr('href', mark);
-                                                                    });
-                                                                }
-                                                            });
                                                         });
 
+                                                    }
+                                                })
+                                            });
+
+                                            var questionID;
+                                            var markId;
+                                            $.each(text, function(x, y) {
+                                                $.each(y, function(keys, answer) {
+
+                                                    if(keys == 'id'){
+                                                        questionID = answer;
+
+                                                    }
+                                                    if(keys == 'answers'){
+                                                        $.each(answer, function(x, y) {
+                                                            $.each(y, function(xi, yi) {
+                                                                if(xi == 'id'){
+                                                                    markId = yi;
+                                                                };
+                                                                if(xi == 'mark'){
+                                                                    if(yi > 0){
+                                                                        yi = 'true';
+                                                                    } else{
+                                                                        yi = 'false';
+                                                                    }
+                                                                    $('.sub_variables select[name='+questionID+'] option[name='+markId+']').attr('href', yi);
+                                                                };
+                                                            });
+                                                        })
                                                     }
                                                 })
                                             })
@@ -269,6 +285,7 @@ $( document ).ready(function() {
                             });
 
                             $('.test_blocks select').change(function () {
+                                $(this).find(':selected').addClass('selected').siblings('option').removeClass('selected');
                                 var liId = $(this).parents('form').parents('li').attr('id');
                                 $('.test_navigation ul li a[href="#' + liId + '"]').addClass('checked');
                             });
@@ -301,7 +318,20 @@ $( document ).ready(function() {
 
             $('.test_blocks li').each(function () {
 
-                $(this).find("input").prop('disabled', true);
+                $(this).find("input, select").prop('disabled', true);
+
+                $(this).find("select option:selected").each(function () {
+                    var optionVal = $(this).attr('href');
+
+                    if(optionVal == 'true'){
+                        $(this).addClass('select-true').parent().addClass('select-true');
+                    } else{
+                        $(this).addClass('select-wrong').parent().addClass('select-wrong');
+                        var rightValue = $(this).parent('select').find('option[href=true]').text();
+                        $(this).text($(this).attr('val') + '. Вірно: '+rightValue);
+                    }
+                    return false;
+                });
 
                 final_questionId = $(this).attr('id');
 
