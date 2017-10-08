@@ -24,6 +24,36 @@
         img
           width: 400px
           margin: 10px 20px
+      &[name='subquestions']
+        form
+          display: flex
+          ul
+            padding-left: 20px
+            list-style-type: decimal
+            li
+              padding: 5px 10px
+              display: list-item
+              border: 1px solid #e6e6e6
+              border-bottom: 0
+              &:first-of-type
+                border-top-left-radius: 2px
+                border-top-right-radius: 2px
+              &:last-of-type
+                border-bottom: 1px solid #e6e6e6
+                border-bottom-right-radius: 2px
+                border-bottom-left-radius: 2px
+            &.sub_answers
+              list-style-type: upper-alpha
+            &.sub_variables
+              margin-left: auto
+              li
+                border: 0
+              select
+                margin-left: 2px
+                border-color: gainsboro
+                height: 28px
+                &:focus
+                  outline: none
       form
         margin: 10px 0 0 0
         label
@@ -124,6 +154,7 @@
         border-color: transparent
         background: $dark_blue
         color: white
+
 .test_navigation ul.fixed
   position: fixed
   top: 0
@@ -145,8 +176,9 @@
   p
     &:first-of-type
       margin-bottom: 5px
+      letter-spacing: 0.3px
       margin-top: 0
-      font-size: 17px
+      font-size: 14px
       img
         display: inline-block
         height: 55px

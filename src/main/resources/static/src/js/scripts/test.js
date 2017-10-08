@@ -168,7 +168,7 @@ $( document ).ready(function() {
                                     }
                                     else if (data == 'subQuestions') {
                                         if(text.length){
-                                            $('.quest_form-'+questionId+'').append('<div class="sub_questions"></div><div class="sub_answers"></div><div class="sub_variables btn-group"></div>');
+                                            $('.quest_form-'+questionId+'').append('<ul class="sub_questions"></ul><ul class="sub_answers"></ul><ul class="sub_variables btn-group"></ul>');
                                             $.each(text, function(x, y) {
                                                 var answerId;
                                                 $.each(y, function(keys, answer) {
@@ -176,11 +176,13 @@ $( document ).ready(function() {
                                                         answerId = answer;
                                                     }
                                                     if(keys == 'questionText'){
-                                                        $('.quest_form-'+questionId+' .sub_variables').append('<select class="selectpicker" name="'+answerId+'"></select>');
-                                                        $('.quest_form-'+questionId+' .sub_questions').append('<label class="button-remember button-remember_'+radio+'">'+answer+'</label>');
+                                                        $('.quest_form-'+questionId+' .sub_variables').append('<li><select class="selectpicker" name="'+answerId+'"></select></li>');
+                                                        $('.quest_form-'+questionId+' .sub_questions').append('<li class="button-remember button-remember_'+radio+'">'+answer+'</li>');
                                                     }
                                                 })
                                             });
+                                            var alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                                            var alph = 0;
                                             $.each(text, function(x, y) {
                                                 var answerId;
                                                 var subId;
@@ -191,14 +193,16 @@ $( document ).ready(function() {
                                                     if(keys == 'answers'){
                                                         $.each(answer, function(x, y) {
                                                             $.each(y, function(key, val) {
+
                                                                 if(key == 'id'){
                                                                     subId = val;
                                                                     $('.quest_form-'+questionId+' .sub_variables .selectpicker').each(function(){
-                                                                        $(this).append('<option href="'+mark+'" name="'+subId+'">'+subId+'</option>');
+                                                                        $(this).append('<option href="'+mark+'" name="'+subId+'">'+alphabet[alph]+'</option>');
                                                                     });
+                                                                    alph = alph+1;
                                                                 }
                                                                 if(key == 'answerText'){
-                                                                    $('.quest_form-'+questionId+' .sub_answers').append('<label class="button-remember button-remember_'+radio+'">'+val+'</label>');
+                                                                    $('.quest_form-'+questionId+' .sub_answers').append('<li class="button-remember button-remember_'+radio+'">'+val+'</li>');
                                                                 }
                                                             });
                                                             $.each(y, function(key, val) {
@@ -262,7 +266,11 @@ $( document ).ready(function() {
                                 } else{
                                     $('.test_navigation ul li a[href="#' + liId + '"]').addClass('checked');
                                 }
+                            });
 
+                            $('.test_blocks select').change(function () {
+                                var liId = $(this).parents('form').parents('li').attr('id');
+                                $('.test_navigation ul li a[href="#' + liId + '"]').addClass('checked');
                             });
 
                             break
