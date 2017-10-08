@@ -30,6 +30,7 @@ public class MailService {
     public static final String TEMPLATE_PASSWORD_RECOVERING = "change_password.ftl";
     public static final String TEMPLATE_REGISTRATION = "registration.ftl";
     public static final String TEMPLATE_WELCOME = "welcome.ftl";
+    public static final String TEMPLATE_WEEKLY_NEWS = "week-mail.ftl";
 
     @Value(value = "${system.email}")
     private String from;
