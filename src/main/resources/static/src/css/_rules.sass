@@ -11,7 +11,7 @@ a
     text-decoration: none
 
 input, textarea, button
-  font-family: 'Open Sans', sans-serif
+  font-family: 'Lato', sans-serif
   &:focus
     outline: none
 
@@ -36,7 +36,7 @@ html, body
   padding: 0
   margin: 0
   font-size: 14px
-  font-family: 'Open Sans', sans-serif
+  font-family: 'Lato', sans-serif
 
 .wrapper
   margin: 0 auto
@@ -67,8 +67,9 @@ html, body
   align-items: center
   i
     border: 1px solid rgba(102, 175, 233, 0.77)
-    width: 20px
-    height: 20px
+    width: 17px
+    height: 17px
+    font-size: 12px
     display: inline-block
     border-radius: 3px
     cursor: pointer
@@ -86,10 +87,11 @@ html, body
 input[type="checkbox"] + i::before, input[type="radio"] + i::before
   content: '\f00c'
   color: transparent
-  line-height: 18px
+  line-height: 16px
 input[type="radio"] + i::before
   display: block
   margin-top: -2px
+  line-height: 18px
 input[type="checkbox"]:checked + i::before, input[type="radio"]:checked + i::before
   color: white
 .button-remember_radio

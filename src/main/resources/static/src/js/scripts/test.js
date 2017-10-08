@@ -32,10 +32,9 @@ $( document ).ready(function() {
         var failedTest = getUrlParameter('failed');
         var brainstormTest = getUrlParameter('brainstorm');
         var refreshIntervalId;
-
         var final_testId;
-
         var testUrl;
+        var startTime;
 
         if(failedTest == 'true'){
             testUrl = "/user/failed/questions/"+testId;
@@ -81,6 +80,7 @@ $( document ).ready(function() {
                             }
                             break;
                         case 'duration':
+                            startTime = val;
                             var Minutes = 60 * val,
                                 display = document.querySelector('#timer span');
                             if(testTime == 'true'){
@@ -248,9 +248,21 @@ $( document ).ready(function() {
 
                             });
 
-                            $('.test__block label').click(function () {
+                            $('.test_blocks label').click(function () {
                                 var liId = $(this).parents('li').attr('id');
-                                $('.test_navigation ul li a[href="#' + liId + '"]').addClass('checked');
+                                var labelType = $(this).parents('li').attr('name');
+
+                                if(labelType == 'checkbox'){
+                                    var checkedInput = $(this).parents('li').find('form').find('label input:checked').length;
+                                    if(checkedInput > 0){
+                                        $('.test_navigation ul li a[href="#' + liId + '"]').addClass('checked');
+                                    } else{
+                                        $('.test_navigation ul li a[href="#' + liId + '"]').removeClass('checked');
+                                    }
+                                } else{
+                                    $('.test_navigation ul li a[href="#' + liId + '"]').addClass('checked');
+                                }
+
                             });
 
                             break
@@ -261,6 +273,7 @@ $( document ).ready(function() {
 
         var final_questionId;
         var final_duration;
+        var user_time;
         var final_answerId;
         var final_answerText;
 
@@ -270,13 +283,17 @@ $( document ).ready(function() {
             $('#test_finish').modal('toggle');
             $('.test-end').css('display', 'none');
 
-            final_duration = $('#timer span').text();
-            final_duration = final_duration.substring(0, final_duration.indexOf(':'));
+            final_duration = startTime;
+            user_time = $('#timer span').text();
+            user_time = user_time.substring(0, user_time.indexOf(':'));
+            final_duration = final_duration - user_time;
             clearInterval(refreshIntervalId);
 
             var userAnswersPerQuestionDTO = [];
 
             $('.test_blocks li').each(function () {
+
+                $(this).find("input").prop('disabled', true);
 
                 final_questionId = $(this).attr('id');
 
