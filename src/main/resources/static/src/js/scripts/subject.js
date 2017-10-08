@@ -166,7 +166,7 @@ $( document ).ready(function() {
 
                 var modalTest = $(this).attr('name');
                 $('#test_info .modal-title').text($(this).text()).attr('name', modalTest);
-                $('#test_info .test_duration').text($(this).attr('value'));
+                $('#test_info .test_duration').text($(this).attr('value') + ' хв');
 
                 jQuery.ajax({
                     type: "GET",

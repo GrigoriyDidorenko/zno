@@ -401,6 +401,14 @@ $( document ).ready(function() {
                         $('.test_result a').css('display','none');
                     }
 
+                    if(data < 140){
+                        $('.test_result-img').attr('src', 'src/img/test_result-bad.svg');
+                    } else if(data > 140 && data < 170){
+                        $('.test_result-img').attr('src', 'src/img/test_result-good.svg');
+                    } else{
+                        $('.test_result-img').attr('src', 'src/img/test_result.svg');
+                    }
+
                     new JustGage({
                         id: 'test-result',
                         value: data,
