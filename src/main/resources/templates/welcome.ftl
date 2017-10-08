@@ -1,11 +1,11 @@
 <html>
 <head>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
     <style>
         html, body{
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Lato', sans-serif
         }
     </style>
 
@@ -29,25 +29,25 @@
         </td>
     </tr>
     <tr>
-        <td style="width: 30%;vertical-align: middle;text-align: center;padding: 10px 0 20px 0;">
+        <td style="width: 130px;vertical-align: middle;text-align: center;padding: 10px 0 20px 0;">
             <img src="https://samples.edusson.com/wp-content/themes/html5blank-stable/img/email_idea.png" alt="email_confirmation" style="display: block;margin: 10px auto;height: 45px">
             <p style="color: #1f83bc;font-size: 12px;letter-spacing: 0.2px;margin: 5px 0;font-weight: 400;">Ознайомтесь з матеріалами</p>
         </td>
-        <td>
+        <td style="width: 20px;">
             <p style="height: 4px;width: 4px;margin: 0; display: inline-block;background: rgb(92, 187, 241);border-radius: 50px;"></p>
             <p style="height: 4px;width: 4px;margin: 0; display: inline-block;background: #2285bd;border-radius: 50px;"></p>
             <p style="height: 4px;width: 4px;margin: 0; display: inline-block;background: rgb(92, 187, 241);border-radius: 50px;"></p>
         </td>
-        <td style="width: 30%;vertical-align: middle;text-align: center;padding: 10px 0 20px 0;">
+        <td style="width: 130px;vertical-align: middle;text-align: center;padding: 10px 0 20px 0;">
             <img src="https://samples.edusson.com/wp-content/themes/html5blank-stable/img/email_realisation.png" alt="email_confirmation" style="display: block;margin: 10px auto;height: 55px">
             <p style="color: #1f83bc;font-size: 12px;letter-spacing: 0.2px;margin: 5px 0;font-weight: 400;">Пройдіть онлайн тестування</p>
         </td>
-        <td>
+        <td style="width: 20px;">
             <p style="height: 4px;width: 4px;margin: 0; display: inline-block;background: rgb(92, 187, 241);border-radius: 50px;"></p>
             <p style="height: 4px;width: 4px;margin: 0; display: inline-block;background: #2285bd;border-radius: 50px;"></p>
             <p style="height: 4px;width: 4px;margin: 0; display: inline-block;background: rgb(92, 187, 241);border-radius: 50px;"></p>
         </td>
-        <td style="width: 30%;vertical-align: middle;text-align: center;padding: 10px 0 20px 0;">
+        <td style="width: 130px;vertical-align: middle;text-align: center;padding: 10px 0 20px 0;">
             <img src="https://samples.edusson.com/wp-content/themes/html5blank-stable/img/email_result.png" alt="email_confirmation" style="display: block;margin: 10px auto;height: 50px">
             <p style="color: #1f83bc;font-size: 12px;letter-spacing: 0.2px;margin: 5px 0;font-weight: 400;">Отримайте<br>найвищий бал</p>
         </td>

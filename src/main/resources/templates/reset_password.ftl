@@ -1,11 +1,11 @@
 <html>
 <head>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
     <style>
         html, body{
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Lato', sans-serif
         }
     </style>
 
