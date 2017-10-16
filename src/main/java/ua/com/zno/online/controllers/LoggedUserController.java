@@ -6,12 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.zno.online.DTOs.TestDTO;
-import ua.com.zno.online.DTOs.TestResultDTO;
-import ua.com.zno.online.DTOs.notification.SubjectFailedQuestionAmountDTO;
+import ua.com.zno.online.dto.entities.TestDTO;
+import ua.com.zno.online.dto.entities.TestResultDTO;
 import ua.com.zno.online.controllers.filter.RequestFilter;
 import ua.com.zno.online.exceptions.ZnoUserException;
-import ua.com.zno.online.DTOs.statistics.SubjectStatistics;
+import ua.com.zno.online.dto.statistics.SubjectStatistics;
 import ua.com.zno.online.services.user.DefaultLoggedUserService;
 import ua.com.zno.online.services.user.LoggedUserService;
 

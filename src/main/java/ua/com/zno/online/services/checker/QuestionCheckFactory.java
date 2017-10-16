@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.com.zno.online.DTOs.UserAnswersPerQuestionDTO;
+import ua.com.zno.online.dto.user.response.UserAnswersPerQuestionDTO;
 import ua.com.zno.online.domain.question.Question;
 import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.repository.QuestionRepository;

@@ -1,7 +1,7 @@
 package ua.com.zno.online.util;
 
-import ua.com.zno.online.DTOs.AbstractDTO;
-import ua.com.zno.online.DTOs.TestDTO;
+import ua.com.zno.online.dto.AbstractDTO;
+import ua.com.zno.online.dto.entities.TestDTO;
 
 import java.util.*;
 

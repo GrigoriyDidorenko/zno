@@ -1,6 +1,6 @@
 package ua.com.zno.online.services.checker;
 
-import ua.com.zno.online.DTOs.AbstractDTO;
+import ua.com.zno.online.dto.AbstractDTO;
 import ua.com.zno.online.domain.AbstractEntity;
 import ua.com.zno.online.exceptions.ZnoUserException;
 

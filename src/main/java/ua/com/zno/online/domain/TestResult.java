@@ -1,7 +1,7 @@
 package ua.com.zno.online.domain;
 
-import ua.com.zno.online.DTOs.statistics.SubjectStatistics;
-import ua.com.zno.online.DTOs.statistics.TestStatistics;
+import ua.com.zno.online.dto.statistics.SubjectStatistics;
+import ua.com.zno.online.dto.statistics.TestStatistics;
 import ua.com.zno.online.domain.user.User;
 
 import javax.persistence.*;

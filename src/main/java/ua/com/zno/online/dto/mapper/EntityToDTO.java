@@ -1,14 +1,12 @@
-package ua.com.zno.online.DTOs.mapper;
+package ua.com.zno.online.dto.mapper;
 
 import org.hibernate.Hibernate;
 import org.modelmapper.Condition;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.com.zno.online.DTOs.AbstractDTO;
+import ua.com.zno.online.dto.AbstractDTO;
 import ua.com.zno.online.domain.AbstractEntity;
-import ua.com.zno.online.util.Constants;
 
 import javax.annotation.PostConstruct;
 

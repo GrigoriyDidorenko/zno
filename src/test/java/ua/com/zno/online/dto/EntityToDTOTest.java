@@ -1,4 +1,4 @@
-package ua.com.zno.online.DTOs;
+package ua.com.zno.online.dto;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,11 +7,11 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.com.zno.online.DTOs.mapper.EntityToDTO;
+import ua.com.zno.online.dto.entities.QuestionDTO;
+import ua.com.zno.online.dto.mapper.EntityToDTO;
 import ua.com.zno.online.ZnoOnlineApplication;
 import ua.com.zno.online.domain.Answer;
 import ua.com.zno.online.domain.question.Question;
-import ua.com.zno.online.util.Constants;
 
 import java.util.Collections;
 

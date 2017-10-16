@@ -1,4 +1,4 @@
-package ua.com.zno.online.DTOs.statistics;
+package ua.com.zno.online.dto.statistics;
 
 /**
  * Created by g.didorenko on 16.09.17.

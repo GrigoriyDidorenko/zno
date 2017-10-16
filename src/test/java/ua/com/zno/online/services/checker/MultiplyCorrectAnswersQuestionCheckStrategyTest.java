@@ -1,8 +1,7 @@
 package ua.com.zno.online.services.checker;
 
 import org.junit.Test;
-import ua.com.zno.online.DTOs.TestResultDTO;
-import ua.com.zno.online.DTOs.UserAnswersPerQuestionDTO;
+import ua.com.zno.online.dto.user.response.UserAnswersPerQuestionDTO;
 import ua.com.zno.online.domain.Answer;
 import ua.com.zno.online.domain.question.Question;
 

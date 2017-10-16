@@ -1,8 +1,8 @@
 package ua.com.zno.online.services.user;
 
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.zno.online.DTOs.TestDTO;
-import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.dto.entities.TestDTO;
+import ua.com.zno.online.dto.entities.TestResultDTO;
 import ua.com.zno.online.domain.Subject;
 import ua.com.zno.online.domain.Test;
 import ua.com.zno.online.exceptions.ZnoServerException;

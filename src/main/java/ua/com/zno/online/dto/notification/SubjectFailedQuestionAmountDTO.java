@@ -1,6 +1,6 @@
-package ua.com.zno.online.DTOs.notification;
+package ua.com.zno.online.dto.notification;
 
-import ua.com.zno.online.DTOs.AbstractDTO;
+import ua.com.zno.online.dto.AbstractDTO;
 
 /**
  * Created by g.didorenko on 07.09.17.

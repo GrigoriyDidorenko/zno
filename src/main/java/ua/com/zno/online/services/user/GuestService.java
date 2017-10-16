@@ -1,7 +1,7 @@
 package ua.com.zno.online.services.user;
 
 import org.springframework.stereotype.Service;
-import ua.com.zno.online.DTOs.TestResultDTO;
+import ua.com.zno.online.dto.entities.TestResultDTO;
 import ua.com.zno.online.exceptions.ZnoUserException;
 
 import java.util.Map;

@@ -1,7 +1,7 @@
 package ua.com.zno.online.repository;
 
-import ua.com.zno.online.DTOs.statistics.SubjectStatistics;
-import ua.com.zno.online.DTOs.statistics.TestStatistics;
+import ua.com.zno.online.dto.statistics.SubjectStatistics;
+import ua.com.zno.online.dto.statistics.TestStatistics;
 import ua.com.zno.online.domain.TestResult;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package ua.com.zno.online.DTOs.security;
+package ua.com.zno.online.dto.security;
 
 /**
  * Created by g.didorenko on 16.09.17.

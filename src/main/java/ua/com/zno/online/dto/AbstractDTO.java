@@ -1,11 +1,9 @@
-package ua.com.zno.online.DTOs;
-
-import ua.com.zno.online.util.Constants;
+package ua.com.zno.online.dto;
 
 /**
  * Created by quento on 26.03.17.
  */
-public class AbstractDTO {
+public abstract class AbstractDTO {
 
     public AbstractDTO(){}
 

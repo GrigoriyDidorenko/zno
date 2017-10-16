@@ -5,14 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ua.com.zno.online.DTOs.TestResultDTO;
-import ua.com.zno.online.DTOs.mapper.EntityToDTO;
-import ua.com.zno.online.DTOs.SubjectDTO;
-import ua.com.zno.online.DTOs.TestDTO;
+import ua.com.zno.online.dto.entities.TestResultDTO;
+import ua.com.zno.online.dto.mapper.EntityToDTO;
+import ua.com.zno.online.dto.entities.SubjectDTO;
+import ua.com.zno.online.dto.entities.TestDTO;
 import ua.com.zno.online.exceptions.ZnoServerException;
 import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.services.user.UserService;
-import ua.com.zno.online.util.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
