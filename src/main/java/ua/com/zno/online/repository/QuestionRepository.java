@@ -13,6 +13,9 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends AbstractRepository<Question> {
 
+    @Query(value = "select test_id from questions q where q.id = ?1", nativeQuery = true)
+    long findTestIdByQuestionId(long questionId);
+
     @Query(value = "select * from questions q join failed_questions f on f.question_id = q.id " +
             "where f.user_id = ?1 and f.deleted = false and f.resolved = false and f.next_ask_time < current_date",
             nativeQuery = true)

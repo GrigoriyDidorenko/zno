@@ -12,6 +12,7 @@ import ua.com.zno.online.DTOs.notification.SubjectFailedQuestionAmountDTO;
 import ua.com.zno.online.controllers.filter.RequestFilter;
 import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.DTOs.statistics.SubjectStatistics;
+import ua.com.zno.online.services.user.DefaultLoggedUserService;
 import ua.com.zno.online.services.user.LoggedUserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +41,16 @@ public class LoggedUserController {
 //        }
 
         double mark = defaultLoggedUserService.processTestResult(testResultDTO);
+        return new ResponseEntity<>(mark, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "result/brainstorm")
+    public ResponseEntity<Double> acceptBrainstormTestResult(HttpServletRequest request, @RequestBody TestResultDTO testResultDTO) throws ZnoUserException {
+//        if (requestFilter.isSpamming(request.getLocalAddr())) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+
+        double mark = ((DefaultLoggedUserService)defaultLoggedUserService).processBrainstormTestResult(testResultDTO);
         return new ResponseEntity<>(mark, HttpStatus.OK);
     }
 

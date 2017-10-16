@@ -71,6 +71,15 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         return total;
     }
 
+    public double processBrainstormTestResult(TestResultDTO testResultDTO) throws ZnoUserException {
+        Map<Long, Long> markPerQuestion = super.computeMarkPerQuestion(testResultDTO);
+
+        List<Long> failedQuestionsIds = findFailedQuestions(markPerQuestion);
+        updateFailedQuestions(failedQuestionsIds, testResultDTO.getId());
+
+        return super.calculateTestResult(markPerQuestion);
+    }
+
     private List<Long> findFailedQuestions(Map<Long, Long> markPerQuestion) {
         return markPerQuestion.entrySet().stream()
                 .filter(entry -> entry.getValue() == 0)
@@ -81,12 +90,15 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
     private void updateFailedQuestions(List<Long> failedQuestionsIds, Long testId) {
         long userId = getAuthenticatedUser().getId();
 
-        for (Long failedQuestionsId : failedQuestionsIds) {
-            if (failedQuestionRepository.existsByUserIdAndQuestionId(userId, failedQuestionsId)) {
+        for (Long failedQuestionId : failedQuestionsIds) {
+            if (failedQuestionRepository.existsByUserIdAndQuestionId(userId, failedQuestionId)) {
                 failedQuestionRepository
-                        .setNewAskDate(LocalDateTime.now().plusDays(daysBetweenRemind.get(0)), userId, failedQuestionsId);
+                        .setNewAskDate(LocalDateTime.now().plusDays(daysBetweenRemind.get(0)), userId, failedQuestionId);
             } else {
-                FailedQuestion newFailedQuestionToPersist = new FailedQuestion(getAuthenticatedUser(), new Test(testId), new Question(failedQuestionsId),
+                if (testId == null || testId == -1 || testId == 0) { //Whatever
+                    testId = questionRepository.findTestIdByQuestionId(failedQuestionId);
+                }
+                FailedQuestion newFailedQuestionToPersist = new FailedQuestion(getAuthenticatedUser(), new Test(testId), new Question(failedQuestionId),
                         false, LocalDateTime.now(), LocalDateTime.now().plusDays(daysBetweenRemind.get(0)));
 
                 failedQuestionRepository.save(newFailedQuestionToPersist);
@@ -109,7 +121,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
                         failedQuestionRepository.setNewAskDate(askNextTime.get(), userId, questionId);
                     else
                         failedQuestionRepository.markResolved(userId, questionId);
-                });
+                });// Якщо він створюється тільки в updateFailedQuestions, що буде якщо пройти брейншторм, а фейл квещона не буде
     }
 
 

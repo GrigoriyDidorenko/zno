@@ -81,7 +81,7 @@ abstract class AbstractUserService implements UserService {
         int avrgNumOfComplexQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.QUESTION_WITH_SUB_QUESTIONS, tests.size());
         int avrgNumOfOpenQuestions = getAvrgNumberOfQuestionsOfCertainType(questions, QuestionType.QUESTION_OPEN, tests.size());
 
-        Test test = new Test("Brainstorm", Calendar.getInstance().get(Calendar.YEAR), 100); //FIXME duration
+        Test test = new Test("Brainstorm", Calendar.getInstance().get(Calendar.YEAR), tests.get(0).getDuration()); //FIXME don't remove this unless u know what u r doing. I do not like it. I mean it!
         test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.QUESTION_WITH_ONE_CORRECT_ANSWER, avrgNumOfSimpleQuestions));
         test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.QUESTION_WITH_SUB_QUESTIONS, avrgNumOfComplexQuestions));
         test.addQuestions(getShuffledLimitedQuestions(questions, QuestionType.QUESTION_OPEN, avrgNumOfOpenQuestions));
