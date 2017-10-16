@@ -132,7 +132,8 @@ $( document ).ready(function() {
                                     } else if(data == 'id'){
                                         questionId = text;
                                         var blockHeight;
-                                        $('.test_navigation ul').append('<li><a href="#'+questionId+'" class="scrollto">'+count+'</a></li>');
+                                        var blockWidth = $('.test__block').outerWidth();
+                                        $('.test_navigation ul').append('<li><a href="#'+questionId+'" class="scrollto">'+count+'</a></li>').css('width', blockWidth);
                                         blockHeight = $('.test_navigation ul').outerHeight();
                                         $('.test_navigation').css('height',blockHeight);
                                         count++;
@@ -459,6 +460,51 @@ $( document ).ready(function() {
 
             console.log(JSON.stringify(testObject));
 
+            $('.test_page ul li').each(function () {
+                var liId = $(this).attr('id');
+                if($(this).attr('name') == 'radio'){
+                    $(this).find('label').each(function () {
+                        if($(this).hasClass('user_answer_correct')){
+                            $('.test_navigation ul li a[href="#'+liId+'"]').addClass('greenLi');
+                        } else if($(this).hasClass('user_answer_incorrect')){
+                            $('.test_navigation ul li a[href="#'+liId+'"]').addClass('redLi');
+                        }
+                    });
+                } else if($(this).attr('name') == 'checkbox'){
+                    var count = 0;
+                    $(this).find('label').each(function () {
+                        if($(this).hasClass('user_answer_incorrect')){
+                            $('.test_navigation ul li a[href="#'+liId+'"]').addClass('redLi');
+                            count++;
+                        }
+                    });
+                    if(count == 0){
+                        $(this).find('label').each(function () {
+                            if($(this).hasClass('user_answer_correct')){
+                                $('.test_navigation ul li a[href="#'+liId+'"]').addClass('greenLi');
+                            }
+                        });
+                    }
+                } else if($(this).attr('name') == 'subquestions'){
+                    var count = 0;
+                    $(this).find('select').each(function () {
+                        if($(this).hasClass('select-wrong')){
+                            $('.test_navigation ul li a[href="#'+liId+'"]').addClass('redLi');
+                            count++;
+                        }
+                    });
+                    if(count == 0){
+                        $(this).find('select').each(function () {
+                            if($(this).hasClass('select-true')){
+                                $('.test_navigation ul li a[href="#'+liId+'"]').addClass('greenLi');
+                            }
+                        });
+                    }
+                }
+
+
+            });
+
             $.ajax({
                 type: "POST",
                 url: testResultUrl,
@@ -472,82 +518,38 @@ $( document ).ready(function() {
                         $('.test_result a').css('display','none');
                     }
 
-                    if(data < 140){
-                        $('.test_result-img').attr('src', 'src/img/test_result-bad.svg');
-                    } else if(data > 140 && data < 170){
-                        $('.test_result-img').attr('src', 'src/img/test_result-good.svg');
-                    } else{
-                        $('.test_result-img').attr('src', 'src/img/test_result.svg');
-                    }
-
-                    new JustGage({
-                        id: 'test-result',
-                        value: data,
-                        min: 100,
-                        max: 200,
-                        symbol: '',
-                        pointer: true,
-                        pointerOptions: {
-                            toplength: 10,
-                            bottomlength: -15,
-                            bottomwidth: 6,
-                            color: '#8e8e93'
-                        },
-                        gaugeWidthScale: 0.3,
-                        counter: true,
-                        minLabelMinFontSize: 16,
-                        maxLabelMinFontSize: 16,
-                        valueMinFontSize: 45,
-                        levelColors: ["#ff0000", "#f9c802", "#a9d70b"]
-                    });
-
-                    $('.test_page ul li').each(function () {
-                        var liId = $(this).attr('id');
-                        if($(this).attr('name') == 'radio'){
-                            $(this).find('label').each(function () {
-                                if($(this).hasClass('user_answer_correct')){
-                                    $('.test_navigation ul li a[href="#'+liId+'"]').addClass('greenLi');
-                                } else if($(this).hasClass('user_answer_incorrect')){
-                                    $('.test_navigation ul li a[href="#'+liId+'"]').addClass('redLi');
-                                }
-                            });
-                        } else if($(this).attr('name') == 'checkbox'){
-                            var count = 0;
-                            $(this).find('label').each(function () {
-                                if($(this).hasClass('user_answer_incorrect')){
-                                    $('.test_navigation ul li a[href="#'+liId+'"]').addClass('redLi');
-                                    count++;
-                                }
-                            });
-                            if(count == 0){
-                                $(this).find('label').each(function () {
-                                    if($(this).hasClass('user_answer_correct')){
-                                        $('.test_navigation ul li a[href="#'+liId+'"]').addClass('greenLi');
-                                    }
-                                });
-                            }
-                        } else if($(this).attr('name') == 'subquestions'){
-                            var count = 0;
-                            $(this).find('select').each(function () {
-                                if($(this).hasClass('select-wrong')){
-                                    $('.test_navigation ul li a[href="#'+liId+'"]').addClass('redLi');
-                                    count++;
-                                }
-                            });
-                            if(count == 0){
-                                $(this).find('select').each(function () {
-                                    if($(this).hasClass('select-true')){
-                                        $('.test_navigation ul li a[href="#'+liId+'"]').addClass('greenLi');
-                                    }
-                                });
-                            }
-                            console.log(count);
+                    if(testResultUrl !== '/user/failed/questions'){
+                        if(data < 140){
+                            $('.test_result-img').attr('src', 'src/img/test_result-bad.svg');
+                        } else if(data > 140 && data < 170){
+                            $('.test_result-img').attr('src', 'src/img/test_result-good.svg');
+                        } else{
+                            $('.test_result-img').attr('src', 'src/img/test_result.svg');
                         }
 
+                        new JustGage({
+                            id: 'test-result',
+                            value: data,
+                            min: 100,
+                            max: 200,
+                            symbol: '',
+                            pointer: true,
+                            pointerOptions: {
+                                toplength: 10,
+                                bottomlength: -15,
+                                bottomwidth: 6,
+                                color: '#8e8e93'
+                            },
+                            gaugeWidthScale: 0.3,
+                            counter: true,
+                            minLabelMinFontSize: 16,
+                            maxLabelMinFontSize: 16,
+                            valueMinFontSize: 45,
+                            levelColors: ["#ff0000", "#f9c802", "#a9d70b"]
+                        });
 
-                    });
-
-                    $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+                        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+                    }
                 },
                 error: function (request) {
                     console.log(request);
