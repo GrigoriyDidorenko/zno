@@ -145,6 +145,7 @@
         color: #c0cbd9
         justify-content: center
         position: relative
+        transition: 0.2s
         &:after
           content: ''
           position: absolute
@@ -154,6 +155,9 @@
           width: 8px
           height: 1px
           background: #c0cbd9
+        &:hover
+          border-color: $dark_blue
+          color: $dark_blue
       &:last-of-type
         a
           &:after
@@ -180,7 +184,7 @@
   border-bottom-right-radius: 2px
   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05)
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16)
-  padding: 0 10px 6px 10px
+  padding: 0 10% 6px 10%
   margin: 0
   z-index: 9
 .test-end
