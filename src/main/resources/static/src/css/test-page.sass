@@ -17,8 +17,6 @@
     li
       border-bottom: 1px solid #ededed
       padding: 20px 0
-      &:first-of-type
-        padding-top: 0
       p
         display: inline
         img
@@ -73,7 +71,7 @@
           cursor: pointer
           &.correct_answer, &.user_answer_correct
             background: rgba(23, 170, 61, 0.7)
-            padding: 10px 20px
+            padding: 23px 20px 10px 20px
             border-radius: 2px
             position: relative
             &:after
@@ -90,7 +88,7 @@
               border-color: rgba(255, 255, 255, 0.7)
           &.user_answer_incorrect
             background: rgba(244, 54, 80, 0.84)
-            padding: 10px 20px
+            padding: 23px 20px 10px 20px
             border-radius: 2px
             position: relative
             &:after
@@ -121,7 +119,6 @@
     padding: 0 5px
 .test_navigation
   background: white
-  height: 45px
   display: flex
   align-items: center
   margin: 10px 0
@@ -129,20 +126,22 @@
     padding: 0
     margin: 0
     list-style-type: none
-    background: white
+    background: #fff
+    display: flex
+    flex-wrap: wrap
     li
       display: inline-block
       margin-right: 10px
       border: none
-      padding: 10px 0
+      padding: 5px 0 0 0
       a
         border: 1px solid #c0cbd9
-        width: 22px
+        width: 20px
         border-radius: 50px
-        height: 22px
+        height: 20px
         display: flex
         align-items: center
-        font-size: 13px
+        font-size: 10px
         color: #c0cbd9
         justify-content: center
         position: relative
@@ -163,16 +162,26 @@
         border-color: transparent
         background: $dark_blue
         color: white
+      a.redLi
+        background: #f6586d
+        border-color: #f6586d
+        color: white
+      a.greenLi
+        background: #62c378
+        border-color: #62c378
+        color: white
 
 .test_navigation ul.fixed
   position: fixed
   top: 0
+  left: 0
+  width: 100%
   border-bottom-left-radius: 2px
   border-bottom-right-radius: 2px
   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05)
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16)
-  padding: 0 0 0 10px
-  margin: 0 0 0 -5px
+  padding: 0 10px 6px 10px
+  margin: 0
   z-index: 9
 .test-end
   width: 180px
@@ -190,7 +199,7 @@
       font-size: 14px
       img
         display: inline-block
-        height: 55px
+        height: 83px
         vertical-align: bottom
   a
     font-size: 13px
@@ -228,7 +237,12 @@
   z-index: 9
 
 .gauge
-  width: 220px
-  height: 140px
+  width: 280px
+  height: 200px
   display: block
-  margin: -10px auto 0 auto
+  margin: -10px auto -13px auto
+
+.no_answered
+  margin: 0 0 5px 0
+  color: orange
+  font-weight: 600

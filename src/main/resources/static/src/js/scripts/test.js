@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
             sURLVariables = sPageURL.split('&'),
@@ -130,7 +131,10 @@ $( document ).ready(function() {
                                         }
                                     } else if(data == 'id'){
                                         questionId = text;
+                                        var blockHeight;
                                         $('.test_navigation ul').append('<li><a href="#'+questionId+'" class="scrollto">'+count+'</a></li>');
+                                        blockHeight = $('.test_navigation ul').outerHeight();
+                                        $('.test_navigation').css('height',blockHeight);
                                         count++;
                                     }
                                 });
@@ -246,20 +250,18 @@ $( document ).ready(function() {
 
                                 $("a.scrollto").click(function () {
                                     var elementClick = $(this).attr("href");
-                                    var destination = $(elementClick).offset().top - 40;
+                                    var destination = $(elementClick).offset().top-55;
                                     jQuery("html:not(:animated),body:not(:animated)").animate({
                                         scrollTop: destination
                                     }, 800);
                                     return false;
                                 });
 
-                                var blockWidth;
                                 $('.test_navigation ul').removeClass('fixed');
 
                                 $(window).scroll(function () {
-                                    blockWidth = $('.test__block').outerWidth();
                                     if ($(window).scrollTop() >= 280) {
-                                        $('.test_navigation ul').addClass('fixed').css('width', blockWidth);
+                                        $('.test_navigation ul').addClass('fixed');
                                     } else {
                                         $('.test_navigation ul').removeClass('fixed');
                                     }
@@ -304,7 +306,38 @@ $( document ).ready(function() {
 
         var user_answer;
 
+
+
+        $('.test-end').click(function () {
+            var checkedQuestion = 0;
+            $('.test_navigation li a').each(function () {
+                if(!$(this).hasClass('checked')){
+                    checkedQuestion++;
+                }
+            });
+            if(checkedQuestion > 0){
+                $('.no_answered').text('Ви не дали відповідь на '+checkedQuestion+' запитань.')
+            }
+        });
+
+        $('.header').on('click', function(e) {
+            e.preventDefault();
+            $('#test_finish').modal('toggle');
+
+            var checkedQuestion = 0;
+            $('.test_navigation li a').each(function () {
+                if(!$(this).hasClass('checked')){
+                    checkedQuestion++;
+                }
+            });
+            if(checkedQuestion > 0){
+                $('.no_answered').text('Ви не дали відповідь на '+checkedQuestion+' запитань.')
+            }
+        });
+
+
         $('#test-save').click(function () {
+            $('.header').unbind('click');
             $('#test_finish').modal('toggle');
             $('.test-end').css('display', 'none');
 
@@ -455,16 +488,68 @@ $( document ).ready(function() {
                         symbol: '',
                         pointer: true,
                         pointerOptions: {
-                            toplength: 8,
-                            bottomlength: -20,
+                            toplength: 10,
+                            bottomlength: -15,
                             bottomwidth: 6,
                             color: '#8e8e93'
                         },
-                        gaugeWidthScale: 0.1,
-                        counter: true
+                        gaugeWidthScale: 0.3,
+                        counter: true,
+                        minLabelMinFontSize: 16,
+                        maxLabelMinFontSize: 16,
+                        valueMinFontSize: 45,
+                        levelColors: ["#ff0000", "#f9c802", "#a9d70b"]
                     });
+
+                    $('.test_page ul li').each(function () {
+                        var liId = $(this).attr('id');
+                        if($(this).attr('name') == 'radio'){
+                            $(this).find('label').each(function () {
+                                if($(this).hasClass('user_answer_correct')){
+                                    $('.test_navigation ul li a[href="#'+liId+'"]').addClass('greenLi');
+                                } else if($(this).hasClass('user_answer_incorrect')){
+                                    $('.test_navigation ul li a[href="#'+liId+'"]').addClass('redLi');
+                                }
+                            });
+                        } else if($(this).attr('name') == 'checkbox'){
+                            var count = 0;
+                            $(this).find('label').each(function () {
+                                if($(this).hasClass('user_answer_incorrect')){
+                                    $('.test_navigation ul li a[href="#'+liId+'"]').addClass('redLi');
+                                    count++;
+                                }
+                            });
+                            if(count == 0){
+                                $(this).find('label').each(function () {
+                                    if($(this).hasClass('user_answer_correct')){
+                                        $('.test_navigation ul li a[href="#'+liId+'"]').addClass('greenLi');
+                                    }
+                                });
+                            }
+                        } else if($(this).attr('name') == 'subquestions'){
+                            var count = 0;
+                            $(this).find('select').each(function () {
+                                if($(this).hasClass('select-wrong')){
+                                    $('.test_navigation ul li a[href="#'+liId+'"]').addClass('redLi');
+                                    count++;
+                                }
+                            });
+                            if(count == 0){
+                                $(this).find('select').each(function () {
+                                    if($(this).hasClass('select-true')){
+                                        $('.test_navigation ul li a[href="#'+liId+'"]').addClass('greenLi');
+                                    }
+                                });
+                            }
+                            console.log(count);
+                        }
+
+
+                    });
+
+                    $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
                 },
-                error: function (request, textStatus, errorThrown) {
+                error: function (request) {
                     console.log(request);
                 }
             });

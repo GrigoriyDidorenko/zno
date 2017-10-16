@@ -21,7 +21,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3" style="padding: 25px 0; background: #35b8e8; border-top-left-radius: 2px;border-top-right-radius: 2px;">
+        <td colspan="3" style="padding: 25px 0; background: #35b8e8; border-top-left-radius: 8px;border-top-right-radius: 8px;">
             <p style="font-size: 25px;letter-spacing: 1px;font-weight: 100;margin:0;text-align: center;color: white;">Email Confirmation</p>
         </td>
     </tr>

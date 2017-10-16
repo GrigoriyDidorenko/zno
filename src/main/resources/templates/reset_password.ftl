@@ -20,8 +20,8 @@
             <img src="https://samples.edusson.com/wp-content/themes/html5blank-stable/img/logo_conf.png" alt="zno.online" style="width: 100px;">
         </td>
     </tr>
-    <tr style="background: #35b8e8;border-top-left-radius: 2px;border-top-right-radius: 2px;">
-        <td style="padding: 25px 0;border-top-left-radius: 2px;border-top-right-radius: 2px;">
+    <tr style="background: #35b8e8;border-top-left-radius: 8px;border-top-right-radius: 8px;">
+        <td style="padding: 25px 0;border-top-left-radius: 8px;border-top-right-radius: 8px;">
             <p style="text-align: center;font-size: 25px;letter-spacing: 1px;font-weight: 100;margin:0;color: white; ">Відновлення пароля</p>
         </td>
     </tr>
