@@ -103,13 +103,13 @@
       background: #e8e8e8
       border-top: 2px solid #dcdcdc
 
-.statistic_nodata
+.statistic_nodata, .subjects_data
   display: none
   align-items: center
   flex-direction: column
   justify-content: center
   height: 480px
-  width: 450px
+  width: 700px
   margin: 0 auto
   position: relative
   p
@@ -120,6 +120,7 @@
     width: 180px
     margin: 0 auto
     padding: 13px 20px
+    z-index: 9
   .pageSubjects
     display: flex
     position: absolute
@@ -127,26 +128,80 @@
     align-items: center
     justify-content: space-between
     width: 100%
-    height: 50%
+    height: 70%
     .subject
       margin: 0
       transition: all .2s ease-in-out
-      &:hover
-        transform: scale(1.1)
-      &:nth-child(2)
-        margin-bottom: auto
       .subject_img
-        width: 60px
-        height: 60px
+        width: 70px
+        height: 70px
         border: 2px solid rgba(41, 128, 185, 0.18)
         background: rgba(41, 128, 185, 0.06)
         position: relative
+        img
+          height: auto
         span
           position: absolute
           font-size: 10px
           bottom: -15px
           line-height: 10px
           width: 100px
+      &:hover
+        transform: scale(1.1)
+      &:nth-child(2)
+        margin-bottom: 40%
+        margin-right: -5%
+        .subject_img
+          width: 60px
+          height: 60px
+      &:nth-child(3)
+        margin-bottom: 10%
+        margin-right: -3%
+      &:nth-child(4)
+        margin-bottom: 50%
+        margin-right: -3%
+      &:nth-child(5)
+        margin-bottom: 24%
+        .subject_img
+          width: 60px
+          height: 60px
+      &:nth-child(6)
+        margin-bottom: 48%
+      &:nth-child(7)
+        margin-bottom: 24%
+      &:nth-child(8)
+        margin-bottom: 50%
+        margin-right: -5%
+      &:nth-child(9)
+        margin-bottom: 18%
+        .subject_img
+          width: 60px
+          height: 60px
+      &:last-of-type
+        margin-bottom: 0
+
+.statistic_nodata
+  height: 535px
+  img
+    height: 150px
+  .pageSubjects
+    height: 73%
+    .subject
+      .subject_img
+        width: 55px
+        height: 55px
+
+.subjects_data
+  display: flex
+  .pageSubjects
+    .subject
+      color: white
+      letter-spacing: 0.5px
+      .subject_img
+        background: rgba(237, 246, 253, 0.48)
+        border: 2px solid rgba(204, 231, 249, 0.52)
+        span
+          font-size: 11px
 
 .circle-chart__circle
   animation: circle-chart-fill 1s reverse

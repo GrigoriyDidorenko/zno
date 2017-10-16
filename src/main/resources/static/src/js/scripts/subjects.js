@@ -12,7 +12,7 @@ jQuery.ajax({
             if(val.name.toLowerCase() == 'історія україни'){
                 imgUrl = 'src/img/' + val.name.toLowerCase().replace(/ /g, '_') + '.png';
             }
-            $('.pageSubjects').append('<a href="subject.html?subject=' + val.id + '" class="subject"><div class="subject_img"><img src='+imgUrl+' alt="' + val.name.toLowerCase() + '"></div><p>' + val.name + '</p></a>');
+            $('.pageSubjects').append('<a href="subject.html?subject=' + val.id + '" class="subject"><div class="subject_img"><img src='+imgUrl+' alt="' + val.name.toLowerCase() + '"><span>'+val.name+'</span></div></a>');
         });
     }
 });
