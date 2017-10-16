@@ -192,7 +192,7 @@ public class SecurityService {
         User userToPersist = new User(userDTO.getEmail().substring(0, userDTO.getEmail().indexOf("@")),
                 userDTO.getEmail(), userDTO.getEmail(), hashedPassword, LocalDateTime.now(), false, Collections.singleton(Authority.USER));
         userRepository.save(userToPersist);
-        mailService.sendEmail(new Mail(MailService.TEMPLATE_REGISTRATION, userDTO.getEmail(), "Підтвердіть реєстрацію для 'zno.net.ua'.", this.createConfirmationContent(userDTO.getEmail())));
+        mailService.sendEmail(new Mail(MailService.TEMPLATE_CONFIRM_REGISTRATION, userDTO.getEmail(), "Підтвердіть реєстрацію для 'zno.net.ua'.", this.createConfirmationContent(userDTO.getEmail())));
     }
 
     @Transactional
@@ -207,7 +207,7 @@ public class SecurityService {
 
         user.get().setEnabled(true);
         userRepository.save(user.get());
-        mailService.sendEmail(new Mail(MailService.TEMPLATE_REGISTRATION, email, "Ви успішно зареєстровані на 'zno.net.ua'.", createSuccessRegistrationContent()));
+        mailService.sendEmail(new Mail(MailService.TEMPLATE_WELCOME_AFTER_REGISTRATION, email, "Ви успішно зареєстровані на 'zno.net.ua'.", createSuccessRegistrationContent()));
         authorizateUser(user.get());
     }
 

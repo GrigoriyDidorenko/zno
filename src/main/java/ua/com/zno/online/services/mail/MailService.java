@@ -28,8 +28,8 @@ public class MailService {
     private static final Logger LOG = LoggerFactory.getLogger(MailService.class.getName());
 
     public static final String TEMPLATE_PASSWORD_RECOVERING = "change_password.ftl";
-    public static final String TEMPLATE_REGISTRATION = "registration.ftl";
-    public static final String TEMPLATE_WELCOME = "welcome.ftl";
+    public static final String TEMPLATE_CONFIRM_REGISTRATION = "registration.ftl";
+    public static final String TEMPLATE_WELCOME_AFTER_REGISTRATION = "welcome.ftl";
     public static final String TEMPLATE_WEEKLY_NEWS = "week-mail.ftl";
 
     @Value(value = "${system.email}")
