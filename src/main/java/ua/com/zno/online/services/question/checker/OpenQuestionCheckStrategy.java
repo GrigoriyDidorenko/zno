@@ -1,4 +1,4 @@
-package ua.com.zno.online.services.checker;
+package ua.com.zno.online.services.question.checker;
 
 import org.springframework.stereotype.Service;
 import ua.com.zno.online.dto.user.response.UserAnswersPerQuestionDTO;
@@ -11,7 +11,7 @@ import ua.com.zno.online.exceptions.ZnoUserException;
  */
 
 @Service
-class OpenQuestionCheckStrategy implements Checker<UserAnswersPerQuestionDTO, Question> {
+class OpenQuestionCheckStrategy implements QuestionChecker<UserAnswersPerQuestionDTO, Question> {
 
 
     @Override

@@ -1,4 +1,4 @@
-package ua.com.zno.online.controllers;
+package ua.com.zno.online.controllers.logged;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.zno.online.dto.entities.TestDTO;
 import ua.com.zno.online.dto.entities.TestResultDTO;
-import ua.com.zno.online.controllers.filter.RequestFilter;
+import ua.com.zno.online.controllers.utils.filter.RequestFilter;
 import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.dto.statistics.SubjectStatistics;
 import ua.com.zno.online.services.user.DefaultLoggedUserService;

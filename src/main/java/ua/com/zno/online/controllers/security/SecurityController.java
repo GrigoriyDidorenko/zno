@@ -1,4 +1,4 @@
-package ua.com.zno.online.controllers;
+package ua.com.zno.online.controllers.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

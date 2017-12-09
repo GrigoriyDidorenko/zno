@@ -1,4 +1,4 @@
-package ua.com.zno.online.controllers;
+package ua.com.zno.online.controllers.guest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

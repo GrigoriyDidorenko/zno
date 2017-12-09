@@ -17,7 +17,7 @@ import ua.com.zno.online.exceptions.ZnoUserException;
 import ua.com.zno.online.repository.QuestionRepository;
 import ua.com.zno.online.repository.SubjectRepository;
 import ua.com.zno.online.repository.TestRepository;
-import ua.com.zno.online.services.checker.QuestionCheckFactory;
+import ua.com.zno.online.services.question.checker.QuestionCheckFactory;
 import ua.com.zno.online.util.Shuffler;
 
 import java.util.*;

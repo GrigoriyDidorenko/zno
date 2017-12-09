@@ -1,7 +1,6 @@
-package ua.com.zno.online.controllers.aspect;
+package ua.com.zno.online.controllers.utils.aspect;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;

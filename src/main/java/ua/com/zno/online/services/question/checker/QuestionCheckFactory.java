@@ -1,4 +1,4 @@
-package ua.com.zno.online.services.checker;
+package ua.com.zno.online.services.question.checker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

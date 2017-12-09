@@ -1,4 +1,4 @@
-package ua.com.zno.online.services.checker;
+package ua.com.zno.online.services.question.checker;
 
 import org.junit.Test;
 import ua.com.zno.online.dto.user.response.UserAnswersPerQuestionDTO;

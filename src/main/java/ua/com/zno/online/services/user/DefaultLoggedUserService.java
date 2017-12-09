@@ -113,10 +113,10 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
                 .filter(entry -> entry.getValue() != 0)
                 .map(Map.Entry::getKey)
                 .forEach(questionId -> {
-                    Optional<LocalDateTime> askNextTime = askNextTime(questionId);
+                    Optional<LocalDateTime> nextAskDate = getNextAskTimeDate(questionId);
 
-                    if (askNextTime.isPresent())
-                        failedQuestionRepository.setNewAskDate(askNextTime.get(), userId, questionId);
+                    if (nextAskDate.isPresent())
+                        failedQuestionRepository.setNewAskDate(nextAskDate.get(), userId, questionId);
                     else
                         failedQuestionRepository.markResolved(userId, questionId);
                 });// Якщо він створюється тільки в updateFailedQuestions, що буде якщо пройти брейншторм, а фейл квещона не буде
@@ -145,7 +145,7 @@ public class DefaultLoggedUserService extends AbstractUserService implements Log
         return new TestDTO("Failed questions by subject", subjectName, questionDTOs);
     }
 
-    private Optional<LocalDateTime> askNextTime(Long failedQuestionId) {
+    private Optional<LocalDateTime> getNextAskTimeDate(Long failedQuestionId) {
         FailedQuestion failedQuestion = failedQuestionRepository.findOne(failedQuestionId);
         int newStage = failedQuestion.incAndGetStage();
 

@@ -1,4 +1,4 @@
-package ua.com.zno.online.services.checker;
+package ua.com.zno.online.services.question.checker;
 
 import org.junit.Test;
 import ua.com.zno.online.dto.user.response.UserAnswersPerQuestionDTO;
@@ -12,30 +12,25 @@ import static org.junit.Assert.*;
 /**
  * Created by g.didorenko on 06.08.17.
  */
+public class OneCorrectAnswerQuestionCheckStrategyTest {
 
-
-public class OpenQuestionCheckStrategyTest {
-
-    private OpenQuestionCheckStrategy openQuestionCheckStrategy = new OpenQuestionCheckStrategy();
+    private OneCorrectAnswerQuestionCheckStrategy oneCorrectAnswerQuestionCheckStrategy = new OneCorrectAnswerQuestionCheckStrategy();
 
     private Answer correctAnswer;
     private Answer incorrectAnswer;
     private Set<Answer> answers;
     private Question question;
 
-
-    public OpenQuestionCheckStrategyTest() {
+    public OneCorrectAnswerQuestionCheckStrategyTest() {
         correctAnswer = new Answer();
         correctAnswer.setId(1L);
         correctAnswer.setMark(5);
-        correctAnswer.setAnswerText("correct");
 
         incorrectAnswer = new Answer();
         incorrectAnswer.setId(2L);
         incorrectAnswer.setMark(0);
-        incorrectAnswer.setAnswerText("incorrect");
 
-        answers = new HashSet<>(new ArrayList<>(Arrays.asList(correctAnswer, incorrectAnswer)));
+        answers = new HashSet<>(new ArrayList<>(Collections.singletonList(correctAnswer)));
 
         question = new Question();
         question.setId(1L);
@@ -46,9 +41,9 @@ public class OpenQuestionCheckStrategyTest {
     @Test
     public void checkCorrectAnswer() throws Exception {
         UserAnswersPerQuestionDTO userAnswer = new UserAnswersPerQuestionDTO();
-        userAnswer.setAnswerText("  " + correctAnswer.getAnswerText().toUpperCase() + "   ");
+        userAnswer.setAnswerIds(new ArrayList<>(Collections.singletonList(correctAnswer.getId())));
 
-        int mark = openQuestionCheckStrategy.check(userAnswer, question);
+        int mark = oneCorrectAnswerQuestionCheckStrategy.check(userAnswer, question);
 
         assertEquals(correctAnswer.getMark(), mark);
     }
@@ -56,9 +51,9 @@ public class OpenQuestionCheckStrategyTest {
     @Test
     public void checkIncorrectAnswer() throws Exception {
         UserAnswersPerQuestionDTO userAnswer = new UserAnswersPerQuestionDTO();
-        userAnswer.setAnswerText("  " + incorrectAnswer.getAnswerText().toUpperCase() + "   ±231");
+        userAnswer.setAnswerIds(new ArrayList<>(Collections.singletonList(incorrectAnswer.getId())));
 
-        int mark = openQuestionCheckStrategy.check(userAnswer, question);
+        int mark = oneCorrectAnswerQuestionCheckStrategy.check(userAnswer, question);
 
         assertEquals(incorrectAnswer.getMark(), mark);
     }

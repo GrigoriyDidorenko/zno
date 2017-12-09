@@ -1,4 +1,4 @@
-package ua.com.zno.online.controllers.error;
+package ua.com.zno.online.controllers.utils.error;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
