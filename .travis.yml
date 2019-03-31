@@ -20,8 +20,6 @@ before_install:
 notifications:
   email:
     recipients:
-      - grigoriy.didorenko@gmail.com
-      - kotun13@mail.ru
-      - atia29@mail.ru
+      - grifan91@gmail.com
     on_success: never
     on_failure: always

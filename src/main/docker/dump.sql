@@ -3,7 +3,7 @@
 -- Host: localhost    Database: zno
 -- ------------------------------------------------------
 -- Server version	5.7.17-log
-
+CREATE DATABASE IF NOT EXISTS zno;
 use zno;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
