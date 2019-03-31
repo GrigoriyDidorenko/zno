@@ -32,7 +32,7 @@ public class EntityToDTOTest {
         ua.com.zno.online.domain.Test test = Mockito.mock(ua.com.zno.online.domain.Test.class);
 
         Question question = new Question();
-        question.setId(10L);
+        question.setId(11L);
         question.setDeleted(false);
         question.setTest(test);
         question.setQuestionText("Test question");
