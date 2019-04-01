@@ -7,15 +7,33 @@ env:
 services:
   - docker
 
+travis env set DOCKER_USERNAME myusername
+travis env set DOCKER_PASSWORD secretsecret
+
 script:
   - mvn package -P prod -Dspring.profiles.active=dev docker:build
 
 
 before_install:
+  - sudo apt-get update
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
+  - docker-compose --version
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
-  - sudo mv docker-compose -f src/main/docker/app.yml
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose --version
+  - docker-compose pull
+  - docker-compose build
+  - docker-compose start
+  - docker ps
+
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+    make push-image ;
+    fi
+
 
 notifications:
   email:
