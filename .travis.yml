@@ -7,9 +7,6 @@ env:
 services:
   - docker
 
-travis env set DOCKER_USERNAME myusername
-travis env set DOCKER_PASSWORD secretsecret
-
 script:
   - mvn package -P prod -Dspring.profiles.active=dev docker:build
 
