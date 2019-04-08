@@ -2,7 +2,7 @@ language: java
 jdk:
   - oraclejdk8
 env:
- DOCKER_COMPOSE_VERSION: 1.8.0
+  DOCKER_COMPOSE_VERSION: 1.8.0
 
 services:
   - docker
@@ -20,12 +20,12 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
-  - docker-compose -f /src/main/docker/docker-compose.yml pull
-  - docker-compose -f /src/main/docker/docker-compose.yml build
-  - docker-compose -f /src/main/docker/docker-compose.yml start
   - ls
   - pwd
   - tree -if --noreport .
+  - docker-compose -f /src/main/docker/docker-compose.yml pull
+  - docker-compose -f /src/main/docker/docker-compose.yml build
+  - docker-compose -f /src/main/docker/docker-compose.yml start
   - docker ps
 
 after_success:
