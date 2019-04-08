@@ -20,10 +20,10 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
-  - src/main/docker/docker-compose pull
-  - src/main/docker/docker-compose build
-  - src/main/docker/docker-compose start
-  - src/main/docker/docker ps
+  - docker-compose /src/main/docker/docker-compose.yml pull
+  - docker-compose /src/main/docker/docker-compose.yml build
+  - docker-compose /src/main/docker/docker-compose.yml start
+  - docker ps
 
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
