@@ -1,0 +1,26 @@
+version: "2"
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=zno
+    ports:
+      - 3307:3306
+
+  app:
+    container_name: zno
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+
+    ports:
+      - 8080:8082
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod, dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/zno?useUnicode=true&characterEncoding=utf8&useSSL=false
