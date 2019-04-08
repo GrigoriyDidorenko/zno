@@ -23,6 +23,9 @@ before_install:
   - docker-compose -f /src/main/docker/docker-compose.yml pull
   - docker-compose -f /src/main/docker/docker-compose.yml build
   - docker-compose -f /src/main/docker/docker-compose.yml start
+  - ls
+  - pwd
+  - tree -if --noreport .
   - docker ps
 
 after_success:
