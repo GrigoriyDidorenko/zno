@@ -13,9 +13,7 @@ services:
 
   app:
     container_name: zno
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: grigoriy/zno-online
     depends_on:
       - db
 
