@@ -9,6 +9,10 @@ services:
 
 script:
   - mvn package -P prod -Dspring.profiles.active=dev docker:build
+  - docker-compose -f ./src/main/docker/docker-compose.yml pull
+  - docker-compose -f ./src/main/docker/docker-compose.yml build
+  - docker-compose -f ./src/main/docker/docker-compose.yml start
+  - docker ps
 
 
 before_install:
@@ -22,11 +26,6 @@ before_install:
   - docker-compose --version
   - ls
   - pwd
-  - tree -if --noreport .
-  - docker-compose -f /src/main/docker/docker-compose.yml pull
-  - docker-compose -f /src/main/docker/docker-compose.yml build
-  - docker-compose -f /src/main/docker/docker-compose.yml start
-  - docker ps
 
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
