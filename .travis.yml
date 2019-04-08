@@ -20,9 +20,9 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
-  - docker-compose /src/main/docker/docker-compose.yml pull
-  - docker-compose /src/main/docker/docker-compose.yml build
-  - docker-compose /src/main/docker/docker-compose.yml start
+  - docker-compose -f /src/main/docker/docker-compose.yml pull
+  - docker-compose -f /src/main/docker/docker-compose.yml build
+  - docker-compose -f /src/main/docker/docker-compose.yml start
   - docker ps
 
 after_success:
