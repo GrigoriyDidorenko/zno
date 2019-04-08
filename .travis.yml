@@ -29,7 +29,8 @@ before_install:
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
     docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
-    docker push grigoriy/zno;
+    docker tag target_app quento/zno
+    docker push quento/zno;
     fi
 
 
